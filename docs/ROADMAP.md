@@ -18,9 +18,8 @@ Objectif : Rajouter un Item de type Origine afin d'automatiser l'ajout de capaci
 - [x] Automatisation de l'ajout des capacités liées à une Origine
 - [x] Gestion de la suppression ou du remplacement d'une Origine
 - [x] Mise à jour automatique des données du personnage lors des modifications
-- [ ] Ajout d'exemples d'Origines pour tests
+- [x] Ajout d'exemples d'Origines pour tests
 - [x] Vérification de compatibilité avec les autres éléments du système
-- [ ] Création du compendium des Origines
 
 ---
 
@@ -39,4 +38,14 @@ Objectif : Ajouter la gestion des Rôles sous forme d'Item afin de permettre l'a
 - [ ] Mise à jour automatique des données du personnage lors des modifications
 - [ ] Ajout de Rôles d'exemple pour tests
 - [ ] Vérification de compatibilité avec les Origines
+
+---
+
+# Version 0.1.3 - Compendium Identité
+
+Objectif : Regrouper les éléments d'identité (Origines et Rôles) dans des compendiums pour faciliter leur réutilisation.
+
+## Fonctionnalités
+
+- [ ] Création du compendium des Origines
 - [ ] Création du compendium des Rôles
