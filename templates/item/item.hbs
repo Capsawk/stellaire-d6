@@ -1,0 +1,48 @@
+<div class="item-content {{item.type}} flexcol" autocomplete="off">
+
+  <header class="sheet-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" data-action="editImage" title="{{item.name}}" height="64" width="64"/>
+    <div class="header-fields">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize 'SD6.name'}}"/>
+      </h1>
+      <span class="item-type-label">{{itemTypeLabel}}</span>
+    </div>
+  </header>
+
+  <section class="item-fields">
+    <div class="form-group description">
+      <label>{{localize "SD6.item.description"}}</label>
+      <prose-mirror name="system.description" value="{{system.description}}" data-document-uuid="{{item.uuid}}" toggled>{{{system.descriptionEnriched}}}</prose-mirror>
+    </div>
+
+    {{#if showBonus}}
+    <div class="form-group">
+      <label>{{localize "SD6.item.bonus"}}</label>
+      <input type="number" name="system.bonus" value="{{system.bonus}}" min="0" max="2" step="1" data-dtype="Number"/>
+    </div>
+    {{/if}}
+
+    {{#if showEffet}}
+    <div class="form-group">
+      <label>{{localize "SD6.item.effet"}}</label>
+      <input type="text" name="system.effet" value="{{system.effet}}"/>
+    </div>
+    {{/if}}
+
+    {{#if showProtection}}
+    <div class="form-group">
+      <label>{{localize "SD6.item.protection"}}</label>
+      <input type="text" name="system.protection" value="{{system.protection}}"/>
+    </div>
+    {{/if}}
+
+    {{#if showEquipped}}
+    <div class="form-group">
+      <label>{{localize "SD6.item.equipped"}}</label>
+      <input type="checkbox" name="system.equipped" {{checked system.equipped}}/>
+    </div>
+    {{/if}}
+  </section>
+
+</div>

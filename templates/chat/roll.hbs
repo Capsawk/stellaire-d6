@@ -1,0 +1,21 @@
+<div class="sd6-roll">
+  <div class="sd6-roll-header">
+    <span class="sd6-roll-actor">{{actorName}}</span>
+    <span class="sd6-roll-skill">{{skillLabel}}</span>
+  </div>
+
+  <div class="sd6-roll-tags">
+    {{#each tags}}<span class="sd6-tag {{this.cls}}">{{this.label}}</span>{{/each}}
+  </div>
+
+  <div class="sd6-dice">
+    {{#each dice}}
+    <span class="sd6-die d6 {{this.colorClass}}{{#if this.kept}} kept{{/if}}">{{this.result}}</span>
+    {{/each}}
+  </div>
+
+  <div class="sd6-outcome {{outcomeClass}}">
+    <div class="sd6-outcome-title">{{outcomeLabel}}</div>
+    <div class="sd6-outcome-detail">{{outcomeDetail}}</div>
+  </div>
+</div>

@@ -1,0 +1,228 @@
+<div class="personnage flexcol" autocomplete="off">
+
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" title="{{actor.name}}" height="100" width="100"/>
+    <div class="header-fields flexcol">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'SD6.name'}}"/>
+      </h1>
+      <div class="resources flexrow">
+        <div class="resource stress{{#if stressFull}} full{{/if}}">
+          <label>{{localize "SD6.rsc.stress"}}</label>
+          <div class="resource-value">
+            <div class="stress-pips">
+              {{#each stressPips}}<span class="pip{{#if this}} filled{{/if}}"></span>{{/each}}
+            </div>
+            <input type="number" name="system.rsc.stress" value="{{system.rsc.stress}}" min="0" max="6" step="1" data-dtype="Number"/>
+            <span>/ 6</span>
+          </div>
+        </div>
+        <div class="resource xp">
+          <label>{{localize "SD6.xp"}}</label>
+          <input type="number" name="system.xp" value="{{system.xp}}" min="0" step="1" data-dtype="Number"/>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  {{!-- Onglets --}}
+  <nav class="tabs" data-group="sd6-main">
+    {{#each tabs}}
+    <button type="button" class="tab-item{{#if active}} active{{/if}}" data-action="tab" data-group="{{group}}" data-tab="{{id}}">{{localize label}}</button>
+    {{/each}}
+  </nav>
+
+  <div class="sheet-body">
+
+    {{!-- Onglet Personnage --}}
+    <section class="tab{{#if tabActive.personnage}} active{{/if}}" data-group="sd6-main" data-tab="personnage">
+
+      {{!-- Identité --}}
+      <section class="sheet-identite">
+        <h2>{{localize "SD6.identite.title"}}</h2>
+        <div class="identite-grid">
+          <div class="form-group">
+            <label>{{localize "SD6.identite.origine"}}</label>
+            <input type="text" name="system.identite.origine" value="{{system.identite.origine}}"/>
+          </div>
+          <div class="form-group">
+            <label>{{localize "SD6.identite.serment"}}</label>
+            <input type="text" name="system.identite.serment" value="{{system.identite.serment}}"/>
+          </div>
+          <div class="form-group">
+            <label>{{localize "SD6.identite.role"}}</label>
+            <input type="text" name="system.identite.role" value="{{system.identite.role}}"/>
+          </div>
+          <div class="form-group">
+            <label>{{localize "SD6.identite.niveau"}}</label>
+            <input type="number" name="system.identite.niveau" value="{{system.identite.niveau}}" min="1" max="5" step="1" data-dtype="Number"/>
+          </div>
+        </div>
+      </section>
+
+      {{!-- Compétences --}}
+      <section class="sheet-skills">
+        <h2>{{localize "SD6.skills.title"}}</h2>
+        <div class="skills-grid">
+          {{#each skillGroups as |group|}}
+          <div class="skill-group" data-group="{{group.id}}">
+            <h3>{{group.label}}</h3>
+            {{#each group.skills as |skill|}}
+            <div class="skill flexrow">
+              <button type="button" class="skill-roll" data-action="rollSkill" data-skill="{{skill.id}}"
+                      title="{{localize 'SD6.jets.rollSkill'}} {{skill.label}}">
+                <i class="fa-solid fa-dice-d6"></i>
+                <span class="skill-label">{{skill.label}}</span>
+              </button>
+              <input type="number" name="system.skills.{{skill.id}}" value="{{skill.value}}" min="0" max="4" step="1" data-dtype="Number" {{#if ../../locked}}disabled{{/if}}/>
+            </div>
+            {{/each}}
+          </div>
+          {{/each}}
+        </div>
+      </section>
+
+      {{!-- Équipement --}}
+      <section class="sheet-equipement">
+        <h2>{{localize "SD6.equipement.title"}}</h2>
+        {{#if equipement.length}}
+        <ol class="equipement-list">
+          {{#each equipement as |item|}}
+          <li class="equipement flexrow" data-item-id="{{item.id}}">
+            <img class="item-img" src="{{item.img}}" title="{{item.name}}"/>
+            <span class="item-name">{{item.name}}</span>
+            <span class="item-type">{{item.typeLabel}}</span>
+            {{#if item.isArme}}
+            <button type="button" class="item-attack" data-action="attackItem" data-item-id="{{item.id}}" title="{{localize 'SD6.item.attack'}}">
+              <i class="fas fa-crosshairs"></i>
+            </button>
+            {{/if}}
+          </li>
+          {{/each}}
+        </ol>
+        {{else}}
+        <p class="item-empty">{{localize "SD6.equipement.empty"}}</p>
+        {{/if}}
+      </section>
+
+      {{!-- États et blessures --}}
+      <section class="sheet-etats">
+        <h2>
+          {{localize "SD6.etats.title"}}
+          <button type="button" class="etat-add" data-action="addEtat" title="{{localize 'SD6.etats.add'}}">
+            <i class="fas fa-plus"></i>
+          </button>
+        </h2>
+        {{#if etats.length}}
+        <ol class="etats-list">
+          {{#each etats as |etat index|}}
+          <li class="etat flexrow">
+            <select name="system.etats.{{index}}.gravite">
+              {{selectOptions ../gravites selected=etat.gravite}}
+            </select>
+            <input type="text" name="system.etats.{{index}}.label" value="{{etat.label}}" placeholder="{{localize 'SD6.etats.label'}}"/>
+            <button type="button" class="etat-delete" data-action="deleteEtat" data-index="{{index}}" title="{{localize 'SD6.etats.delete'}}">
+              <i class="fas fa-trash"></i>
+            </button>
+          </li>
+          {{/each}}
+        </ol>
+        {{else}}
+        <p class="etats-empty">{{localize "SD6.etats.empty"}}</p>
+        {{/if}}
+      </section>
+
+      {{!-- Capacités, pouvoirs & marques --}}
+      <section class="sheet-capacites">
+        <h2>{{localize "SD6.capacites.title"}}</h2>
+        {{#if abilites.length}}
+        <ol class="item-list">
+          {{#each abilites as |item|}}
+          <li class="item flexrow" data-item-id="{{item.id}}">
+            <img class="item-img" src="{{item.img}}" title="{{item.name}}"/>
+            <span class="item-name">{{item.name}}</span>
+            <span class="item-type">{{item.typeLabel}}</span>
+            <button type="button" class="item-chat" data-action="chatAbilitie" data-item-id="{{item.id}}" title="{{localize 'SD6.capacites.chat'}}">
+              <i class="fas fa-comment"></i>
+            </button>
+            <button type="button" class="item-delete" data-action="deleteAbilitie" data-item-id="{{item.id}}" title="{{localize 'SD6.capacites.delete'}}">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button type="button" class="item-edit" data-action="editAbilitie" data-item-id="{{item.id}}" title="{{localize 'SD6.capacites.edit'}}">
+              <i class="fas fa-pen"></i>
+            </button>
+          </li>
+          {{/each}}
+        </ol>
+        {{else}}
+        <p class="item-empty">{{localize "SD6.capacites.empty"}}</p>
+        {{/if}}
+        {{#unless locked}}
+        <div class="item-add-row flexrow">
+          <select name="abilitieType">{{selectOptions abilitieTypes}}</select>
+          <button type="button" class="item-add" data-action="addAbilitie"><i class="fas fa-plus"></i> {{localize "SD6.capacites.add"}}</button>
+        </div>
+        {{/unless}}
+      </section>
+
+    </section>
+
+    {{!-- Onglet Inventaire --}}
+    <section class="tab{{#if tabActive.inventaire}} active{{/if}}" data-group="sd6-main" data-tab="inventaire">
+      <section class="sheet-inventaire">
+        {{#if inventory.length}}
+        <ol class="item-list">
+          {{#each inventory as |item|}}
+          <li class="item flexrow" data-item-id="{{item.id}}">
+            <img class="item-img" src="{{item.img}}" title="{{item.name}}"/>
+            <input type="checkbox" class="item-equipped" data-action="toggleEquip" data-item-id="{{item.id}}" {{checked item.equipped}} title="{{localize 'SD6.item.equipped'}}"/>
+            <span class="item-name">{{item.name}}</span>
+            <span class="item-type">{{item.typeLabel}}</span>
+            {{#if item.isArme}}
+            <button type="button" class="item-attack" data-action="attackItem" data-item-id="{{item.id}}" title="{{localize 'SD6.item.attack'}}">
+              <i class="fas fa-crosshairs"></i>
+            </button>
+            {{/if}}
+            <button type="button" class="item-delete" data-action="deleteItem" data-item-id="{{item.id}}" title="{{localize 'SD6.item.delete'}}">
+              <i class="fas fa-trash"></i>
+            </button>
+            <button type="button" class="item-edit" data-action="editItem" data-item-id="{{item.id}}" title="{{localize 'SD6.item.edit'}}">
+              <i class="fas fa-pen"></i>
+            </button>
+          </li>
+          {{/each}}
+        </ol>
+        {{else}}
+        <p class="item-empty">{{localize "SD6.item.empty"}}</p>
+        {{/if}}
+        <div class="item-add-row flexrow">
+          <select name="itemType">{{selectOptions itemTypes}}</select>
+          <button type="button" class="item-add" data-action="addItem"><i class="fas fa-plus"></i> {{localize "SD6.item.add"}}</button>
+        </div>
+      </section>
+    </section>
+
+    {{!-- Onglet Biographie --}}
+    <section class="tab{{#if tabActive.biographie}} active{{/if}}" data-group="sd6-main" data-tab="biographie">
+      <section class="sheet-biographie">
+        <div class="form-group description">
+          <label>{{localize "SD6.biographie.title"}}</label>
+          <prose-mirror name="system.biographie" value="{{system.biographie}}" data-document-uuid="{{actor.uuid}}" toggled>{{{system.biographieEnriched}}}</prose-mirror>
+        </div>
+        <div class="form-group description notes">
+          <label>{{localize "SD6.biographie.notes"}}</label>
+          <prose-mirror name="system.notes" value="{{system.notes}}" data-document-uuid="{{actor.uuid}}" toggled>{{{system.notesEnriched}}}</prose-mirror>
+        </div>
+      </section>
+    </section>
+
+  </div>
+
+  {{!-- Pied de fiche : runes --}}
+  <footer class="sheet-footer-runes">
+    <span class="footer-rune-line">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ</span>
+    <span class="footer-title">{{localize "SD6.title"}}</span>
+  </footer>
+
+</div>

@@ -1,0 +1,33 @@
+<div class="stellaire-roll-dialog">
+  <p class="roll-dialog-title">{{skillLabel}}</p>
+
+  <div class="form-group">
+    <label>{{localize "SD6.jets.position"}}</label>
+    <select name="position">{{selectOptions positions selected="risquee"}}</select>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "SD6.jets.effet"}}</label>
+    <select name="effet">{{selectOptions effets selected="normal"}}</select>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "SD6.jets.bonus"}}</label>
+    <input type="number" name="bonusDice" value="0" min="0" max="3" step="1" data-dtype="Number"/>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "SD6.jets.malus"}}</label>
+    <input type="number" name="malusDice" value="0" min="0" max="3" step="1" data-dtype="Number"/>
+  </div>
+
+  <div class="form-group">
+    <label>{{localize "SD6.jets.gainStress"}}</label>
+    <input type="checkbox" name="gainStress" {{#if stressFull}}disabled{{/if}}/>
+    <span class="stress-available">{{localize "SD6.rsc.stress"}} : {{stress}}/6</span>
+  </div>
+
+  <footer class="sheet-footer">
+    <button type="submit"><i class="fa-solid fa-dice-d6"></i> {{localize "SD6.jets.roll"}}</button>
+  </footer>
+</div>

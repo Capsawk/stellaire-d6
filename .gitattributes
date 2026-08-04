@@ -1,0 +1,2 @@
+# Les compendiums LevelDB sont des fichiers binaires — interdit tout traitement de ligne
+packs/** binary

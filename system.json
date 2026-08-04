@@ -1,0 +1,67 @@
+{
+  "id": "stellaire-d6",
+  "title": "Stellaire D6",
+  "description": "Système Foundry VTT (V14) pour jouer à « La Campagne Stellaire », un jeu de rôle sur table léger.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Capsawk"
+    }
+  ],
+  "url": "https://github.com/Capsawk/stellaire-d6",
+  "manifest": "https://github.com/Capsawk/stellaire-d6/releases/latest/download/system.json",
+  "download": "https://github.com/Capsawk/stellaire-d6/releases/download/v0.1.0/stellaire-d6.zip",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "esmodules": ["stellaire.mjs"],
+  "styles": ["styles/stellaire.css"],
+  "changelog": "CHANGELOG.md",
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/stellaire-d6/assets/cover-stellaire-d6.webp",
+      "thumbnail": "systems/stellaire-d6/assets/thumb-stellaire-d6.webp"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "personnage": {}
+    },
+    "Item": {
+      "arme": {},
+      "armure": {},
+      "outil": {},
+      "relique": {},
+      "equipement": {},
+      "capacite": {},
+      "pouvoir": {},
+      "marque": {}
+    }
+  },
+  "packs": [
+    {
+      "name": "pretires",
+      "label": "Prétirés",
+      "system": "stellaire-d6",
+      "path": "packs/pretires",
+      "type": "Actor"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "fr",
+      "name": "Francais",
+      "path": "lang/fr.json"
+    }
+  ],
+  "socket": false,
+  "background": "systems/stellaire-d6/assets/bg-stellaire-d6.webp",
+  "primaryTokenAttribute": "rsc.stress"
+}

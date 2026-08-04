@@ -1,0 +1,11 @@
+# Documents privés — jamais publiés sur le dépôt
+private/
+
+# Logs et fichiers système
+*.log
+.DS_Store
+Thumbs.db
+
+# Fichiers runtime des compendiums LevelDB (CURRENT, MANIFEST-* et *.ldb doivent être commités)
+packs/**/LOCK
+packs/**/LOG

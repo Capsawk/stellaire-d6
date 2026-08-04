@@ -1,0 +1,42 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create system archive
+        run: |
+          mkdir release
+          zip -r release/stellaire-d6.zip \
+            system.json \
+            stellaire.mjs \
+            module \
+            styles \
+            templates \
+            assets \
+            lang \
+            packs \
+            CHANGELOG.md \
+            README.md \
+            LICENSE
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/stellaire-d6.zip
+            system.json
+          generate_release_notes: true

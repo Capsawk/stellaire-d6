@@ -1,0 +1,1152 @@
+/* ============================================================
+   Stellaire D6 — Thème « Espace & Vikings »
+   Palette : nuit spatiale, or runique, Bifrost (arc-en-ciel d'Yggdrasil)
+   ============================================================ */
+
+.stellaire-d6,
+.sd6-roll,
+.sd6-chat-item {
+  --sd6-space: #0a0e22;
+  --sd6-space-2: #0d1430;
+  --sd6-panel: #121b3b;
+  --sd6-panel-2: #182450;
+  --sd6-line: #2c3a66;
+  --sd6-line-bright: #42579c;
+  --sd6-ice: #d9e4ff;
+  --sd6-mist: #94a6cf;
+  --sd6-gold: #e3b45e;
+  --sd6-gold-soft: #a98a4a;
+  --sd6-success: #62d68a;
+  --sd6-mixed: #f2b95c;
+  --sd6-fail: #ef6b73;
+  --sd6-crit: #ffe066;
+  --sd6-font-display: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  color: var(--sd6-ice);
+}
+
+/* --- Champs de formulaire communs --- */
+.stellaire-d6 input[type="text"],
+.stellaire-d6 input[type="number"],
+.stellaire-d6 textarea,
+.stellaire-d6 select {
+  background: rgba(7, 11, 30, 0.65);
+  border: 1px solid var(--sd6-line);
+  border-radius: 3px;
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6 input:focus,
+.stellaire-d6 textarea:focus,
+.stellaire-d6 select:focus {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 0 1px rgba(227, 180, 94, 0.25);
+}
+
+.stellaire-d6 select option {
+  background: var(--sd6-panel-2);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6 button {
+  background: rgba(24, 36, 80, 0.7);
+  border: 1px solid var(--sd6-line);
+  border-radius: 3px;
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6 button:hover {
+  border-color: var(--sd6-gold-soft);
+  color: var(--sd6-gold);
+  text-shadow: 0 0 6px rgba(227, 180, 94, 0.6);
+}
+
+/* ============================================================
+   Feuille de personnage
+   ============================================================ */
+
+.stellaire-d6.actor {
+  background-color: var(--sd6-space);
+  background-image:
+    radial-gradient(ellipse 130% 55% at 50% -12%, rgba(64, 96, 220, 0.20), transparent 62%),
+    radial-gradient(ellipse 90% 40% at 85% 110%, rgba(190, 110, 220, 0.10), transparent 60%),
+    radial-gradient(1px 1px at 10% 12%, rgba(255, 255, 255, 0.75), transparent 100%),
+    radial-gradient(1px 1px at 24% 68%, rgba(255, 255, 255, 0.50), transparent 100%),
+    radial-gradient(1px 1px at 38% 26%, rgba(255, 255, 255, 0.85), transparent 100%),
+    radial-gradient(1.5px 1.5px at 46% 82%, rgba(255, 255, 255, 0.55), transparent 100%),
+    radial-gradient(1px 1px at 55% 44%, rgba(255, 255, 255, 0.45), transparent 100%),
+    radial-gradient(1px 1px at 63% 15%, rgba(255, 255, 255, 0.70), transparent 100%),
+    radial-gradient(1.5px 1.5px at 71% 58%, rgba(255, 255, 255, 0.50), transparent 100%),
+    radial-gradient(1px 1px at 79% 34%, rgba(255, 255, 255, 0.80), transparent 100%),
+    radial-gradient(1px 1px at 87% 74%, rgba(255, 255, 255, 0.55), transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 90%, rgba(255, 255, 255, 0.50), transparent 100%),
+    radial-gradient(1px 1px at 66% 94%, rgba(255, 255, 255, 0.60), transparent 100%),
+    linear-gradient(180deg, var(--sd6-space-2) 0%, var(--sd6-space) 100%);
+}
+
+.stellaire-d6.actor .window-content {
+  padding: 0;
+}
+
+.stellaire-d6.actor .personnage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+/* --- Titres de sections (runes + filet d'or) --- */
+.stellaire-d6.actor h2 {
+  align-items: center;
+  color: var(--sd6-gold);
+  display: flex;
+  font-family: var(--sd6-font-display);
+  font-size: 1.05rem;
+  font-weight: bold;
+  gap: 0.5rem;
+  letter-spacing: 3px;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor h2::before {
+  font-size: 0.95em;
+  font-weight: normal;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.stellaire-d6.actor h2::after {
+  background: linear-gradient(90deg, var(--sd6-gold-soft), transparent);
+  content: "";
+  flex: 1;
+  height: 1px;
+  order: 1;
+}
+
+.stellaire-d6.actor h2 .etat-add {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 1.5rem;
+  justify-content: center;
+  order: 2;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.actor h2 .etat-add:hover {
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgba(227, 180, 94, 0.7);
+}
+
+.stellaire-d6.actor .sheet-identite h2::before { content: "ᛟ"; }
+.stellaire-d6.actor .sheet-skills h2::before { content: "ᚱ"; }
+.stellaire-d6.actor .sheet-etats h2::before { content: "ᛏ"; }
+.stellaire-d6.actor .sheet-capacites h2::before { content: "ᛊ"; }
+.stellaire-d6.actor .sheet-equipement h2::before { content: "ᚲ"; }
+
+/* --- Header --- */
+.stellaire-d6.actor .sheet-header {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  position: relative;
+  padding-bottom: 0.35rem;
+}
+
+.stellaire-d6.actor .sheet-header::after {
+  background: linear-gradient(90deg,
+    #58c7f3, #8f7cf0, #f18bc0, #f2b95c, #f18bc0, #8f7cf0, #58c7f3);
+  border-radius: 2px;
+  bottom: 0;
+  box-shadow: 0 0 8px rgba(143, 124, 240, 0.6);
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.stellaire-d6.actor .profile-img {
+  border: 2px solid var(--sd6-gold-soft);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(227, 180, 94, 0.35), inset 0 0 10px rgba(0, 0, 0, 0.6);
+  flex: 0 0 100px;
+  height: 100px;
+  object-fit: cover;
+  width: 100px;
+}
+
+.stellaire-d6.actor .header-fields {
+  flex: 1;
+  gap: 0.4rem;
+}
+
+.stellaire-d6.actor input:disabled,
+.stellaire-d6.actor select:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.stellaire-d6.actor .charname {
+  margin: 0;
+}
+
+.stellaire-d6.actor .charname input {
+  background: transparent;
+  border: none;
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-size: 1.7rem;
+  font-weight: bold;
+  height: auto;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(88, 199, 243, 0.25);
+  width: 100%;
+}
+
+.stellaire-d6.actor .resources {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.actor .resource {
+  align-items: center;
+  background: linear-gradient(180deg, rgba(24, 36, 80, 0.65), rgba(10, 14, 34, 0.7));
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.stellaire-d6.actor .resource label {
+  color: var(--sd6-mist);
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .resource.stress {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: inset 0 0 10px rgba(227, 180, 94, 0.08);
+}
+
+.stellaire-d6.actor .resource-value {
+  align-items: center;
+  display: flex;
+  gap: 0.3rem;
+  font-family: var(--sd6-font-display);
+  font-size: 1.15rem;
+}
+
+.stellaire-d6.actor .resource-value span {
+  color: var(--sd6-mist);
+  font-size: 0.9rem;
+}
+
+.stellaire-d6.actor .resource input[type="number"] {
+  background: transparent;
+  border: none;
+  color: var(--sd6-gold);
+  font-family: var(--sd6-font-display);
+  font-size: 1.15rem;
+  font-weight: bold;
+  height: auto;
+  padding: 0;
+  text-align: center;
+  width: 2.6rem;
+}
+
+.stellaire-d6.actor .resource input[type="number"]:focus {
+  box-shadow: none;
+}
+
+/* --- Pépites de Stress --- */
+.stellaire-d6.actor .stress-pips {
+  display: flex;
+  gap: 3px;
+}
+
+.stellaire-d6.actor .stress-pips .pip {
+  border: 1px solid var(--sd6-gold-soft);
+  box-shadow: 0 0 3px rgba(227, 180, 94, 0.25);
+  height: 9px;
+  transform: rotate(45deg);
+  width: 9px;
+}
+
+.stellaire-d6.actor .stress-pips .pip.filled {
+  background: linear-gradient(135deg, #ffe6a0, var(--sd6-gold));
+  box-shadow: 0 0 5px rgba(227, 180, 94, 0.7);
+}
+
+.stellaire-d6.actor .resource.stress.full {
+  border-color: var(--sd6-fail);
+  box-shadow: inset 0 0 12px rgba(239, 107, 115, 0.25);
+}
+
+.stellaire-d6.actor .resource.stress.full .stress-pips .pip.filled {
+  background: linear-gradient(135deg, #ffd7da, var(--sd6-fail));
+  box-shadow: 0 0 6px rgba(239, 107, 115, 0.8);
+}
+
+/* --- Onglets --- */
+.stellaire-d6.actor .tabs {
+  align-items: center;
+  border-bottom: 1px solid var(--sd6-line);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.6rem 0.5rem 0.5rem;
+}
+
+.stellaire-d6.actor .tab-item {
+  background: linear-gradient(180deg, rgba(24, 36, 80, 0.55), rgba(18, 27, 59, 0.8));
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  color: var(--sd6-mist);
+  cursor: pointer;
+  font-family: var(--sd6-font-display);
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  line-height: 1;
+  padding: 0.5rem 1.25rem;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.stellaire-d6.actor .tab-item:hover {
+  background: linear-gradient(180deg, rgba(37, 56, 118, 0.65), rgba(24, 36, 80, 0.85));
+  border-color: var(--sd6-line-bright);
+  box-shadow: 0 0 6px rgba(66, 87, 156, 0.35);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6.actor .tab-item.active {
+  background: linear-gradient(180deg, rgba(66, 52, 24, 0.4), rgba(47, 37, 18, 0.65));
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 8px rgba(227, 180, 94, 0.35), inset 0 0 6px rgba(227, 180, 94, 0.12);
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgba(227, 180, 94, 0.5);
+}
+
+.stellaire-d6.actor .sheet-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  min-height: 0;
+}
+
+.stellaire-d6.actor .sheet-body > .tab {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .sheet-body > .tab:not(.active) {
+  display: none;
+}
+
+/* --- Sections --- */
+.stellaire-d6.actor section {
+  background:
+    linear-gradient(180deg, rgba(18, 27, 59, 0.85), rgba(10, 14, 34, 0.75));
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+/* --- Identité --- */
+.stellaire-d6.actor .identite-grid {
+  display: grid;
+  gap: 0.3rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.stellaire-d6.actor .form-group {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.actor .form-group label {
+  flex: 0 0 5.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.stellaire-d6.actor .form-group input {
+  flex: 1;
+}
+
+/* --- Biographie --- */
+.stellaire-d6.actor .sheet-biographie {
+  gap: 0.75rem;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group.description {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group.description label {
+  flex: 0 0 auto;
+  padding-top: 0;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group prose-mirror {
+  flex: 1;
+  min-height: 14rem;
+  width: 100%;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group.description.notes prose-mirror {
+  min-height: 10rem;
+}
+
+/* --- Compétences --- */
+.stellaire-d6.actor .skills-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stellaire-d6.actor .skill-group {
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(64, 96, 220, 0.10), transparent 70%),
+    rgba(8, 12, 28, 0.5);
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  padding: 0.35rem;
+}
+
+.stellaire-d6.actor .skill-group h3 {
+  color: var(--sd6-mist);
+  font-family: var(--sd6-font-display);
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  margin: 0 0 0.35rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .skill-group h3::before,
+.stellaire-d6.actor .skill-group h3::after {
+  color: var(--sd6-gold-soft);
+  font-size: 0.85em;
+  padding: 0 0.35rem;
+}
+
+.stellaire-d6.actor .skill-group[data-group="physique"] h3::before { content: "ᛏ"; }
+.stellaire-d6.actor .skill-group[data-group="physique"] h3::after { content: "ᛏ"; }
+.stellaire-d6.actor .skill-group[data-group="mental"] h3::before { content: "ᛟ"; }
+.stellaire-d6.actor .skill-group[data-group="mental"] h3::after { content: "ᛟ"; }
+.stellaire-d6.actor .skill-group[data-group="social"] h3::before { content: "ᛉ"; }
+.stellaire-d6.actor .skill-group[data-group="social"] h3::after { content: "ᛉ"; }
+
+.stellaire-d6.actor .skill {
+  align-items: center;
+  border-bottom: 1px dashed rgba(44, 58, 102, 0.5);
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.actor .skill:last-child {
+  border-bottom: none;
+}
+
+.stellaire-d6.actor .skill-roll {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 1;
+  gap: 0.35rem;
+  height: auto;
+  justify-content: flex-start;
+  line-height: 1;
+  padding: 0;
+  text-align: left;
+}
+
+.stellaire-d6.actor .skill-roll:hover {
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgba(227, 180, 94, 0.8);
+}
+
+.stellaire-d6.actor .skill-roll .skill-label {
+  color: inherit;
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+.stellaire-d6.actor .skill input[type="number"] {
+  background: rgba(7, 11, 30, 0.7);
+  border: 1px solid var(--sd6-line);
+  border-radius: 3px;
+  color: var(--sd6-gold);
+  font-family: var(--sd6-font-display);
+  font-size: 0.95rem;
+  font-weight: bold;
+  height: auto;
+  padding: 0.1rem;
+  text-align: center;
+  width: 2.5rem;
+}
+
+.stellaire-d6.actor .skill input[type="number"]:focus {
+  box-shadow: 0 0 0 2px rgba(227, 180, 94, 0.2);
+}
+
+/* --- États --- */
+.stellaire-d6.actor .etats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .etat {
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stellaire-d6.actor .etat select {
+  flex: 0 0 7rem;
+}
+
+.stellaire-d6.actor .etat input[type="text"] {
+  flex: 1;
+}
+
+.stellaire-d6.actor .etat-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.actor .etat-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgba(239, 107, 115, 0.7);
+}
+
+.stellaire-d6.actor .etats-empty {
+  color: var(--sd6-mist);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.stellaire-d6.actor .item-add {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+/* --- Capacités, pouvoirs & marques --- */
+.stellaire-d6.actor .sheet-capacites .item-list {
+  gap: 0.3rem;
+}
+
+.stellaire-d6.actor .capacites-empty {
+  color: var(--sd6-mist);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+/* --- Équipement --- */
+.stellaire-d6.actor .equipement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .equipement {
+  align-items: center;
+  border-bottom: 1px dashed rgba(44, 58, 102, 0.5);
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.actor .equipement:last-child {
+  border-bottom: none;
+}
+
+/* --- Inventaire --- */
+.stellaire-d6.actor .item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .item {
+  align-items: center;
+  border-bottom: 1px dashed rgba(44, 58, 102, 0.5);
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.actor .item:last-child {
+  border-bottom: none;
+}
+
+.stellaire-d6.actor .item-img {
+  border: 1px solid var(--sd6-line);
+  border-radius: 50%;
+  flex: 0 0 2rem;
+  height: 2rem;
+  object-fit: cover;
+  width: 2rem;
+}
+
+.stellaire-d6.actor .item input[type="checkbox"] {
+  accent-color: var(--sd6-gold);
+  flex: 0 0 auto;
+}
+
+.stellaire-d6.actor .item-edit,
+.stellaire-d6.actor .item-chat,
+.stellaire-d6.actor .item-attack,
+.stellaire-d6.actor .item-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.actor .item-chat:hover {
+  color: var(--sd6-ice);
+  text-shadow: 0 0 8px rgba(88, 199, 243, 0.7);
+}
+
+.stellaire-d6.actor .item-edit:hover {
+  color: var(--sd6-ice);
+  text-shadow: 0 0 8px rgba(88, 199, 243, 0.7);
+}
+
+.stellaire-d6.actor .item-attack:hover {
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgba(227, 180, 94, 0.8);
+}
+
+.stellaire-d6.actor .item-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgba(239, 107, 115, 0.7);
+}
+
+.stellaire-d6.actor .item-name {
+  color: var(--sd6-ice);
+  flex: 1;
+  font-family: var(--sd6-font-display);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.stellaire-d6.actor .item-type {
+  color: var(--sd6-gold-soft);
+  flex: 0 0 6rem;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .item-empty {
+  color: var(--sd6-mist);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.stellaire-d6.actor .item-add-row {
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.stellaire-d6.actor .item-add-row select {
+  flex: 1;
+  min-width: 0;
+}
+
+.stellaire-d6.actor .item-add-row .item-add {
+  flex: 0 0 25%;
+  margin-top: 0;
+  max-width: 25%;
+  padding: 0.3rem;
+  width: 25%;
+}
+
+/* --- Pied de fiche --- */
+.stellaire-d6.actor .sheet-footer-runes {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.15rem 0 0.1rem;
+}
+
+.stellaire-d6.actor .footer-rune-line {
+  color: var(--sd6-gold-soft);
+  font-size: 0.85rem;
+  letter-spacing: 6px;
+  line-height: 1;
+  opacity: 0.75;
+  text-align: center;
+}
+
+.stellaire-d6.actor .footer-title {
+  color: var(--sd6-mist);
+  font-family: var(--sd6-font-display);
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  opacity: 0.8;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Fiche item
+   ============================================================ */
+
+.stellaire-d6.item {
+  background-color: var(--sd6-space);
+  background-image:
+    radial-gradient(ellipse 130% 55% at 50% -12%, rgba(64, 96, 220, 0.18), transparent 62%),
+    radial-gradient(1px 1px at 18% 25%, rgba(255, 255, 255, 0.7), transparent 100%),
+    radial-gradient(1px 1px at 62% 70%, rgba(255, 255, 255, 0.5), transparent 100%),
+    radial-gradient(1.5px 1.5px at 84% 22%, rgba(255, 255, 255, 0.6), transparent 100%),
+    linear-gradient(180deg, var(--sd6-space-2) 0%, var(--sd6-space) 100%);
+}
+
+.stellaire-d6.item .window-content {
+  padding: 0;
+}
+
+.stellaire-d6.item .item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.stellaire-d6.item .sheet-header {
+  align-items: center;
+  border-bottom: 2px solid var(--sd6-gold-soft);
+  display: flex;
+  gap: 0.75rem;
+  padding-bottom: 0.35rem;
+}
+
+.stellaire-d6.item .profile-img {
+  border: 1px solid var(--sd6-gold-soft);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(227, 180, 94, 0.3);
+  flex: 0 0 64px;
+  height: 64px;
+  object-fit: cover;
+  width: 64px;
+}
+
+.stellaire-d6.item .header-fields {
+  flex: 1;
+}
+
+.stellaire-d6.item .charname {
+  margin: 0;
+}
+
+.stellaire-d6.item .charname input {
+  background: transparent;
+  border: none;
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-size: 1.3rem;
+  font-weight: bold;
+  height: auto;
+  width: 100%;
+}
+
+.stellaire-d6.item .item-type-label {
+  color: var(--sd6-gold-soft);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.item .item-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.item .form-group {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.item .form-group label {
+  color: var(--sd6-mist);
+  flex: 0 0 6rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding-top: 0.2rem;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.item .form-group input,
+.stellaire-d6.item .form-group textarea {
+  flex: 1;
+}
+
+.stellaire-d6.item .form-group.description {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.stellaire-d6.item .form-group.description label {
+  flex: 0 0 auto;
+  padding-top: 0;
+}
+
+.stellaire-d6.item .form-group prose-mirror {
+  flex: 1;
+  width: 100%;
+}
+
+.stellaire-d6.item .form-group input[type="checkbox"] {
+  accent-color: var(--sd6-gold);
+  flex: 0 0 auto;
+}
+
+/* ============================================================
+   Dialogue de jet
+   ============================================================ */
+
+.stellaire-d6.roll-dialog {
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(64, 96, 220, 0.15), transparent 60%),
+    linear-gradient(180deg, var(--sd6-space-2), var(--sd6-space));
+}
+
+.stellaire-d6.roll-dialog .stellaire-roll-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .roll-dialog-title {
+  color: var(--sd6-gold);
+  font-family: var(--sd6-font-display);
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.roll-dialog .roll-dialog-title::before {
+  content: "᛭ ";
+  color: var(--sd6-gold-soft);
+}
+
+.stellaire-d6.roll-dialog .roll-dialog-title::after {
+  content: " ᛭";
+  color: var(--sd6-gold-soft);
+}
+
+.stellaire-d6.roll-dialog .form-group {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .form-group label {
+  color: var(--sd6-mist);
+  flex: 0 0 9rem;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.roll-dialog .form-group select,
+.stellaire-d6.roll-dialog .form-group input[type="number"] {
+  flex: 1;
+}
+
+.stellaire-d6.roll-dialog .form-group input[type="number"] {
+  width: 4rem;
+}
+
+.stellaire-d6.roll-dialog .form-group.stress input {
+  flex: 0 0 auto;
+}
+
+.stellaire-d6.roll-dialog .stress-available {
+  color: var(--sd6-mist);
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.stellaire-d6.roll-dialog .sheet-footer {
+  border-top: 1px solid var(--sd6-line);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* ============================================================
+   Carte de jet (chat) — couleurs homogènes avec la fiche
+   ============================================================ */
+
+.sd6-roll {
+  background: var(--sd6-panel);
+  border: 1px solid var(--sd6-line);
+  border-left: 3px solid var(--sd6-gold-soft);
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  padding: 0.5rem;
+}
+
+.sd6-roll-header {
+  align-items: baseline;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sd6-roll-actor {
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.sd6-roll-skill {
+  color: var(--sd6-gold);
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.sd6-roll-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.4rem 0;
+}
+
+.sd6-tag {
+  border-radius: 3px;
+  font-size: 0.68rem;
+  letter-spacing: 1px;
+  padding: 0.1rem 0.4rem;
+  text-transform: uppercase;
+}
+
+.sd6-tag.position {
+  background: rgba(88, 199, 243, 0.14);
+  border: 1px solid rgba(88, 199, 243, 0.4);
+  color: #8fd8f7;
+}
+
+.sd6-tag.effet {
+  background: rgba(143, 124, 240, 0.14);
+  border: 1px solid rgba(143, 124, 240, 0.4);
+  color: #b5a8f5;
+}
+
+.sd6-tag.desavantage {
+  background: rgba(239, 107, 115, 0.14);
+  border: 1px solid rgba(239, 107, 115, 0.4);
+  color: #f58f95;
+}
+
+.sd6-tag.stress {
+  background: rgba(241, 139, 192, 0.14);
+  border: 1px solid rgba(241, 139, 192, 0.4);
+  color: #f3a9d0;
+}
+
+.sd6-dice {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.sd6-die {
+  align-items: center;
+  background: rgba(7, 11, 30, 0.7);
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  display: inline-flex;
+  font-family: var(--sd6-font-display);
+  font-size: 1.1rem;
+  font-weight: bold;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.sd6-die.kept {
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 8px rgba(227, 180, 94, 0.45);
+}
+
+.sd6-die.fail {
+  color: var(--sd6-fail);
+}
+
+.sd6-die.mixed {
+  color: var(--sd6-mixed);
+}
+
+.sd6-die.success {
+  color: var(--sd6-success);
+  text-shadow: 0 0 6px rgba(98, 214, 138, 0.4);
+}
+
+.sd6-die.crit {
+  color: var(--sd6-crit);
+  text-shadow: 0 0 10px rgba(255, 224, 102, 0.8);
+}
+
+.sd6-outcome {
+  border-top: 1px solid var(--sd6-line);
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+}
+
+.sd6-outcome-title {
+  font-family: var(--sd6-font-display);
+  font-size: 0.95rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.sd6-outcome-detail {
+  color: var(--sd6-mist);
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.sd6-outcome.critique .sd6-outcome-title {
+  color: var(--sd6-crit);
+  text-shadow: 0 0 8px rgba(255, 224, 102, 0.5);
+}
+
+.sd6-outcome.net .sd6-outcome-title {
+  color: var(--sd6-success);
+}
+
+.sd6-outcome.complication .sd6-outcome-title {
+  color: var(--sd6-mixed);
+}
+
+.sd6-outcome.echec .sd6-outcome-title {
+  color: var(--sd6-fail);
+}
+
+/* ============================================================
+   Chat : fiche d'item (capacités, pouvoirs & marques)
+   ============================================================ */
+
+.sd6-chat-item {
+  background: linear-gradient(180deg, var(--sd6-panel), var(--sd6-space));
+  border: 1px solid var(--sd6-line);
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+  color: var(--sd6-ice);
+  padding: 0.6rem;
+}
+
+.sd6-chat-item-header {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.sd6-chat-item-header img {
+  border: 1px solid var(--sd6-gold-soft);
+  border-radius: 50%;
+  flex: 0 0 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  width: 2.5rem;
+}
+
+.sd6-chat-item-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.sd6-chat-item-type {
+  color: var(--sd6-gold-soft);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.sd6-chat-item h3 {
+  font-family: var(--sd6-font-display);
+  font-size: 1.05rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.sd6-chat-item-description {
+  border-top: 1px dashed rgba(44, 58, 102, 0.7);
+  color: var(--sd6-mist);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+}
