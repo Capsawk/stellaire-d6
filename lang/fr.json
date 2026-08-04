@@ -11,7 +11,8 @@
       "equipement": "Équipement",
       "capacite": "Capacité",
       "pouvoir": "Pouvoir",
-      "marque": "Marque"
+      "marque": "Marque",
+      "origine": "Origine"
     }
   },
   "SD6": {
@@ -132,6 +133,23 @@
     "equipement": {
       "title": "Équipement",
       "empty": "Aucun équipement"
+    },
+    "origine": {
+      "drop": "Glissez votre Origine ici",
+      "drag": "Glissez pour déplacer l'Origine",
+      "detach": "Détacher l'origine",
+      "open": "Ouvrir la fiche de l'origine",
+      "chat": "Afficher l'origine dans le chat",
+      "empty": "Aucune origine attachée",
+      "invalid": "L'élément sélectionné n'est pas une Origine.",
+      "drop_invalid": "Une Origine ne peut pas transmettre une autre Origine.",
+      "bonus": "Bonus",
+      "malus": "Malus",
+      "items": "Objets transmis",
+      "items_drop": "Glissez des objets ici pour les transmettre",
+      "items_remove": "Retirer l'objet",
+      "items_open": "Ouvrir l'objet",
+      "items_empty": "Aucun objet transmis"
     },
     "item": {
       "title": "Inventaire",

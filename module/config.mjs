@@ -62,7 +62,10 @@ SD6.itemTypes = ["arme", "armure", "outil", "relique", "equipement"];
 // Types de capacités / pouvoirs / marques (items)
 SD6.abilitieTypes = ["capacite", "pouvoir", "marque"];
 
+// Type d'Origine (item)
+SD6.origineType = "origine";
+
 // Tous les types d'items du système
-SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes];
+SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType];
 
 export default SD6;

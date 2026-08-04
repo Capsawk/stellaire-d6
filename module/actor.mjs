@@ -86,6 +86,53 @@ export class StellaireActor extends Actor {
   }
 
   /**
+   * Attache une Origine au personnage.
+   * Copie sur l'acteur les objets transmis par l'Origine, puis enregistre
+   * la référence (UUID) de l'Origine dans `system.identite.origine`.
+   * Si une autre Origine était déjà attachée, elle est d'abord détachée.
+   * @param {string} origineUuid  UUID de l'Item de type "origine".
+   * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
+   */
+  async attachOrigine(origineUuid) {
+    const origine = await fromUuid(origineUuid);
+    if ( !origine || origine.type !== SD6.origineType ) {
+      throw new Error(game.i18n.localize("SD6.origine.invalid"));
+    }
+    const previous = this.system.identite.origine;
+    if ( previous && previous !== origineUuid ) await this.detachOrigine();
+
+    const createdIds = [];
+    for ( const uuid of origine.system.items ?? [] ) {
+      const source = await fromUuid(uuid);
+      if ( !source ) continue;
+      const data = source.toObject();
+      delete data._id;
+      delete data._stats;
+      const items = await Item.create([data], { parent: this });
+      for ( const item of items ) createdIds.push(item.id);
+    }
+
+    await this.update({
+      "system.identite.origine": origineUuid,
+      "flags.stellaire-d6.origineItems": createdIds
+    });
+    return createdIds;
+  }
+
+  /**
+   * Détache l'Origine du personnage et supprime les objets qui lui étaient liés.
+   */
+  async detachOrigine() {
+    const ids = this.getFlag("stellaire-d6", "origineItems") ?? [];
+    const toDelete = ids.filter(id => this.items.has(id));
+    if ( toDelete.length ) await this.deleteEmbeddedDocuments("Item", toDelete);
+    await this.update({
+      "system.identite.origine": "",
+      "flags.stellaire-d6.origineItems": []
+    });
+  }
+
+  /**
    * Interprète le résultat d'un jet.
    * @param {number} kept      Dé conservé.
    * @param {number} countSix  Nombre de 6 dans le pool.

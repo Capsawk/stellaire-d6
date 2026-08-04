@@ -12,14 +12,14 @@ Objectif : Rajouter un Item de type Origine afin d'automatiser l'ajout de capaci
 
 ## Fonctionnalités
 
-- [ ] Création du type d'Item "Origine"
-- [ ] Ajout des champs nécessaires à une Origine
-- [ ] Intégration des Origines dans la fiche personnage
-- [ ] Automatisation de l'ajout des capacités liées à une Origine
-- [ ] Gestion de la suppression ou du remplacement d'une Origine
-- [ ] Mise à jour automatique des données du personnage lors des modifications
+- [x] Création du type d'Item "Origine"
+- [x] Ajout des champs nécessaires à une Origine
+- [x] Intégration des Origines dans la fiche personnage
+- [x] Automatisation de l'ajout des capacités liées à une Origine
+- [x] Gestion de la suppression ou du remplacement d'une Origine
+- [x] Mise à jour automatique des données du personnage lors des modifications
 - [ ] Ajout d'exemples d'Origines pour tests
-- [ ] Vérification de compatibilité avec les autres éléments du système
+- [x] Vérification de compatibilité avec les autres éléments du système
 - [ ] Création du compendium des Origines
 
 ---

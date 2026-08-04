@@ -1,4 +1,4 @@
-const { SchemaField, StringField, NumberField, BooleanField, HTMLField } = foundry.data.fields;
+const { SchemaField, StringField, NumberField, BooleanField, HTMLField, ArrayField } = foundry.data.fields;
 
 /**
  * Champs communs à tous les items + champs spécifiques.
@@ -64,5 +64,16 @@ export class PouvoirModel extends foundry.abstract.TypeDataModel {
 export class MarqueModel extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return itemFields();
+  }
+}
+
+export class OrigineModel extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField({ label: "SD6.item.description" }),
+      bonus: new HTMLField({ label: "SD6.origine.bonus" }),
+      malus: new HTMLField({ label: "SD6.origine.malus" }),
+      items: new ArrayField(new StringField({ label: "SD6.origine.items" }))
+    };
   }
 }

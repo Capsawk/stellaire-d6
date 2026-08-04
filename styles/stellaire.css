@@ -396,6 +396,65 @@
   flex: 1;
 }
 
+/* --- Origine (fiche personnage) --- */
+.stellaire-d6.actor .identite-grid .form-group.origine {
+  grid-column: 1 / -1;
+}
+
+.stellaire-d6.actor .origine-attached {
+  align-items: center;
+  flex: 1;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.stellaire-d6.actor .origine-drop {
+  align-items: center;
+  border: 1px dashed var(--sd6-line-bright);
+  border-radius: 4px;
+  color: var(--sd6-mist);
+  display: flex;
+  flex: 1;
+  font-size: 0.8rem;
+  font-style: italic;
+  gap: 0.4rem;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.35rem;
+}
+
+.stellaire-d6.actor .sheet-origine {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.stellaire-d6.actor .origine-block {
+  background: rgba(8, 12, 28, 0.5);
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  padding: 0.4rem;
+}
+
+.stellaire-d6.actor .origine-block h3 {
+  color: var(--sd6-gold-soft);
+  font-family: var(--sd6-font-display);
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  margin: 0 0 0.25rem;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .origine-block.bonus h3::before { content: "ᚢ "; }
+.stellaire-d6.actor .origine-block.malus h3::before { content: "ᛁ "; }
+.stellaire-d6.actor .origine-block.items h3::before { content: "ᚷ "; }
+
+.stellaire-d6.actor .origine-html {
+  color: var(--sd6-ice);
+  font-size: 0.85rem;
+}
+
 /* --- Biographie --- */
 .stellaire-d6.actor .sheet-biographie {
   gap: 0.75rem;
@@ -866,6 +925,99 @@
   flex: 0 0 auto;
 }
 
+/* --- Fiche item : objets transmis d'une Origine --- */
+.stellaire-d6.item .form-group.origine-items {
+  align-items: flex-start;
+}
+
+.stellaire-d6.item .origine-items-editor {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.stellaire-d6.item .origine-items-editor .item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.item .origine-items-editor .item {
+  align-items: center;
+  border-bottom: 1px dashed rgba(44, 58, 102, 0.5);
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.item .origine-items-editor .item-img {
+  border: 1px solid var(--sd6-line);
+  border-radius: 50%;
+  flex: 0 0 2rem;
+  height: 2rem;
+  object-fit: cover;
+  width: 2rem;
+}
+
+.stellaire-d6.item .origine-items-editor .item-name {
+  color: var(--sd6-ice);
+  flex: 1;
+  font-family: var(--sd6-font-display);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.stellaire-d6.item .origine-items-editor .item-type {
+  color: var(--sd6-gold-soft);
+  flex: 0 0 6rem;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.item .origine-items-editor .item-edit,
+.stellaire-d6.item .origine-items-editor .item-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.item .origine-items-editor .item-edit:hover {
+  color: var(--sd6-ice);
+  text-shadow: 0 0 8px rgba(88, 199, 243, 0.7);
+}
+
+.stellaire-d6.item .origine-items-editor .item-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgba(239, 107, 115, 0.7);
+}
+
+.stellaire-d6.item .origine-drop-hint {
+  align-items: center;
+  border: 1px dashed var(--sd6-line-bright);
+  border-radius: 4px;
+  color: var(--sd6-mist);
+  display: flex;
+  font-size: 0.75rem;
+  font-style: italic;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 0.3rem;
+}
+
 /* ============================================================
    Dialogue de jet
    ============================================================ */
@@ -1149,4 +1301,24 @@
   font-size: 0.85rem;
   margin-top: 0.5rem;
   padding-top: 0.4rem;
+}
+
+/* --- Chat : carte d'Origine --- */
+.sd6-chat-origine-block {
+  border-top: 1px dashed rgba(44, 58, 102, 0.7);
+  margin-top: 0.4rem;
+  padding-top: 0.35rem;
+}
+
+.sd6-chat-origine-block h4 {
+  color: var(--sd6-gold-soft);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  margin: 0 0 0.2rem;
+  text-transform: uppercase;
+}
+
+.sd6-chat-origine-text {
+  color: var(--sd6-mist);
+  font-size: 0.85rem;
 }
