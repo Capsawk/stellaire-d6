@@ -136,27 +136,8 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
         context.origine = {
           uuid: origineUuid,
           name: origineItem.name,
-          img: origineItem.img,
-          bonusEnriched: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
-            origineItem.system.bonus ?? "",
-            { secrets: this.document.isOwner, documents: true }
-          ),
-          malusEnriched: await foundry.applications.ux.TextEditor.implementation.enrichHTML(
-            origineItem.system.malus ?? "",
-            { secrets: this.document.isOwner, documents: true }
-          ),
-          items: []
+          img: origineItem.img
         };
-        for ( const uuid of origineItem.system.items ?? [] ) {
-          const linked = await fromUuid(uuid);
-          if ( linked ) {
-            context.origine.items.push({
-              name: linked.name,
-              img: linked.img,
-              typeLabel: game.i18n.localize(`TYPES.Item.${linked.type}`)
-            });
-          }
-        }
       }
     }
 

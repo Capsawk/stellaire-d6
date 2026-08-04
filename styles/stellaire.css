@@ -397,10 +397,6 @@
 }
 
 /* --- Origine (fiche personnage) --- */
-.stellaire-d6.actor .identite-grid .form-group.origine {
-  grid-column: 1 / -1;
-}
-
 .stellaire-d6.actor .origine-attached {
   align-items: center;
   flex: 1;
@@ -423,36 +419,22 @@
   padding: 0.35rem;
 }
 
-.stellaire-d6.actor .sheet-origine {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 0.35rem;
-}
-
-.stellaire-d6.actor .origine-block {
-  background: rgba(8, 12, 28, 0.5);
+.stellaire-d6.actor .form-group.origine.locked .origine-attached {
+  background: rgba(7, 11, 30, 0.65);
   border: 1px solid var(--sd6-line);
-  border-radius: 4px;
-  padding: 0.4rem;
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
 }
 
-.stellaire-d6.actor .origine-block h3 {
-  color: var(--sd6-gold-soft);
-  font-family: var(--sd6-font-display);
-  font-size: 0.72rem;
-  letter-spacing: 2px;
-  margin: 0 0 0.25rem;
-  text-transform: uppercase;
-}
-
-.stellaire-d6.actor .origine-block.bonus h3::before { content: "ᚢ "; }
-.stellaire-d6.actor .origine-block.malus h3::before { content: "ᛁ "; }
-.stellaire-d6.actor .origine-block.items h3::before { content: "ᚷ "; }
-
-.stellaire-d6.actor .origine-html {
-  color: var(--sd6-ice);
-  font-size: 0.85rem;
+.stellaire-d6.actor .form-group.origine.locked .item-empty {
+  align-items: center;
+  background: rgba(7, 11, 30, 0.65);
+  border: 1px solid var(--sd6-line);
+  border-radius: 3px;
+  display: flex;
+  flex: 1;
+  min-height: 2rem;
+  padding: 0.1rem 0.4rem;
 }
 
 /* --- Biographie --- */
@@ -1288,11 +1270,16 @@
 }
 
 .sd6-chat-item h3 {
+  color: var(--sd6-ice);
   font-family: var(--sd6-font-display);
   font-size: 1.05rem;
   font-weight: bold;
   letter-spacing: 1px;
   margin: 0;
+}
+
+#chat-log .message-content .sd6-chat-item h3 {
+  color: var(--sd6-ice);
 }
 
 .sd6-chat-item-description {

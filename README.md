@@ -1,5 +1,5 @@
 ![Foundry VTT](https://img.shields.io/badge/Foundry%20VTT-v14-151515?logo=foundryvirtualtabletop)
-![Version](https://img.shields.io/badge/Version-0.1.0-ffd700)
+![Version](https://img.shields.io/badge/Version-0.1.1-ffd700)
 ![Langue](https://img.shields.io/badge/Langue-Fran%C3%A7ais-4a90d9)
 ![Statut](https://img.shields.io/badge/Statut-D%C3%A9veloppement-orange)
 

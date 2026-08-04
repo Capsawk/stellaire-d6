@@ -42,7 +42,7 @@
       <section class="sheet-identite">
         <h2>{{localize "SD6.identite.title"}}</h2>
         <div class="identite-grid">
-          <div class="form-group origine">
+          <div class="form-group origine{{#if locked}} locked{{/if}}">
             <label>{{localize "SD6.identite.origine"}}</label>
             {{#if origine}}
             <div class="origine-attached flexrow draggable" data-uuid="{{origine.uuid}}" title="{{localize 'SD6.origine.drag'}}">
@@ -71,48 +71,18 @@
             {{/if}}
           </div>
           <div class="form-group">
-            <label>{{localize "SD6.identite.serment"}}</label>
-            <input type="text" name="system.identite.serment" value="{{system.identite.serment}}"/>
-          </div>
-          <div class="form-group">
             <label>{{localize "SD6.identite.role"}}</label>
             <input type="text" name="system.identite.role" value="{{system.identite.role}}"/>
+          </div>
+          <div class="form-group">
+            <label>{{localize "SD6.identite.serment"}}</label>
+            <input type="text" name="system.identite.serment" value="{{system.identite.serment}}"/>
           </div>
           <div class="form-group">
             <label>{{localize "SD6.identite.niveau"}}</label>
             <input type="number" name="system.identite.niveau" value="{{system.identite.niveau}}" min="1" max="5" step="1" data-dtype="Number"/>
           </div>
         </div>
-        {{#if origine}}
-        <div class="sheet-origine">
-          {{#if origine.bonusEnriched}}
-          <div class="origine-block bonus">
-            <h3>{{localize "SD6.origine.bonus"}}</h3>
-            <div class="origine-html">{{{origine.bonusEnriched}}}</div>
-          </div>
-          {{/if}}
-          {{#if origine.malusEnriched}}
-          <div class="origine-block malus">
-            <h3>{{localize "SD6.origine.malus"}}</h3>
-            <div class="origine-html">{{{origine.malusEnriched}}}</div>
-          </div>
-          {{/if}}
-          {{#if origine.items.length}}
-          <div class="origine-block items">
-            <h3>{{localize "SD6.origine.items"}}</h3>
-            <ol class="item-list">
-              {{#each origine.items as |entry|}}
-              <li class="item flexrow">
-                <img class="item-img" src="{{entry.img}}" title="{{entry.name}}"/>
-                <span class="item-name">{{entry.name}}</span>
-                <span class="item-type">{{entry.typeLabel}}</span>
-              </li>
-              {{/each}}
-            </ol>
-          </div>
-          {{/if}}
-        </div>
-        {{/if}}
       </section>
 
       {{!-- Compétences --}}
