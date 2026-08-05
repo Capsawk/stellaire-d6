@@ -396,15 +396,17 @@
   flex: 1;
 }
 
-/* --- Origine (fiche personnage) --- */
-.stellaire-d6.actor .origine-attached {
+/* --- Origine & Rôle (fiche personnage) --- */
+.stellaire-d6.actor .origine-attached,
+.stellaire-d6.actor .role-attached {
   align-items: center;
   flex: 1;
   gap: 0.4rem;
   min-width: 0;
 }
 
-.stellaire-d6.actor .origine-drop {
+.stellaire-d6.actor .origine-drop,
+.stellaire-d6.actor .role-drop {
   align-items: center;
   border: 1px dashed var(--sd6-line-bright);
   border-radius: 4px;
@@ -419,14 +421,16 @@
   padding: 0.35rem;
 }
 
-.stellaire-d6.actor .form-group.origine.locked .origine-attached {
+.stellaire-d6.actor .form-group.origine.locked .origine-attached,
+.stellaire-d6.actor .form-group.role.locked .role-attached {
   background: rgba(7, 11, 30, 0.65);
   border: 1px solid var(--sd6-line);
   border-radius: 3px;
   padding: 0.1rem 0.4rem;
 }
 
-.stellaire-d6.actor .form-group.origine.locked .item-empty {
+.stellaire-d6.actor .form-group.origine.locked .item-empty,
+.stellaire-d6.actor .form-group.role.locked .item-empty {
   align-items: center;
   background: rgba(7, 11, 30, 0.65);
   border: 1px solid var(--sd6-line);
@@ -907,7 +911,7 @@
   flex: 0 0 auto;
 }
 
-/* --- Fiche item : objets transmis d'une Origine --- */
+/* --- Fiche item : objets transmis d'une Origine ou d'un Rôle --- */
 .stellaire-d6.item .form-group.origine-items {
   align-items: flex-start;
 }

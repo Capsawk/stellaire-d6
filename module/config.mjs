@@ -65,7 +65,10 @@ SD6.abilitieTypes = ["capacite", "pouvoir", "marque"];
 // Type d'Origine (item)
 SD6.origineType = "origine";
 
+// Type de Rôle (item)
+SD6.roleType = "role";
+
 // Tous les types d'items du système
-SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType];
+SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType, SD6.roleType];
 
 export default SD6;

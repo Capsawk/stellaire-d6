@@ -29,15 +29,15 @@ Objectif : Ajouter la gestion des Rôles sous forme d'Item afin de permettre l'a
 
 ## Fonctionnalités
 
-- [ ] Création du type d'Item "Rôle"
-- [ ] Ajout des champs nécessaires à un Rôle
-- [ ] Intégration des Rôles dans la fiche personnage
-- [ ] Automatisation de l'ajout des compétences liées à un Rôle
-- [ ] Automatisation de l'ajout des capacités ou avantages liés à un Rôle
-- [ ] Gestion de la suppression ou du remplacement d'un Rôle
-- [ ] Mise à jour automatique des données du personnage lors des modifications
+- [x] Création du type d'Item "Rôle"
+- [x] Ajout des champs nécessaires à un Rôle
+- [x] Intégration des Rôles dans la fiche personnage
+- [x] Automatisation de l'ajout des compétences liées à un Rôle
+- [x] Automatisation de l'ajout des capacités ou avantages liés à un Rôle
+- [x] Gestion de la suppression ou du remplacement d'un Rôle
+- [x] Mise à jour automatique des données du personnage lors des modifications
 - [ ] Ajout de Rôles d'exemple pour tests
-- [ ] Vérification de compatibilité avec les Origines
+- [x] Vérification de compatibilité avec les Origines
 
 ---
 

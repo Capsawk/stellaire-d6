@@ -70,9 +70,33 @@
             {{/unless}}
             {{/if}}
           </div>
-          <div class="form-group">
+          <div class="form-group role{{#if locked}} locked{{/if}}">
             <label>{{localize "SD6.identite.role"}}</label>
-            <input type="text" name="system.identite.role" value="{{system.identite.role}}"/>
+            {{#if role}}
+            <div class="role-attached flexrow draggable" data-uuid="{{role.uuid}}" title="{{localize 'SD6.role.drag'}}">
+              <img class="item-img" src="{{role.img}}" title="{{role.name}}"/>
+              <span class="item-name">{{role.name}}</span>
+              <button type="button" class="item-chat" data-action="chatRole" title="{{localize 'SD6.role.chat'}}">
+                <i class="fas fa-comment"></i>
+              </button>
+              <button type="button" class="item-edit" data-action="openRole" title="{{localize 'SD6.role.open'}}">
+                <i class="fas fa-pen"></i>
+              </button>
+              {{#unless locked}}
+              <button type="button" class="item-delete" data-action="detachRole" title="{{localize 'SD6.role.detach'}}">
+                <i class="fas fa-link-slash"></i>
+              </button>
+              {{/unless}}
+            </div>
+            {{else}}
+            {{#unless locked}}
+            <div class="role-drop">
+              <i class="fas fa-link"></i> {{localize "SD6.role.drop"}}
+            </div>
+            {{else}}
+            <span class="item-empty">{{localize "SD6.role.empty"}}</span>
+            {{/unless}}
+            {{/if}}
           </div>
           <div class="form-group">
             <label>{{localize "SD6.identite.serment"}}</label>

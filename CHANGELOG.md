@@ -4,6 +4,27 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.1.2 - Ajout des Rôles via Item
+
+Date : 2026-08-05
+
+## Ajout
+
+- Création du type d'Item « Rôle ».
+- Ajout des champs nécessaires à un Rôle : description et liste d'objets transmis (compétences, capacités, avantages).
+- Intégration des Rôles dans la fiche personnage (attache, détache, remplacement).
+- Automatisation de l'ajout des objets liés à un Rôle lors de l'attachement.
+- Attachement d'un Rôle par glisser-déposer sur la fiche personnage.
+- Remplissage des objets transmis d'un Rôle par glisser-déposer d'Items sur sa fiche.
+- Gestion de la suppression ou du remplacement d'un Rôle (retrait des objets liés).
+
+## Update
+
+- La case « Rôle » de la fiche personnage référence désormais un Item de type Rôle au lieu d'un texte libre.
+- Refactorisation du code d'attachement/détachement des Items d'identité (Origine et Rôle partagent désormais une logique commune).
+
+---
+
 # Version 0.1.1 - Ajout des Origines via Item
 
 Date : 2026-08-04

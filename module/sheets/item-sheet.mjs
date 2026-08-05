@@ -13,8 +13,8 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
       closeOnSubmit: false
     },
     actions: {
-      removeOrigineItem: this._onRemoveOrigineItem,
-      openOrigineItem: this._onOpenOrigineItem
+      removeIdentiteItem: this._onRemoveIdentiteItem,
+      openIdentiteItem: this._onOpenIdentiteItem
     }
   };
 
@@ -32,6 +32,8 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
     context.showProtection = this.document.type === "armure";
     context.showEquipped = ["arme", "armure", "outil", "relique", "equipement"].includes(this.document.type);
     context.isOrigine = this.document.type === SD6.origineType;
+    context.isRole = this.document.type === SD6.roleType;
+    context.isIdentiteItem = context.isOrigine || context.isRole;
     context.system.descriptionEnriched = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.system.description ?? "",
       { secrets: this.document.isOwner, documents: true }
@@ -46,11 +48,17 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
         context.system.malus ?? "",
         { secrets: this.document.isOwner, documents: true }
       );
-      context.origineItems = [];
+    }
+
+    context.identiteItems = [];
+    if ( context.isIdentiteItem ) {
+      context.itemsLabel = game.i18n.localize(`SD6.${this.document.type}.items`);
+      context.itemsDropLabel = game.i18n.localize(`SD6.${this.document.type}.items_drop`);
+      context.itemsEmptyLabel = game.i18n.localize(`SD6.${this.document.type}.items_empty`);
       for ( const uuid of context.system.items ?? [] ) {
         const item = await fromUuid(uuid);
         if ( item ) {
-          context.origineItems.push({
+          context.identiteItems.push({
             uuid,
             name: item.name,
             img: item.img,
@@ -62,7 +70,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
     return context;
   }
 
-  static async _onRemoveOrigineItem(event, target) {
+  static async _onRemoveIdentiteItem(event, target) {
     const items = foundry.utils.duplicate(this.document.system.items ?? []);
     const index = items.indexOf(target.dataset.uuid);
     if ( index !== -1 ) items.splice(index, 1);
@@ -70,22 +78,23 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
     this.render();
   }
 
-  static async _onOpenOrigineItem(event, target) {
+  static async _onOpenIdentiteItem(event, target) {
     const item = await fromUuid(target.dataset.uuid);
     item?.sheet.render(true);
   }
 
   /**
    * Dépose d'un document sur la fiche d'un Item.
-   * Sur une fiche « Origine », un Item déposé est ajouté aux objets transmis.
+   * Sur une fiche « Origine » ou « Rôle », un Item déposé est ajouté aux
+   * objets transmis.
    * @override
    */
   async _onDropDocument(event, document) {
     const item = this.document;
-    if ( document.documentName === "Item" && item.type === SD6.origineType ) {
+    if ( document.documentName === "Item" && [SD6.origineType, SD6.roleType].includes(item.type) ) {
       if ( !this.isEditable ) return null;
-      if ( document.type === SD6.origineType || document.uuid === item.uuid ) {
-        ui.notifications.warn(game.i18n.localize("SD6.origine.drop_invalid"));
+      if ( document.type === item.type || document.uuid === item.uuid ) {
+        ui.notifications.warn(game.i18n.localize(`SD6.${item.type}.drop_invalid`));
         return null;
       }
       const items = new Set(item.system.items ?? []);

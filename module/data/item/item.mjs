@@ -67,13 +67,28 @@ export class MarqueModel extends foundry.abstract.TypeDataModel {
   }
 }
 
+/**
+ * Champs communs aux Items d'identité (Origine, Rôle...).
+ */
+function identiteFields() {
+  return {
+    description: new HTMLField({ label: "SD6.item.description" }),
+    items: new ArrayField(new StringField({ label: "SD6.origine.items" }))
+  };
+}
+
 export class OrigineModel extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return {
-      description: new HTMLField({ label: "SD6.item.description" }),
+      ...identiteFields(),
       bonus: new HTMLField({ label: "SD6.origine.bonus" }),
-      malus: new HTMLField({ label: "SD6.origine.malus" }),
-      items: new ArrayField(new StringField({ label: "SD6.origine.items" }))
+      malus: new HTMLField({ label: "SD6.origine.malus" })
     };
+  }
+}
+
+export class RoleModel extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    return identiteFields();
   }
 }

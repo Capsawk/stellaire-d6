@@ -8,7 +8,8 @@ import {
   CapaciteModel,
   PouvoirModel,
   MarqueModel,
-  OrigineModel
+  OrigineModel,
+  RoleModel
 } from './data/item/item.mjs';
 
 export const personnageConfig = {
@@ -24,5 +25,6 @@ export const itemConfig = {
   capacite: CapaciteModel,
   pouvoir: PouvoirModel,
   marque: MarqueModel,
-  origine: OrigineModel
+  origine: OrigineModel,
+  role: RoleModel
 };

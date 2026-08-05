@@ -25,30 +25,33 @@
       <label>{{localize "SD6.origine.malus"}}</label>
       <prose-mirror name="system.malus" value="{{system.malus}}" data-document-uuid="{{item.uuid}}" toggled>{{{system.malusEnriched}}}</prose-mirror>
     </div>
+    {{/if}}
+
+    {{#if isIdentiteItem}}
     <div class="form-group origine-items">
-      <label>{{localize "SD6.origine.items"}}</label>
+      <label>{{itemsLabel}}</label>
       <div class="origine-items-editor">
-        {{#if origineItems.length}}
+        {{#if identiteItems.length}}
         <ol class="item-list">
-          {{#each origineItems as |entry|}}
+          {{#each identiteItems as |entry|}}
           <li class="item flexrow">
             <img class="item-img" src="{{entry.img}}" title="{{entry.name}}"/>
             <span class="item-name">{{entry.name}}</span>
             <span class="item-type">{{entry.typeLabel}}</span>
-            <button type="button" class="item-edit" data-action="openOrigineItem" data-uuid="{{entry.uuid}}" title="{{localize 'SD6.origine.items_open'}}">
+            <button type="button" class="item-edit" data-action="openIdentiteItem" data-uuid="{{entry.uuid}}" title="{{localize 'SD6.origine.items_open'}}">
               <i class="fas fa-pen"></i>
             </button>
-            <button type="button" class="item-delete" data-action="removeOrigineItem" data-uuid="{{entry.uuid}}" title="{{localize 'SD6.origine.items_remove'}}">
+            <button type="button" class="item-delete" data-action="removeIdentiteItem" data-uuid="{{entry.uuid}}" title="{{localize 'SD6.origine.items_remove'}}">
               <i class="fas fa-trash"></i>
             </button>
           </li>
           {{/each}}
         </ol>
         {{else}}
-        <p class="item-empty">{{localize "SD6.origine.items_empty"}}</p>
+        <p class="item-empty">{{itemsEmptyLabel}}</p>
         {{/if}}
         <div class="origine-drop-hint">
-          <i class="fas fa-arrow-down"></i> {{localize "SD6.origine.items_drop"}}
+          <i class="fas fa-arrow-down"></i> {{itemsDropLabel}}
         </div>
       </div>
     </div>

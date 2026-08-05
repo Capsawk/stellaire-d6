@@ -86,50 +86,87 @@ export class StellaireActor extends Actor {
   }
 
   /**
-   * Attache une Origine au personnage.
-   * Copie sur l'acteur les objets transmis par l'Origine, puis enregistre
-   * la référence (UUID) de l'Origine dans `system.identite.origine`.
-   * Si une autre Origine était déjà attachée, elle est d'abord détachée.
-   * @param {string} origineUuid  UUID de l'Item de type "origine".
+   * Attache un Item d'identité (Origine, Rôle...) au personnage.
+   * Copie sur l'acteur les objets transmis par l'Item, puis enregistre
+   * la référence (UUID) dans `system.identite[field]`.
+   * Si un autre Item du même type était déjà attaché, il est d'abord détaché.
+   * @param {string} uuid      UUID de l'Item d'identité.
+   * @param {string} itemType  Type d'Item attendu (SD6.origineType, SD6.roleType...).
+   * @param {string} field     Clé dans system.identite.
+   * @param {string} flag      Nom du flag "stellaire-d6" stockant les ids créés.
    * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
    */
-  async attachOrigine(origineUuid) {
-    const origine = await fromUuid(origineUuid);
-    if ( !origine || origine.type !== SD6.origineType ) {
-      throw new Error(game.i18n.localize("SD6.origine.invalid"));
+  async _attachIdentite(uuid, itemType, field, flag) {
+    const item = await fromUuid(uuid);
+    if ( !item || item.type !== itemType ) {
+      throw new Error(game.i18n.localize(`SD6.${itemType}.invalid`));
     }
-    const previous = this.system.identite.origine;
-    if ( previous && previous !== origineUuid ) await this.detachOrigine();
+    const previous = this.system.identite[field];
+    if ( previous && previous !== uuid ) await this._detachIdentite(field, flag);
 
     const createdIds = [];
-    for ( const uuid of origine.system.items ?? [] ) {
-      const source = await fromUuid(uuid);
+    for ( const link of item.system.items ?? [] ) {
+      const source = await fromUuid(link);
       if ( !source ) continue;
       const data = source.toObject();
       delete data._id;
       delete data._stats;
       const items = await Item.create([data], { parent: this });
-      for ( const item of items ) createdIds.push(item.id);
+      for ( const child of items ) createdIds.push(child.id);
     }
 
     await this.update({
-      "system.identite.origine": origineUuid,
-      "flags.stellaire-d6.origineItems": createdIds
+      [`system.identite.${field}`]: uuid,
+      [`flags.stellaire-d6.${flag}`]: createdIds
     });
     return createdIds;
   }
 
   /**
-   * Détache l'Origine du personnage et supprime les objets qui lui étaient liés.
+   * Détache l'Item d'identité du personnage et supprime les objets liés.
+   * @param {string} field  Clé dans system.identite.
+   * @param {string} flag   Nom du flag "stellaire-d6" stockant les ids créés.
    */
-  async detachOrigine() {
-    const ids = this.getFlag("stellaire-d6", "origineItems") ?? [];
+  async _detachIdentite(field, flag) {
+    const ids = this.getFlag("stellaire-d6", flag) ?? [];
     const toDelete = ids.filter(id => this.items.has(id));
     if ( toDelete.length ) await this.deleteEmbeddedDocuments("Item", toDelete);
     await this.update({
-      "system.identite.origine": "",
-      "flags.stellaire-d6.origineItems": []
+      [`system.identite.${field}`]: "",
+      [`flags.stellaire-d6.${flag}`]: []
     });
+  }
+
+  /**
+   * Attache une Origine au personnage.
+   * @param {string} origineUuid  UUID de l'Item de type "origine".
+   * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
+   */
+  attachOrigine(origineUuid) {
+    return this._attachIdentite(origineUuid, SD6.origineType, "origine", "origineItems");
+  }
+
+  /**
+   * Détache l'Origine du personnage et supprime les objets qui lui étaient liés.
+   */
+  detachOrigine() {
+    return this._detachIdentite("origine", "origineItems");
+  }
+
+  /**
+   * Attache un Rôle au personnage.
+   * @param {string} roleUuid  UUID de l'Item de type "role".
+   * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
+   */
+  attachRole(roleUuid) {
+    return this._attachIdentite(roleUuid, SD6.roleType, "role", "roleItems");
+  }
+
+  /**
+   * Détache le Rôle du personnage et supprime les objets qui lui étaient liés.
+   */
+  detachRole() {
+    return this._detachIdentite("role", "roleItems");
   }
 
   /**

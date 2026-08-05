@@ -29,7 +29,10 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
       chatAbilitie: this._onChatAbilitie,
       detachOrigine: this._onDetachOrigine,
       openOrigine: this._onOpenOrigine,
-      chatOrigine: this._onChatOrigine
+      chatOrigine: this._onChatOrigine,
+      detachRole: this._onDetachRole,
+      openRole: this._onOpenRole,
+      chatRole: this._onChatRole
     }
   };
 
@@ -117,7 +120,8 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     context.itemTypes = {};
     for ( const type of SD6.itemTypes ) context.itemTypes[type] = game.i18n.localize(`TYPES.Item.${type}`);
     context.inventory = this.document.items
-      .filter(item => !SD6.abilitieTypes.includes(item.type) && item.type !== SD6.origineType)
+      .filter(item => !SD6.abilitieTypes.includes(item.type)
+        && ![SD6.origineType, SD6.roleType].includes(item.type))
       .map(item => ({
         id: item.id,
         name: item.name,
@@ -128,18 +132,8 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
         isArme: item.type === "arme"
       }));
 
-    context.origine = null;
-    const origineUuid = context.system.identite.origine ?? "";
-    if ( origineUuid ) {
-      const origineItem = await fromUuid(origineUuid);
-      if ( origineItem ) {
-        context.origine = {
-          uuid: origineUuid,
-          name: origineItem.name,
-          img: origineItem.img
-        };
-      }
-    }
+    context.origine = await this._prepareIdentiteEntry("origine");
+    context.role = await this._prepareIdentiteEntry("role");
 
     context.system.biographieEnriched = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
       context.system.biographie ?? "",
@@ -151,6 +145,19 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     );
 
     return context;
+  }
+
+  /**
+   * Prépare l'entrée d'identité (Origine, Rôle...) liée au personnage.
+   * @param {string} field  Clé dans system.identite.
+   * @returns {Promise<object|null>}  Données d'affichage ou null si aucune entrée.
+   */
+  async _prepareIdentiteEntry(field) {
+    const uuid = this.document.system.identite[field] ?? "";
+    if ( !uuid ) return null;
+    const item = await fromUuid(uuid);
+    if ( !item ) return null;
+    return { uuid, name: item.name, img: item.img };
   }
 
   static async _onToggleLock(event, target) {
@@ -266,16 +273,24 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 
   /**
    * Dépose d'un document sur la fiche personnage.
-   * Un Item de type « Origine » est attaché au personnage, les autres
-   * documents sont traités par le comportement par défaut.
+   * Un Item de type « Origine » ou « Rôle » est attaché au personnage,
+   * les autres documents sont traités par le comportement par défaut.
    * @override
    */
   async _onDropDocument(event, document) {
-    if ( document.documentName === "Item" && document.type === SD6.origineType ) {
-      if ( this.document.system.identite.origine === document.uuid ) return null;
-      await this.document.attachOrigine(document.uuid);
-      this.render();
-      return document;
+    if ( document.documentName === "Item" ) {
+      if ( document.type === SD6.origineType ) {
+        if ( this.document.system.identite.origine === document.uuid ) return null;
+        await this.document.attachOrigine(document.uuid);
+        this.render();
+        return document;
+      }
+      if ( document.type === SD6.roleType ) {
+        if ( this.document.system.identite.role === document.uuid ) return null;
+        await this.document.attachRole(document.uuid);
+        this.render();
+        return document;
+      }
     }
     return super._onDropDocument(event, document);
   }
@@ -312,6 +327,38 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
       description,
       bonus,
       malus
+    });
+    const messageData = {
+      content,
+      speaker: ChatMessage.getSpeaker({ actor: this.document }),
+      flags: { "core": { "canPopout": true } }
+    };
+    ChatMessage.applyMode(messageData, game.settings.get("core", "rollMode"));
+    await ChatMessage.create(messageData);
+  }
+
+  static async _onDetachRole(event, target) {
+    await this.document.detachRole();
+    this.render();
+  }
+
+  static async _onOpenRole(event, target) {
+    const role = await fromUuid(this.document.system.identite.role);
+    role?.sheet.render(true);
+  }
+
+  static async _onChatRole(event, target) {
+    const role = await fromUuid(this.document.system.identite.role);
+    if ( !role ) return;
+    const description = await foundry.applications.ux.TextEditor.implementation.enrichHTML(
+      role.system.description ?? "",
+      { secrets: this.document.isOwner, documents: true }
+    );
+    const content = await foundry.applications.handlebars.renderTemplate("systems/stellaire-d6/templates/chat/role.hbs", {
+      name: role.name,
+      img: role.img,
+      typeLabel: game.i18n.localize(`TYPES.Item.${role.type}`),
+      description
     });
     const messageData = {
       content,

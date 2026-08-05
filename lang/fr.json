@@ -12,7 +12,8 @@
       "capacite": "Capacité",
       "pouvoir": "Pouvoir",
       "marque": "Marque",
-      "origine": "Origine"
+      "origine": "Origine",
+      "role": "Rôle"
     }
   },
   "SD6": {
@@ -145,6 +146,21 @@
       "drop_invalid": "Une Origine ne peut pas transmettre une autre Origine.",
       "bonus": "Bonus",
       "malus": "Malus",
+      "items": "Objets transmis",
+      "items_drop": "Glissez des objets ici pour les transmettre",
+      "items_remove": "Retirer l'objet",
+      "items_open": "Ouvrir l'objet",
+      "items_empty": "Aucun objet transmis"
+    },
+    "role": {
+      "drop": "Glissez votre Rôle ici",
+      "drag": "Glissez pour déplacer le Rôle",
+      "detach": "Détacher le rôle",
+      "open": "Ouvrir la fiche du rôle",
+      "chat": "Afficher le rôle dans le chat",
+      "empty": "Aucun rôle attaché",
+      "invalid": "L'élément sélectionné n'est pas un Rôle.",
+      "drop_invalid": "Un Rôle ne peut pas transmettre un autre Rôle.",
       "items": "Objets transmis",
       "items_drop": "Glissez des objets ici pour les transmettre",
       "items_remove": "Retirer l'objet",
