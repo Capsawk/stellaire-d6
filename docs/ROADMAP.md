@@ -36,7 +36,7 @@ Objectif : Ajouter la gestion des Rôles sous forme d'Item afin de permettre l'a
 - [x] Automatisation de l'ajout des capacités ou avantages liés à un Rôle
 - [x] Gestion de la suppression ou du remplacement d'un Rôle
 - [x] Mise à jour automatique des données du personnage lors des modifications
-- [ ] Ajout de Rôles d'exemple pour tests
+- [X] Ajout de Rôles d'exemple pour tests
 - [x] Vérification de compatibilité avec les Origines
 
 ---
