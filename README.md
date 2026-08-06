@@ -9,7 +9,7 @@
 
 # Stellaire D6 - Système Foundry VTT
 
-Implémentation Foundry VTT du système **Stellaire D6**, permettant de jouer **La Campagne Stellaire** : un jeu de rôle de space opera mêlant exploration spatiale, aventure épique et mythologie nordique.
+Implémentation Foundry VTT du système **Stellaire D6**, permettant de jouer **La Croisade Stellaire** : un jeu de rôle de space opera mêlant exploration spatiale, aventure épique et mythologie nordique.
 
 Ce projet vise à fournir une expérience intégrée dans Foundry VTT avec l'automatisation des mécaniques de jeu, la gestion des personnages et les outils nécessaires à la partie.
 
@@ -54,7 +54,7 @@ Ce système Foundry VTT est une implémentation technique du système **Stellair
 
 ### Univers
 
-- **Bayross** — Créateur de **La Campagne Stellaire**
+- **Bayross** — Créateur de **La Croisade Stellaire**
 
 ## Licence
 
