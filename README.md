@@ -45,7 +45,7 @@ Il est également possible d'installer le système manuellement :
 
 ## Crédits
 
-Ce système Foundry VTT est une implémentation technique du système **Stellaire D6**, basé sur les règles allégées créées par **Elostiragne**, et utilisé pour jouer **La Campagne Stellaire**, créée par **Bayross**.
+Ce système Foundry VTT est une implémentation technique du système **Stellaire D6**, basé sur les règles allégées créées par **Elostiragne**, et utilisé pour jouer **La Croisade Stellaire**, créée par **Bayross**.
 
 ### Système de règles
 
