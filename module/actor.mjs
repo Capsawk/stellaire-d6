@@ -87,53 +87,80 @@ export class StellaireActor extends Actor {
 
   /**
    * Attache un Item d'identité (Origine, Rôle...) au personnage.
-   * Copie sur l'acteur les objets transmis par l'Item, puis enregistre
-   * la référence (UUID) dans `system.identite[field]`.
+   * L'Item d'identité et les objets transmis sont dupliqués et embarqués
+   * sur l'acteur : le propriétaire de la fiche dispose ainsi de copies
+   * qu'il peut ouvrir et modifier sans impacter les Items sources.
+   * La référence de la copie (UUID embarqué) est enregistrée dans
+   * `system.identite[field]`.
    * Si un autre Item du même type était déjà attaché, il est d'abord détaché.
-   * @param {string} uuid      UUID de l'Item d'identité.
-   * @param {string} itemType  Type d'Item attendu (SD6.origineType, SD6.roleType...).
-   * @param {string} field     Clé dans system.identite.
-   * @param {string} flag      Nom du flag "stellaire-d6" stockant les ids créés.
+   * @param {string} uuid       UUID de l'Item d'identité source.
+   * @param {string} itemType   Type d'Item attendu (SD6.origineType, SD6.roleType...).
+   * @param {string} field      Clé dans system.identite.
+   * @param {string} flag       Nom du flag "stellaire-d6" stockant les ids créés.
+   * @param {string} sourceFlag Nom du flag "stellaire-d6" stockant l'UUID source.
    * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
    */
-  async _attachIdentite(uuid, itemType, field, flag) {
+  async _attachIdentite(uuid, itemType, field, flag, sourceFlag) {
     const item = await fromUuid(uuid);
     if ( !item || item.type !== itemType ) {
       throw new Error(game.i18n.localize(`SD6.${itemType}.invalid`));
     }
-    const previous = this.system.identite[field];
-    if ( previous && previous !== uuid ) await this._detachIdentite(field, flag);
+
+    const attachedSource = this.getFlag("stellaire-d6", sourceFlag) ?? null;
+    if ( attachedSource && attachedSource === uuid ) return [];
+
+    if ( this.system.identite[field] ) await this._detachIdentite(field, flag, sourceFlag);
 
     const createdIds = [];
+
+    // Copie de l'Item d'identité lui-même, embarquée sur l'acteur.
+    const identityData = item.toObject();
+    delete identityData._id;
+    delete identityData._stats;
+    const [identity] = await Item.create([identityData], { parent: this });
+    createdIds.push(identity.id);
+
+    // Copies des objets transmis, embarquées sur l'acteur.
+    const newLinks = [];
     for ( const link of item.system.items ?? [] ) {
       const source = await fromUuid(link);
       if ( !source ) continue;
       const data = source.toObject();
       delete data._id;
       delete data._stats;
-      const items = await Item.create([data], { parent: this });
-      for ( const child of items ) createdIds.push(child.id);
+      const children = await Item.create([data], { parent: this });
+      for ( const child of children ) {
+        createdIds.push(child.id);
+        newLinks.push(child.uuid);
+      }
     }
 
+    // Les objets transmis de la copie pointent vers les copies de l'acteur.
+    await identity.update({ "system.items": newLinks });
+
     await this.update({
-      [`system.identite.${field}`]: uuid,
-      [`flags.stellaire-d6.${flag}`]: createdIds
+      [`system.identite.${field}`]: identity.uuid,
+      [`flags.stellaire-d6.${flag}`]: createdIds,
+      [`flags.stellaire-d6.${sourceFlag}`]: uuid
     });
     return createdIds;
   }
 
   /**
-   * Détache l'Item d'identité du personnage et supprime les objets liés.
-   * @param {string} field  Clé dans system.identite.
-   * @param {string} flag   Nom du flag "stellaire-d6" stockant les ids créés.
+   * Détache l'Item d'identité du personnage et supprime la copie embarquée
+   * ainsi que les objets liés.
+   * @param {string} field      Clé dans system.identite.
+   * @param {string} flag       Nom du flag "stellaire-d6" stockant les ids créés.
+   * @param {string} sourceFlag Nom du flag "stellaire-d6" stockant l'UUID source.
    */
-  async _detachIdentite(field, flag) {
+  async _detachIdentite(field, flag, sourceFlag) {
     const ids = this.getFlag("stellaire-d6", flag) ?? [];
     const toDelete = ids.filter(id => this.items.has(id));
     if ( toDelete.length ) await this.deleteEmbeddedDocuments("Item", toDelete);
     await this.update({
       [`system.identite.${field}`]: "",
-      [`flags.stellaire-d6.${flag}`]: []
+      [`flags.stellaire-d6.${flag}`]: [],
+      [`flags.stellaire-d6.${sourceFlag}`]: ""
     });
   }
 
@@ -143,14 +170,14 @@ export class StellaireActor extends Actor {
    * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
    */
   attachOrigine(origineUuid) {
-    return this._attachIdentite(origineUuid, SD6.origineType, "origine", "origineItems");
+    return this._attachIdentite(origineUuid, SD6.origineType, "origine", "origineItems", "origineSource");
   }
 
   /**
    * Détache l'Origine du personnage et supprime les objets qui lui étaient liés.
    */
   detachOrigine() {
-    return this._detachIdentite("origine", "origineItems");
+    return this._detachIdentite("origine", "origineItems", "origineSource");
   }
 
   /**
@@ -159,14 +186,14 @@ export class StellaireActor extends Actor {
    * @returns {Promise<string[]>}  Identifiants des objets créés sur l'acteur.
    */
   attachRole(roleUuid) {
-    return this._attachIdentite(roleUuid, SD6.roleType, "role", "roleItems");
+    return this._attachIdentite(roleUuid, SD6.roleType, "role", "roleItems", "roleSource");
   }
 
   /**
    * Détache le Rôle du personnage et supprime les objets qui lui étaient liés.
    */
   detachRole() {
-    return this._detachIdentite("role", "roleItems");
+    return this._detachIdentite("role", "roleItems", "roleSource");
   }
 
   /**

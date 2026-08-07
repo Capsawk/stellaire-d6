@@ -4,6 +4,19 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.1.3 - Copies des Items d'identité
+
+Date : 2026-08-07
+
+## Fix
+
+- Un Rôle ou une Origine déposé sur une fiche personnage est désormais dupliqué : une copie de l'Item est embarquée sur l'acteur, dont le propriétaire de la fiche est propriétaire.
+- Le propriétaire de la fiche peut ouvrir et modifier cette copie (description, bonus, malus, objets transmis) sans impacter l'Item source utilisé pour l'attachement.
+- Les objets transmis par le Rôle ou l'Origine sont également dupliqués sur l'acteur, et la copie de l'Item d'identité référence ces copies afin que le joueur accède à ses propres versions modifiables.
+- Le détachement d'un Rôle ou d'une Origine supprime la copie embarquée et toutes les copies des objets transmis.
+
+---
+
 # Version 0.1.2 - Ajout des Rôles via Item
 
 Date : 2026-08-05

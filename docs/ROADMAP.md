@@ -41,7 +41,24 @@ Objectif : Ajouter la gestion des Rôles sous forme d'Item afin de permettre l'a
 
 ---
 
-# Version 0.1.3 - Compendium Identité
+# Version 0.1.3 - Copies des Items d'identité
+
+Objectif : Garantir que les Items d'identité (Origines et Rôles) attachés à une fiche personnage soient des copies dont le propriétaire de la fiche peut disposer, sans impacter les Items sources.
+
+## Fonctionnalités
+
+- [x] Duplication du Rôle ou de l'Origine déposé sur la fiche personnage
+- [x] Copie embarquée sur l'acteur, propriété du joueur de la fiche
+- [x] Édition de la copie (description, bonus, malus, objets transmis) sans impact sur l'Item source
+- [x] Duplication des objets transmis par le Rôle ou l'Origine
+- [x] Référencement des copies des objets transmis par l'Item d'identité de l'acteur
+- [x] Détachement supprimant la copie et les objets transmis
+- [x] Détection du dépôt du même Item source (pas de doublon)
+- [x] Migration des fiches existantes (ancien format de référence) lors d'un nouvel attachement
+
+---
+
+# Version 0.1.4 - Compendium Identité
 
 Objectif : Regrouper les éléments d'identité (Origines et Rôles) dans des compendiums pour faciliter leur réutilisation.
 

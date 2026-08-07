@@ -280,13 +280,13 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
   async _onDropDocument(event, document) {
     if ( document.documentName === "Item" ) {
       if ( document.type === SD6.origineType ) {
-        if ( this.document.system.identite.origine === document.uuid ) return null;
+        if ( this.document.getFlag("stellaire-d6", "origineSource") === document.uuid ) return null;
         await this.document.attachOrigine(document.uuid);
         this.render();
         return document;
       }
       if ( document.type === SD6.roleType ) {
-        if ( this.document.system.identite.role === document.uuid ) return null;
+        if ( this.document.getFlag("stellaire-d6", "roleSource") === document.uuid ) return null;
         await this.document.attachRole(document.uuid);
         this.render();
         return document;
