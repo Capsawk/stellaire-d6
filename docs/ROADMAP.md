@@ -64,5 +64,17 @@ Objectif : Regrouper les éléments d'identité (Origines et Rôles) dans des co
 
 ## Fonctionnalités
 
-- [ ] Création du compendium des Origines
-- [ ] Création du compendium des Rôles
+- [x] Création du compendium des Origines
+- [x] Création du compendium des Rôles
+
+---
+
+# Version 0.1.5 - Gestion des effets Item
+
+Objectif : Mettre en place la gestion des effets pour les Items du système.
+
+## Fonctionnalités
+
+- [ ] Ajouter un onglet « Effets » sur les Items
+- [ ] Gérer les effets actifs sur la fiche personnage
+- [ ] Appliquer les effets au lancer de dés

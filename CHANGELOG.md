@@ -4,6 +4,22 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.1.4 - Compendium Identité
+
+Date : 2026-08-08
+
+## Ajout
+
+- Création du compendium des Origines.
+- Création du compendium des Rôles.
+- Déclaration des nouveaux compendiums dans le manifest du système.
+
+## Update
+
+- Passage du système en version 0.1.4.
+
+---
+
 # Version 0.1.3 - Copies des Items d'identité
 
 Date : 2026-08-07
