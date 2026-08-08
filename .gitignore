@@ -9,3 +9,5 @@ Thumbs.db
 # Fichiers runtime des compendiums LevelDB (CURRENT, MANIFEST-* et *.ldb doivent être commités)
 packs/**/LOCK
 packs/**/LOG
+packs/**/LOG.old
+packs/**/*.log
