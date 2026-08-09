@@ -179,7 +179,8 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
       changes: [{
         key: `system.effets.${skill}.${type}`,
         value: String(value),
-        mode: CONST.ACTIVE_EFFECT_CHANGE_TYPES.ADD,
+        type: "add",
+        phase: "initial",
         priority: 0
       }],
       flags: { "stellaire-d6": { skill, type } },
@@ -201,12 +202,14 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
 
   /**
    * Écoute les modifications des champs d'effet (délégation sur la fenêtre,
-   * conservée entre les rendus).
+   * conservée entre les rendus). Le binding est effectué en phase de capture
+   * afin d'isoler ces champs de la soumission automatique du formulaire
+   * (`submitOnChange`), qui ferait converger un `document.update` concurrent.
    */
   _bindEffectChanges() {
-    if ( !this._effectsBound ) {
-      this._effectsBound = true;
-      this.element.addEventListener("change", this._onEffectChange.bind(this));
+    if ( this._effectsElement !== this.element ) {
+      this._effectsElement = this.element;
+      this.element.addEventListener("change", this._onEffectChange.bind(this), { capture: true });
     }
   }
 
@@ -217,6 +220,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
   async _onEffectChange(event) {
     const target = event.target.closest("[data-effect-field]");
     if ( !target || !this.isEditable ) return;
+    event.stopPropagation();
     const effect = this.document.effects.get(target.dataset.effectId);
     if ( !effect ) return;
 
