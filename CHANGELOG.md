@@ -4,6 +4,25 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.1.5 - Gestion des effets Item
+
+Date : 2026-08-09
+
+## Ajout
+
+- Ajout d'un onglet « Effets » sur les items Armes, Armures, Outils, Reliques, Capacités, Pouvoirs, Marques, Origines et Rôles.
+- Un effet définit une compétence, un type (dés bonus ou dés malus) et une valeur (nombre de dés).
+- Les effets utilisent les ActiveEffects natifs de Foundry, transférés automatiquement au personnage qui possède l'item.
+- Pour les items à équipement, les effets ne s'appliquent que si l'item est équipé.
+- Application automatique des dés bonus/malus d'effet aux jets de compétence, sans dépasser le plafond de 4 dés.
+- Ajout dans le dialogue de jet des cases à cocher pour désactiver les dés bonus/malus d'effet avant le jet.
+
+## Update
+
+- Passage du système en version 0.1.5.
+
+---
+
 # Version 0.1.4 - Compendium Identité
 
 Date : 2026-08-08

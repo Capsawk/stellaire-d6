@@ -21,7 +21,9 @@
     "title": "Stellaire D6",
     "tabs": {
       "personnage": "Personnage",
-      "biographie": "Biographie"
+      "biographie": "Biographie",
+      "details": "Détails",
+      "effets": "Effets"
     },
     "biographie": {
       "title": "Biographie",
@@ -89,6 +91,8 @@
       "bonus": "Dés bonus",
       "malus": "Dés malus",
       "gainStress": "Gagner 1 Stress",
+      "effetBonus": "Dés bonus (effets)",
+      "effetMalus": "Dés malus (effets)",
       "desavantage": "Désavantage : 2d6, garde le pire",
       "stress": "+1d6 · Stress généré",
       "outcomes": {
@@ -134,6 +138,19 @@
     "equipement": {
       "title": "Équipement",
       "empty": "Aucun équipement"
+    },
+    "effets": {
+      "add": "Ajouter un effet",
+      "delete": "Retirer l'effet",
+      "empty": "Aucun effet",
+      "bonus": "Dés bonus",
+      "malus": "Dés malus",
+      "unknown": "Compétence inconnue",
+      "equippedHint": "Les effets ne s'appliquent au personnage que si l'item est équipé.",
+      "types": {
+        "bonus": "Bonus",
+        "malus": "Malus"
+      }
     },
     "origine": {
       "drop": "Glissez votre Origine ici",

@@ -71,4 +71,21 @@ SD6.roleType = "role";
 // Tous les types d'items du système
 SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType, SD6.roleType];
 
+// Nombre maximum de dés qu'un jet peut lancer (pool plafonné).
+SD6.maxDice = 4;
+
+// Types d'effets d'item (dés bonus / dés malus).
+SD6.effectTypes = {
+  bonus: "SD6.effets.types.bonus",
+  malus: "SD6.effets.types.malus"
+};
+
+// Types d'items disposant d'un onglet « Effets ».
+SD6.effectItemTypes = [
+  ...["arme", "armure", "outil", "relique"],
+  ...SD6.abilitieTypes,
+  SD6.origineType,
+  SD6.roleType
+];
+
 export default SD6;

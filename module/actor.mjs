@@ -6,14 +6,50 @@ export class StellaireActor extends Actor {
   }
 
   /**
+   * Calcule les dés bonus/malus fournis par les effets d'items actifs
+   * pour une compétence donnée.
+   * Un item équipable n'apporte ses effets que s'il est équipé ;
+   * les effets désactivés sont ignorés.
+   * @param {string} skillId  Identifiant de compétence.
+   * @returns {{bonus: number, malus: number, sources: object[]}}
+   */
+  getSkillEffectDice(skillId) {
+    let bonus = 0;
+    let malus = 0;
+    const sources = [];
+    for ( const item of this.items ) {
+      if ( !SD6.effectItemTypes.includes(item.type) ) continue;
+      if ( item.system.equipped !== undefined && !item.system.equipped ) continue;
+      for ( const effect of item.effects ) {
+        if ( effect.disabled ) continue;
+        const skill = effect.getFlag("stellaire-d6", "skill")
+          ?? effect.changes[0]?.key?.split(".")?.[2];
+        if ( skill !== skillId ) continue;
+        const type = effect.getFlag("stellaire-d6", "type")
+          ?? effect.changes[0]?.key?.split(".")?.[3];
+        const value = Number(effect.changes[0]?.value) || 1;
+        if ( type === "bonus" ) bonus += value;
+        else if ( type === "malus" ) malus += value;
+        else continue;
+        sources.push({ name: item.name, type, value });
+      }
+    }
+    return { bonus, malus, sources };
+  }
+
+  /**
    * Lance un jet de compétence.
    * Pool = score de compétence + dés bonus - dés malus (+1 si Stress généré).
+   * Les dés bonus/malus des effets d'items actifs sont ajoutés automatiquement.
+   * Le pool est plafonné à SD6.maxDice dés.
    * Score résultant <= 0 : 2d6 en gardant le pire (désavantage).
    * Sinon : autant de d6 que le pool, en gardant le meilleur.
    * @param {string} skillId   Identifiant de compétence (clé de SD6.skills).
    * @param {object} [options]
    * @param {number} [options.bonusDice=0]
    * @param {number} [options.malusDice=0]
+   * @param {boolean} [options.applyBonusEffects=true]  Applique les dés bonus des effets d'items.
+   * @param {boolean} [options.applyMalusEffects=true]  Applique les dés malus des effets d'items.
    * @param {boolean} [options.gainStress=false]  Génère 1 Stress pour +1d6.
    * @param {string} [options.position="risquee"]
    * @param {string} [options.effet="normal"]
@@ -23,6 +59,8 @@ export class StellaireActor extends Actor {
     const {
       bonusDice = 0,
       malusDice = 0,
+      applyBonusEffects = true,
+      applyMalusEffects = true,
       gainStress = false,
       position = "risquee",
       effet = "normal",
@@ -34,7 +72,13 @@ export class StellaireActor extends Actor {
     const skillLabel = label ?? game.i18n.localize(SD6.skills[skillId].label);
 
     const stressGained = gainStress && (this.system.rsc.stress < 6);
-    const pool = skill + bonusDice - malusDice + (stressGained ? 1 : 0);
+    const effects = this.getSkillEffectDice(skillId);
+    const pool = Math.min(
+      skill + bonusDice + (applyBonusEffects ? effects.bonus : 0)
+        - malusDice - (applyMalusEffects ? effects.malus : 0)
+        + (stressGained ? 1 : 0),
+      SD6.maxDice
+    );
     const desavantage = pool <= 0;
     const count = desavantage ? 2 : pool;
 

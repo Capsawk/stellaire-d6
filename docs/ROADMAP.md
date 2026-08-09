@@ -75,6 +75,5 @@ Objectif : Mettre en place la gestion des effets pour les Items du système.
 
 ## Fonctionnalités
 
-- [ ] Ajouter un onglet « Effets » sur les Items
-- [ ] Gérer les effets actifs sur la fiche personnage
-- [ ] Appliquer les effets au lancer de dés
+- [x] Ajouter un onglet « Effets » sur les Items
+- [x] Appliquer les effets au lancer de dés

@@ -39,6 +39,12 @@ export class RollSkillDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     for ( const [id, label] of Object.entries(SD6.effets) ) context.effets[id] = game.i18n.localize(label);
     context.stress = this.actor.system.rsc.stress;
     context.stressFull = context.stress >= 6;
+
+    const skillEffects = this.actor.getSkillEffectDice(this.skillId);
+    context.effectBonus = skillEffects.bonus;
+    context.effectMalus = skillEffects.malus;
+    context.effectBonusSources = skillEffects.sources.filter(s => s.type === "bonus");
+    context.effectMalusSources = skillEffects.sources.filter(s => s.type === "malus");
     return context;
   }
 
@@ -47,6 +53,8 @@ export class RollSkillDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     await this.actor.rollSkill(this.skillId, {
       bonusDice: Number(data.bonusDice) || 0,
       malusDice: Number(data.malusDice) || 0,
+      applyBonusEffects: Boolean(data.applyEffectBonus),
+      applyMalusEffects: Boolean(data.applyEffectMalus),
       gainStress: Boolean(data.gainStress),
       position: data.position,
       effet: data.effet

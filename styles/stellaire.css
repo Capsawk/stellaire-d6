@@ -1004,6 +1004,155 @@
   padding: 0.3rem;
 }
 
+/* --- Fiche item : onglets --- */
+.stellaire-d6.item .tabs {
+  align-items: center;
+  border-bottom: 1px solid var(--sd6-line);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.4rem 0.5rem;
+}
+
+.stellaire-d6.item .tab-item {
+  background: linear-gradient(180deg, rgba(24, 36, 80, 0.55), rgba(18, 27, 59, 0.8));
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  color: var(--sd6-mist);
+  cursor: pointer;
+  font-family: var(--sd6-font-display);
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  line-height: 1;
+  padding: 0.4rem 1rem;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.stellaire-d6.item .tab-item:hover {
+  background: linear-gradient(180deg, rgba(37, 56, 118, 0.65), rgba(24, 36, 80, 0.85));
+  border-color: var(--sd6-line-bright);
+  box-shadow: 0 0 6px rgba(66, 87, 156, 0.35);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6.item .tab-item.active {
+  background: linear-gradient(180deg, rgba(66, 52, 24, 0.4), rgba(47, 37, 18, 0.65));
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 8px rgba(227, 180, 94, 0.35), inset 0 0 6px rgba(227, 180, 94, 0.12);
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgba(227, 180, 94, 0.5);
+}
+
+.stellaire-d6.item .sheet-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.stellaire-d6.item .sheet-body > .tab {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.stellaire-d6.item .sheet-body > .tab:not(.active) {
+  display: none;
+}
+
+/* --- Fiche item : éditeur d'effets --- */
+.stellaire-d6.item .item-effects {
+  background: linear-gradient(180deg, rgba(18, 27, 59, 0.85), rgba(10, 14, 34, 0.75));
+  border: 1px solid var(--sd6-line);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.stellaire-d6.item .effect-hint {
+  color: var(--sd6-mist);
+  font-size: 0.75rem;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.stellaire-d6.item .effect-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.item .effect {
+  align-items: center;
+  border-bottom: 1px dashed rgba(44, 58, 102, 0.5);
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.item .effect:last-child {
+  border-bottom: none;
+}
+
+.stellaire-d6.item .effect select {
+  flex: 1;
+  min-width: 0;
+}
+
+.stellaire-d6.item .effect select[data-effect-field="type"] {
+  flex: 0 0 7rem;
+}
+
+.stellaire-d6.item .effect input[type="number"] {
+  flex: 0 0 3rem;
+  text-align: center;
+  width: 3rem;
+}
+
+.stellaire-d6.item .effect-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.item .effect-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgba(239, 107, 115, 0.7);
+}
+
+.stellaire-d6.item .effect-add {
+  width: 100%;
+}
+
+.stellaire-d6.item .effect-empty {
+  color: var(--sd6-mist);
+  font-size: 0.85rem;
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
 /* ============================================================
    Dialogue de jet
    ============================================================ */
@@ -1080,6 +1229,39 @@
   justify-content: flex-end;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .form-group.effect .effect-value {
+  color: var(--sd6-gold);
+  flex: 1;
+  font-family: var(--sd6-font-display);
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.stellaire-d6.roll-dialog .form-group.effect input[type="checkbox"] {
+  accent-color: var(--sd6-gold);
+  flex: 0 0 auto;
+}
+
+.stellaire-d6.roll-dialog .effect-sources {
+  border-left: 2px solid var(--sd6-line);
+  font-size: 0.78rem;
+  list-style: none;
+  margin: 0 0 0.5rem 1.5rem;
+  padding: 0.25rem 0 0 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .effect-sources li {
+  color: var(--sd6-text-dim, inherit);
+  line-height: 1.5;
+}
+
+.stellaire-d6.roll-dialog .effect-sources li i {
+  color: var(--sd6-gold);
+  font-size: 0.7rem;
+  margin-right: 0.25rem;
 }
 
 /* ============================================================
