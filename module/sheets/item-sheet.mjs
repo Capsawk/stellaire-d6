@@ -39,7 +39,6 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
     context.item = this.document;
     context.system = this.document.system;
     context.itemTypeLabel = game.i18n.localize(`TYPES.Item.${this.document.type}`);
-    context.showBonus = ["arme", "armure", "outil", "relique"].includes(this.document.type);
     context.showEffet = ["arme", "relique"].includes(this.document.type);
     context.showProtection = this.document.type === "armure";
     context.showEquipped = ["arme", "armure", "outil", "relique", "equipement"].includes(this.document.type);

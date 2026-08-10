@@ -1,4 +1,4 @@
-const { SchemaField, StringField, NumberField, BooleanField, HTMLField, ArrayField } = foundry.data.fields;
+const { StringField, BooleanField, HTMLField, ArrayField } = foundry.data.fields;
 
 /**
  * Champs communs à tous les items + champs spécifiques.
@@ -7,7 +7,6 @@ const { SchemaField, StringField, NumberField, BooleanField, HTMLField, ArrayFie
 function itemFields(extra = {}) {
   return {
     description: new HTMLField({ label: "SD6.item.description" }),
-    bonus: new NumberField({ initial: 0, min: 0, max: 2, integer: true, label: "SD6.item.bonus" }),
     equipped: new BooleanField({ initial: false, label: "SD6.item.equipped" }),
     ...extra
   };

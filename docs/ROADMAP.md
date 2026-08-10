@@ -77,4 +77,4 @@ Objectif : Mettre en place la gestion des effets pour les Items du système.
 
 - [x] Ajouter un onglet « Effets » sur les Items
 - [x] Appliquer les effets au lancer de dés
-- [ ] Nettoyer dés bonus dans onglet général des items
+- [x] Nettoyer dés bonus dans onglet général des items
