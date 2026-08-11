@@ -78,3 +78,16 @@ Objectif : Mettre en place la gestion des effets pour les Items du système.
 - [x] Ajouter un onglet « Effets » sur les Items
 - [x] Appliquer les effets au lancer de dés
 - [x] Nettoyer dés bonus dans onglet général des items
+
+---
+
+# Version 0.1.6 - Quality of Life
+
+Objectif : Améliorer l'expérience utilisateur en apportant des améliorations de confort et de finition au système.
+
+## Fonctionnalités
+
+- [ ] Ajout de la traduction anglaise
+- [ ] Modification de certains éléments visuels (ex. SVG du jeu en pause)
+- [ ] Ajout d'un compendium avec les items de base
+- [ ] Ajout d'icônes spécifiques au système
