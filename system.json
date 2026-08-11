@@ -73,8 +73,13 @@
   "languages": [
     {
       "lang": "fr",
-      "name": "Francais",
+      "name": "Français",
       "path": "lang/fr.json"
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
     }
   ],
   "socket": false,

@@ -1,0 +1,200 @@
+{
+  "TYPES": {
+    "Actor": {
+      "personnage": "Character"
+    },
+    "Item": {
+      "arme": "Weapon",
+      "armure": "Armor",
+      "outil": "Tool",
+      "relique": "Relic",
+      "equipement": "Equipment",
+      "capacite": "Ability",
+      "pouvoir": "Power",
+      "marque": "Mark",
+      "origine": "Origin",
+      "role": "Role"
+    }
+  },
+  "SD6": {
+    "name": "Name",
+    "title": "Stellaire D6",
+    "tabs": {
+      "personnage": "Character",
+      "biographie": "Biography",
+      "details": "Details",
+      "effets": "Effects"
+    },
+    "biographie": {
+      "title": "Biography",
+      "notes": "Notes"
+    },
+    "lock": {
+      "lock": "Lock sheet",
+      "unlock": "Unlock sheet"
+    },
+    "identite": {
+      "title": "Identity",
+      "origine": "Origin",
+      "serment": "Oath",
+      "role": "Role",
+      "niveau": "Level"
+    },
+    "skills": {
+      "title": "Skills",
+      "domaines": {
+        "physique": "Physical",
+        "mental": "Mental",
+        "social": "Social / mystical"
+      },
+      "combattre": "Fight",
+      "combattreAbr": "Fgt",
+      "endurer": "Endure",
+      "endurerAbr": "End",
+      "sedep": "Move",
+      "sedepAbr": "Mov",
+      "analyser": "Analyze",
+      "analyserAbr": "Ana",
+      "bricoler": "Tinker",
+      "bricolerAbr": "Tin",
+      "survivre": "Survive",
+      "survivreAbr": "Sur",
+      "convaincre": "Persuade",
+      "convaincreAbr": "Per",
+      "ruser": "Scheme",
+      "ruserAbr": "Sch",
+      "resonner": "Resonate",
+      "resonnerAbr": "Res"
+    },
+    "rsc": {
+      "stress": "Stress"
+    },
+    "xp": "XP",
+    "jets": {
+      "title": "Skill roll",
+      "skillTitle": "{skill} roll",
+      "roll": "Roll the dice",
+      "rollSkill": "Make a roll",
+      "attack": "Attack · {weapon}",
+      "position": "Position",
+      "positions": {
+        "controlee": "Controlled",
+        "risquee": "Risky",
+        "desesperee": "Desperate"
+      },
+      "effet": "Effect",
+      "effets": {
+        "limite": "Limited",
+        "normal": "Normal",
+        "puissant": "Powerful"
+      },
+      "bonus": "Bonus dice",
+      "malus": "Penalty dice",
+      "gainStress": "Gain 1 Stress",
+      "effetBonus": "Bonus dice (effects)",
+      "effetMalus": "Penalty dice (effects)",
+      "desavantage": "Disadvantage: 2d6, keep the worst",
+      "stress": "+1d6 · Stress generated",
+      "outcomes": {
+        "critique": {
+          "title": "Critical success",
+          "detail": "At least two 6s: the action succeeds brilliantly, the effect is multiplied."
+        },
+        "net": {
+          "title": "Clean success",
+          "detail": "6: the action succeeds without complication."
+        },
+        "complication": {
+          "title": "Success with complication",
+          "detail": "4-5: the action succeeds, but with a complication."
+        },
+        "echec": {
+          "title": "Failure or very costly success",
+          "detail": "1-3: failure, or success at the cost of a very heavy consequence."
+        }
+      }
+    },
+    "etats": {
+      "title": "States and injuries",
+      "add": "Add a state",
+      "delete": "Remove the state",
+      "label": "State name",
+      "empty": "No states",
+      "gravites": {
+        "leger": "Minor",
+        "serieux": "Serious",
+        "grave": "Severe"
+      }
+    },
+    "capacites": {
+      "title": "Abilities, powers & marks",
+      "label": "Name",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Remove",
+      "chat": "Show in chat",
+      "empty": "No ability, power or mark"
+    },
+    "equipement": {
+      "title": "Equipment",
+      "empty": "No equipment"
+    },
+    "effets": {
+      "add": "Add an effect",
+      "delete": "Remove the effect",
+      "empty": "No effects",
+      "bonus": "Bonus dice",
+      "malus": "Penalty dice",
+      "unknown": "Unknown skill",
+      "equippedHint": "Effects only apply to the character if the item is equipped.",
+      "types": {
+        "bonus": "Bonus",
+        "malus": "Penalty"
+      }
+    },
+    "origine": {
+      "drop": "Drag your Origin here",
+      "drag": "Drag to move the Origin",
+      "detach": "Detach the origin",
+      "open": "Open the origin sheet",
+      "chat": "Show the origin in chat",
+      "empty": "No origin attached",
+      "invalid": "The selected element is not an Origin.",
+      "drop_invalid": "An Origin cannot transmit another Origin.",
+      "bonus": "Bonus",
+      "malus": "Penalty",
+      "items": "Transmitted items",
+      "items_drop": "Drag items here to transmit them",
+      "items_remove": "Remove the item",
+      "items_open": "Open the item",
+      "items_empty": "No transmitted items"
+    },
+    "role": {
+      "drop": "Drag your Role here",
+      "drag": "Drag to move the Role",
+      "detach": "Detach the role",
+      "open": "Open the role sheet",
+      "chat": "Show the role in chat",
+      "empty": "No role attached",
+      "invalid": "The selected element is not a Role.",
+      "drop_invalid": "A Role cannot transmit another Role.",
+      "items": "Transmitted items",
+      "items_drop": "Drag items here to transmit them",
+      "items_remove": "Remove the item",
+      "items_open": "Open the item",
+      "items_empty": "No transmitted items"
+    },
+    "item": {
+      "title": "Inventory",
+      "add": "Add an item",
+      "edit": "Edit the item",
+      "delete": "Remove the item",
+      "equipped": "Equipped",
+      "description": "Description",
+      "effet": "Effect",
+      "protection": "Protection",
+      "attack": "Attack",
+      "empty": "No items"
+    }
+  }
+}
