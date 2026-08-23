@@ -92,7 +92,8 @@
   flex-direction: column;
   gap: 0.5rem;
   height: 100%;
-  overflow-y: auto;
+  min-height: 0;
+  overflow: hidden;
   padding: 0.5rem;
 }
 
@@ -154,6 +155,7 @@
 .stellaire-d6.actor .sheet-header {
   align-items: center;
   display: flex;
+  flex: 0 0 auto;
   gap: 0.75rem;
   position: relative;
   padding-bottom: 0.35rem;
@@ -302,6 +304,7 @@
   align-items: center;
   border-bottom: 1px solid var(--sd6-line);
   display: flex;
+  flex: 0 0 auto;
   gap: 0.5rem;
   justify-content: center;
   padding: 0.6rem 0.5rem 0.5rem;
@@ -345,6 +348,7 @@
   flex: 1;
   gap: 0.5rem;
   min-height: 0;
+  overflow-y: auto;
 }
 
 .stellaire-d6.actor .sheet-body > .tab {
@@ -770,6 +774,7 @@
 .stellaire-d6.actor .sheet-footer-runes {
   align-items: center;
   display: flex;
+  flex: 0 0 auto;
   flex-direction: column;
   gap: 0.15rem;
   padding: 0.15rem 0 0.1rem;
