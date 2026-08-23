@@ -4,6 +4,20 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.1.5fx - Fix clic fiche personnage
+
+Date : 2026-08-23
+
+## Fix
+
+- Correction d'un bug empêchant les clics sur la fiche personnage : le footer de la fiche bloquait les clics.
+
+## Update
+
+- Passage du système en version 0.1.5fx.
+
+---
+
 # Version 0.1.5 - Gestion des effets Item
 
 Date : 2026-08-09

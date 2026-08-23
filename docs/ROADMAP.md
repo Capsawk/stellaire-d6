@@ -81,6 +81,17 @@ Objectif : Mettre en place la gestion des effets pour les Items du système.
 
 ---
 
+# Version 0.1.5fx - Fix clic fiche personnage
+
+Objectif : Corriger le bug de clic bloqué par le footer de la fiche personnage.
+
+## Fonctionnalités
+
+- [x] Identification du footer de la fiche personnage comme source du blocage du clic
+- [x] Correction du bug empêchant les clics sur la fiche personnage
+
+---
+
 # Version 0.1.6 - Quality of Life
 
 Objectif : Améliorer l'expérience utilisateur en apportant des améliorations de confort et de finition au système.
