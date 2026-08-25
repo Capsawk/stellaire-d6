@@ -473,3 +473,41 @@
     rgb(var(--sd6-c-night-600-rgb) / 0.14) 5px 6px
   );
 }
+
+/* --- Liseré de type --- */
+/* Dix types d'objets partageaient exactement la même fiche. Le
+   liseré les distingue d'un coup d'œil, en piochant dans les
+   accents Bifrost déjà définis : aucune couleur nouvelle, une
+   affectation. */
+.stellaire-d6.item[data-item-type] {
+  border-left: 3px solid var(--sd6-line-bright);
+}
+
+.stellaire-d6.item[data-item-type="arme"] { border-left-color: var(--sd6-fail); }
+.stellaire-d6.item[data-item-type="armure"] { border-left-color: var(--sd6-c-cyan-500); }
+.stellaire-d6.item[data-item-type="outil"] { border-left-color: var(--sd6-mist); }
+.stellaire-d6.item[data-item-type="equipement"] { border-left-color: var(--sd6-mist); }
+.stellaire-d6.item[data-item-type="relique"] { border-left-color: var(--sd6-c-violet-500); }
+.stellaire-d6.item[data-item-type="capacite"] { border-left-color: var(--sd6-success); }
+.stellaire-d6.item[data-item-type="pouvoir"] { border-left-color: var(--sd6-c-magenta-500); }
+.stellaire-d6.item[data-item-type="marque"] { border-left-color: var(--sd6-c-rose-500); }
+.stellaire-d6.item[data-item-type="origine"] { border-left-color: var(--sd6-gold); }
+.stellaire-d6.item[data-item-type="role"] { border-left-color: var(--sd6-gold); }
+
+/* Reliques et marques : la lueur qui les distingue du matériel. */
+.stellaire-d6.item[data-item-type="relique"] .profile-img,
+.stellaire-d6.item[data-item-type="marque"] .profile-img {
+  animation: sd6-relic-sheet 4.5s var(--sd6-ease-in-out) infinite;
+  animation-play-state: paused;
+  border-color: rgb(var(--sd6-c-violet-500-rgb) / 0.6);
+}
+
+.stellaire-d6.item[data-item-type="relique"]:hover .profile-img,
+.stellaire-d6.item[data-item-type="marque"]:hover .profile-img {
+  animation-play-state: running;
+}
+
+@keyframes sd6-relic-sheet {
+  0%, 100% { box-shadow: 0 0 6px rgb(var(--sd6-c-violet-500-rgb) / 0.3); }
+  50% { box-shadow: 0 0 18px rgb(var(--sd6-c-violet-500-rgb) / 0.6); }
+}
