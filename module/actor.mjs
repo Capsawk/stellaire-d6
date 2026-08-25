@@ -1,6 +1,10 @@
 import SD6 from "./config.mjs";
 
 export class StellaireActor extends Actor {
+  get isPlayer() {
+    return this.hasPlayerOwner;
+  }
+
   prepareDerivedData() {
     super.prepareDerivedData();
   }
@@ -10,6 +14,10 @@ export class StellaireActor extends Actor {
    * pour une compétence donnée.
    * Un item équipable n'apporte ses effets que s'il est équipé ;
    * les effets désactivés sont ignorés.
+   *
+   * Le format des ActiveEffects attendu par cette méthode est documenté
+   * dans docs/MODULE-API.md (section « Flags des ActiveEffects »).
+   *
    * @param {string} skillId  Identifiant de compétence.
    * @returns {{bonus: number, malus: number, sources: object[]}}
    */
@@ -54,6 +62,7 @@ export class StellaireActor extends Actor {
    * @param {string} [options.position="risquee"]
    * @param {string} [options.effet="normal"]
    * @param {string} [options.label]  Libellé affiché dans le chat (défaut : nom de la compétence).
+   * @param {string} [options.weapon=null]  Nom de l'arme (ex. pour rollAttack). Exposé dans les flags.
    */
   async rollSkill(skillId, options = {}) {
     const {
@@ -64,7 +73,8 @@ export class StellaireActor extends Actor {
       gainStress = false,
       position = "risquee",
       effet = "normal",
-      label = null
+      label = null,
+      weapon = null
     } = options;
 
     const skill = this.system.skills?.[skillId];
@@ -118,7 +128,21 @@ export class StellaireActor extends Actor {
     const messageData = {
       content,
       speaker: ChatMessage.getSpeaker({ actor: this }),
-      flags: { "core": { "canPopout": true } },
+      flags: {
+        "core": { "canPopout": true },
+        "stellaire-d6": {
+          skill: skillId,
+          weapon,
+          outcome,
+          kept,
+          dice: results,
+          pool: count,
+          desavantage,
+          stressGained,
+          position,
+          effet
+        }
+      },
       rolls: [roll]
     };
     ChatMessage.applyMode(messageData, game.settings.get("core", "rollMode"));

@@ -10,7 +10,8 @@ export class StellaireItem extends Item {
   async rollAttack() {
     if ( !this.actor ) throw new Error("L'arme n'est portée par aucun acteur.");
     await this.actor.rollSkill("combattre", {
-      label: game.i18n.format("SD6.jets.attack", { weapon: this.name })
+      label: game.i18n.format("SD6.jets.attack", { weapon: this.name }),
+      weapon: this.name
     });
   }
 }
