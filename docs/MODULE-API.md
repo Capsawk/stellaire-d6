@@ -60,7 +60,11 @@ Emplacement : `effect.flags["stellaire-d6"]`
 
 ### Format des changes
 
-Le système lit également `changes[0]` comme fallback. Le format attendu :
+**Chaque `change` compte pour une entrée.** Un effet qui modifie trois compétences
+en produit trois. Lorsque les flags de l'effet sont présents, ils l'emportent sur la
+clé du `change` ; sinon la clé est décomposée pour retrouver compétence et type.
+
+Le format attendu :
 
 | Champ   | Valeur                                    | Description                          |
 |---------|-------------------------------------------|--------------------------------------|
@@ -103,6 +107,45 @@ await ActiveEffect.create([{
 ```js
 const effects = actor.getSkillEffectDice("combattre");
 // { bonus: 1, malus: 2, sources: [{ name: "Bouclier", type: "bonus", value: 1 }, ...] }
+```
+
+### Écriture assistée
+
+Reproduire le format à la main reste possible — c'est ce que montre l'exemple
+ci-dessus — mais l'acteur expose deux méthodes qui s'en chargent, et qui restent
+alignées sur le format quoi qu'il devienne.
+
+```js
+await actor.addSkillEffects(
+  [
+    { skill: "combattre", type: "bonus", value: 1 },
+    { skill: "ruser", type: "malus", value: 1 }
+  ],
+  { name: "Fureur du Bifrost", source: "mon-module" }
+);
+```
+
+| Paramètre | Description |
+|---|---|
+| `entries` | Une entrée, ou un tableau d'entrées `{ skill, type, value }`. `value` vaut 1 par défaut. |
+| `options.name` | Nom de l'item porteur créé sur l'acteur. |
+| `options.itemType` | Type de l'item porteur, `capacite` par défaut. |
+| `options.source` | Identifiant libre de l'appelant, stocké en flag pour permettre un retrait ciblé. |
+
+L'item porteur est créé équipé, donc visible et supprimable depuis la fiche comme
+n'importe quel autre effet du système.
+
+```js
+await actor.removeSkillEffects("mon-module");
+// retire tous les items d'effets posés par cette source, et retourne leurs identifiants
+```
+
+Le format lui-même est implémenté une seule fois, dans `module/skill-effects.mjs`.
+Un module qui préfère construire ses effets lui-même peut en importer les fonctions
+plutôt que recopier la structure :
+
+```js
+import { buildSkillEffectData, readSkillEffect } from "./skill-effects.mjs";
 ```
 
 ---

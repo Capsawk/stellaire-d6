@@ -1,4 +1,5 @@
 import SD6 from "./config.mjs";
+import { readSkillEffect, buildSkillEffectData, SKILL_EFFECT_TYPES } from "./skill-effects.mjs";
 
 export class StellaireActor extends Actor {
   get isPlayer() {
@@ -30,19 +31,77 @@ export class StellaireActor extends Actor {
       if ( item.system.equipped !== undefined && !item.system.equipped ) continue;
       for ( const effect of item.effects ) {
         if ( effect.disabled ) continue;
-        const skill = effect.getFlag("stellaire-d6", "skill")
-          ?? effect.changes[0]?.key?.split(".")?.[2];
-        if ( skill !== skillId ) continue;
-        const type = effect.getFlag("stellaire-d6", "type")
-          ?? effect.changes[0]?.key?.split(".")?.[3];
-        const value = Number(effect.changes[0]?.value) || 1;
-        if ( type === "bonus" ) bonus += value;
-        else if ( type === "malus" ) malus += value;
-        else continue;
-        sources.push({ name: item.name, type, value });
+        for ( const entry of readSkillEffect(effect) ) {
+          if ( entry.skill !== skillId ) continue;
+          if ( entry.type === "bonus" ) bonus += entry.value;
+          else malus += entry.value;
+          sources.push({ name: item.name, type: entry.type, value: entry.value });
+        }
       }
     }
     return { bonus, malus, sources };
+  }
+
+  /**
+   * Applique des dés bonus/malus de compétence au personnage.
+   *
+   * Les effets sont portés par un item équipé créé pour l'occasion : ils
+   * restent ainsi visibles et supprimables depuis la fiche, comme n'importe
+   * quel autre effet du système. Destiné aux modules tiers, pour leur éviter
+   * de reproduire à la main le format lu par getSkillEffectDice().
+   *
+   * @param {Array<{skill: string, type: string, value?: number}>|object} entries
+   *   Une entrée, ou un tableau d'entrées. `type` vaut "bonus" ou "malus",
+   *   `value` est le nombre de dés (1 par défaut).
+   * @param {object} [options]
+   * @param {string} [options.name]  Nom de l'item porteur.
+   * @param {string} [options.itemType="capacite"]  Type de l'item porteur.
+   * @param {string} [options.source]  Identifiant libre de l'appelant, stocké en
+   *   flag pour permettre un retrait ciblé via removeSkillEffects().
+   * @returns {Promise<Item>}  L'item porteur créé.
+   *
+   * @example
+   * await actor.addSkillEffects(
+   *   [{ skill: "combattre", type: "bonus", value: 1 }],
+   *   { name: "Fureur", source: "mon-module" }
+   * );
+   */
+  async addSkillEffects(entries, { name, itemType = "capacite", source = null } = {}) {
+    const list = Array.isArray(entries) ? entries : [entries];
+    if ( !list.length ) throw new Error("Aucun effet à appliquer.");
+    if ( !SD6.effectItemTypes.includes(itemType) ) {
+      throw new Error(`Ce type d'item ne porte pas d'effets : ${itemType}`);
+    }
+    for ( const { skill, type } of list ) {
+      if ( !(skill in SD6.skills) ) throw new Error(`Compétence inconnue : ${skill}`);
+      if ( !SKILL_EFFECT_TYPES.includes(type) ) throw new Error(`Type d'effet inconnu : ${type}`);
+    }
+
+    const [item] = await Item.create([{
+      name: name ?? game.i18n.localize("SD6.effets.carrier"),
+      type: itemType,
+      system: { equipped: true },
+      effects: list.map(({ skill, type, value = 1 }) => ({
+        ...buildSkillEffectData(skill, type, value),
+        transfer: false,
+        disabled: false
+      })),
+      flags: { "stellaire-d6": { skillEffectSource: source } }
+    }], { parent: this });
+    return item;
+  }
+
+  /**
+   * Retire les items d'effets créés par addSkillEffects() pour une source donnée.
+   * @param {string|null} [source]  Identifiant passé à addSkillEffects().
+   * @returns {Promise<string[]>}  Identifiants des items supprimés.
+   */
+  async removeSkillEffects(source = null) {
+    const ids = this.items
+      .filter(item => item.getFlag("stellaire-d6", "skillEffectSource") === source)
+      .map(item => item.id);
+    if ( ids.length ) await this.deleteEmbeddedDocuments("Item", ids);
+    return ids;
   }
 
   /**

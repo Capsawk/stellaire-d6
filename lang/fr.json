@@ -148,6 +148,7 @@
       "malus": "Dés malus",
       "unknown": "Compétence inconnue",
       "equippedHint": "Les effets ne s'appliquent au personnage que si l'item est équipé.",
+      "carrier": "Effets appliqués",
       "types": {
         "bonus": "Bonus",
         "malus": "Malus"

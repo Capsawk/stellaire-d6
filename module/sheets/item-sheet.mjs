@@ -1,4 +1,5 @@
 import SD6 from "../config.mjs";
+import { readSkillEffectEntry, buildSkillEffectData, skillEffectName } from "../skill-effects.mjs";
 
 const { ItemSheetV2 } = foundry.applications.sheets;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -131,8 +132,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
    * @returns {string|undefined}
    */
   _effectSkill(effect) {
-    return effect.getFlag("stellaire-d6", "skill")
-      ?? effect.changes[0]?.key?.split(".")?.[2];
+    return readSkillEffectEntry(effect).skill;
   }
 
   /**
@@ -141,8 +141,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
    * @returns {string|undefined}
    */
   _effectType(effect) {
-    return effect.getFlag("stellaire-d6", "type")
-      ?? effect.changes[0]?.key?.split(".")?.[3];
+    return readSkillEffectEntry(effect).type;
   }
 
   /**
@@ -151,8 +150,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
    * @returns {number}
    */
   _effectValue(effect) {
-    const value = Number(effect.changes[0]?.value);
-    return Number.isFinite(value) ? value : 1;
+    return readSkillEffectEntry(effect).value;
   }
 
   /**
@@ -163,10 +161,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
    * @returns {string}
    */
   _effectName(skill, type, value) {
-    const sign = type === "bonus" ? "+" : "−";
-    const skillLabel = game.i18n.localize(SD6.skills[skill]?.label ?? "SD6.effets.unknown");
-    const typeLabel = game.i18n.localize(`SD6.effets.types.${type}`);
-    return `${typeLabel} ${sign}${value} · ${skillLabel}`;
+    return skillEffectName(skill, type, value);
   }
 
   /**
@@ -174,17 +169,7 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
    * à partir d'une compétence, d'un type et d'une valeur.
    */
   _effectData(skill, type, value) {
-    return {
-      changes: [{
-        key: `system.effets.${skill}.${type}`,
-        value: String(value),
-        type: "add",
-        phase: "initial",
-        priority: 0
-      }],
-      flags: { "stellaire-d6": { skill, type } },
-      name: this._effectName(skill, type, value)
-    };
+    return buildSkillEffectData(skill, type, value);
   }
 
   /** @inheritDoc */
