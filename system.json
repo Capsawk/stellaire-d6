@@ -26,7 +26,8 @@
     "styles/sheets/_item.css",
     "styles/sheets/_dialog.css",
     "styles/components/_chat-roll.css",
-    "styles/components/_chat-item.css"
+    "styles/components/_chat-item.css",
+    "styles/components/_inline-roll.css"
   ],
   "changelog": "CHANGELOG.md",
   "grid": {

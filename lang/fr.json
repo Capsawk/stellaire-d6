@@ -113,6 +113,10 @@
           "title": "Échec ou réussite très coûteuse",
           "detail": "1-3 : échec, ou réussite au prix d'une conséquence très lourde."
         }
+      },
+      "inline": {
+        "hint": "Lancer un jet de {skill}",
+        "noActor": "Sélectionnez un pion, ou faites-vous attribuer un personnage, pour lancer ce jet."
       }
     },
     "etats": {

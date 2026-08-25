@@ -12,6 +12,36 @@ export class StellaireActor extends Actor {
   }
 
   /**
+   * Données exposées aux formules et aux expressions « @… ».
+   *
+   * C'est ce que Foundry interroge pour résoudre `[[/r 1d6 + @combattre]]`
+   * dans un journal ou en chat. Sans cette méthode, aucune référence `@` ne
+   * fonctionne dans un texte.
+   *
+   * Les neuf compétences sont exposées deux fois : sous `@skills.combattre`,
+   * fidèle au schéma, et sous `@combattre`, plus court à écrire à la table.
+   *
+   * @returns {object}
+   * @inheritdoc
+   */
+  getRollData() {
+    // toObject(false) rend une copie profonde et simple : une formule qui
+    // muterait ces données ne peut pas atteindre le modèle vivant.
+    const data = this.system.toObject(false);
+
+    for ( const id of Object.keys(SD6.skills) ) data[id] = data.skills?.[id] ?? 0;
+
+    data.stress = data.rsc?.stress?.value ?? 0;
+    data.stressMax = data.rsc?.stress?.max ?? SD6.stressMax;
+    data.niveau = data.identite?.niveau ?? 1;
+    data.maxDice = maxDice();
+    data.name = this.name;
+    data.type = this.type;
+
+    return data;
+  }
+
+  /**
    * Reflète les états de la fiche sur le pion, via les effets de statut de
    * Foundry.
    *

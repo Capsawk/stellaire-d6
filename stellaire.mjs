@@ -6,6 +6,7 @@ import { CharacterActorSheet } from "./module/sheets/character-sheet.mjs";
 import { StellaireItemSheet } from "./module/sheets/item-sheet.mjs";
 import { registerSettings, applyInitiativeFormula } from "./module/settings.mjs";
 import { migrateWorldIfNeeded } from "./module/migration.mjs";
+import { registerEnrichers, activateEnricherListeners } from "./module/enrichers.mjs";
 
 const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
@@ -43,6 +44,11 @@ Hooks.once("init", () => {
       img: gravite.img
     });
   }
+
+  registerEnrichers();
 });
 
-Hooks.once("ready", () => migrateWorldIfNeeded());
+Hooks.once("ready", () => {
+  activateEnricherListeners();
+  migrateWorldIfNeeded();
+});
