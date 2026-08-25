@@ -79,3 +79,28 @@
   color: var(--sd6-mist);
   font-size: var(--sd6-fs-085);
 }
+
+/* --- Mouvement --- */
+.sd6-chat-item.sd6-animate {
+  animation: sd6-chat-item-in var(--sd6-dur-slow) var(--sd6-ease-out) both;
+}
+
+@keyframes sd6-chat-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.sd6-chat-item-header img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+.sd6-chat-item:hover .sd6-chat-item-header img {
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 12px rgb(var(--sd6-c-gold-500-rgb) / 0.35);
+  transform: scale(1.06);
+}

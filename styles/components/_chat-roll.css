@@ -147,3 +147,156 @@
 .sd6-outcome.echec .sd6-outcome-title {
   color: var(--sd6-fail);
 }
+
+/* ============================================================
+   Mouvement — la séquence de jet
+   ------------------------------------------------------------
+   Tout est conditionné à la classe .sd6-animate, que la carte ne
+   porte QUE si elle vient d'être créée. Sans cette garde, chaque
+   rechargement de page rejouerait la séquence de tous les messages
+   du journal : deux cents jets, deux cents cascades de dés.
+   C'est module/motion.mjs qui pose la classe, et lui seul.
+
+   La séquence raconte la règle : les dés tombent, puis celui qui
+   compte s'embrase, puis le verdict monte. Sur N dés, un seul
+   décide — il mérite son propre temps.
+
+   Les délais viennent de deux variables posées à l'insertion, avec
+   un repli pour une pool de quatre dés si elles manquent.
+   ============================================================ */
+
+.sd6-roll.sd6-animate {
+  animation: sd6-card-in var(--sd6-dur-slow) var(--sd6-ease-out) both;
+  overflow: hidden;
+}
+
+@keyframes sd6-card-in {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Le contexte s'installe avant le jet --- */
+.sd6-roll.sd6-animate .sd6-tag {
+  animation: sd6-tag-in var(--sd6-dur-base) var(--sd6-ease-out) backwards;
+  animation-delay: calc(120ms + var(--sd6-i, 0) * 70ms);
+}
+
+@keyframes sd6-tag-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+}
+
+/* --- Les dés se posent, l'un après l'autre --- */
+.sd6-roll.sd6-animate .sd6-die {
+  animation: sd6-die-land 460ms var(--sd6-ease-land) backwards;
+  animation-delay: calc(200ms + var(--sd6-i, 0) * var(--sd6-stagger-dice));
+}
+
+@keyframes sd6-die-land {
+  0% {
+    opacity: 0;
+    transform: translateY(-22px) rotate(-25deg) scale(0.55);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(3px) rotate(4deg) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Désavantage : on garde le pire. Les dés montent au lieu de
+   tomber — la règle inversée se lit dans le mouvement. */
+.sd6-roll.sd6-animate.is-desavantage .sd6-die {
+  animation-name: sd6-die-rise;
+}
+
+@keyframes sd6-die-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) rotate(25deg) scale(0.55);
+  }
+  62% {
+    opacity: 1;
+    transform: translateY(-3px) rotate(-4deg) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Le dé gardé s'embrase, une fois les autres immobiles --- */
+/* Il arrive neutre : sa bordure dorée ne s'allume qu'après. */
+.sd6-roll.sd6-animate .sd6-die.kept {
+  animation:
+    sd6-die-land 460ms var(--sd6-ease-land) backwards,
+    sd6-die-ignite 560ms var(--sd6-ease-out) both;
+  animation-delay:
+    calc(200ms + var(--sd6-i, 0) * var(--sd6-stagger-dice)),
+    var(--sd6-ignite, 760ms);
+}
+
+.sd6-roll.sd6-animate.is-desavantage .sd6-die.kept {
+  animation-name: sd6-die-rise, sd6-die-ignite-fail;
+}
+
+@keyframes sd6-die-ignite {
+  0% {
+    border-color: var(--sd6-line);
+    box-shadow: 0 0 0 rgb(var(--sd6-c-gold-500-rgb) / 0);
+  }
+  45% {
+    border-color: var(--sd6-crit);
+    box-shadow: 0 0 22px 4px rgb(var(--sd6-c-gold-500-rgb) / 0.55);
+    transform: scale(1.14);
+  }
+  100% {
+    border-color: var(--sd6-gold);
+    box-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.45);
+    transform: none;
+  }
+}
+
+/* Le pire dé s'allume en corail : ce n'est pas une réussite. */
+@keyframes sd6-die-ignite-fail {
+  0% {
+    border-color: var(--sd6-line);
+    box-shadow: 0 0 0 rgb(var(--sd6-c-coral-500-rgb) / 0);
+  }
+  45% {
+    border-color: var(--sd6-fail);
+    box-shadow: 0 0 18px 3px rgb(var(--sd6-c-coral-500-rgb) / 0.45);
+    transform: scale(1.1);
+  }
+  100% {
+    border-color: var(--sd6-fail);
+    box-shadow: 0 0 8px rgb(var(--sd6-c-coral-500-rgb) / 0.4);
+    transform: none;
+  }
+}
+
+/* --- Le verdict arrive en dernier --- */
+.sd6-roll.sd6-animate .sd6-outcome {
+  animation: sd6-outcome-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+  animation-delay: var(--sd6-outcome-delay, 1100ms);
+}
+
+@keyframes sd6-outcome-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
