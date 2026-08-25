@@ -67,7 +67,8 @@
       "resonnerAbr": "Réso"
     },
     "rsc": {
-      "stress": "Stress"
+      "stress": "Stress",
+      "stressMax": "Stress maximum"
     },
     "xp": "XP",
     "jets": {
@@ -207,6 +208,13 @@
         "name": "Formule d'initiative",
         "hint": "Formule utilisée par le tracker de combat. Par défaut : 1d6."
       }
+    },
+    "migration": {
+      "begin": "Stellaire D6 : migration des données de {from} vers {to}. Ne fermez pas la partie.",
+      "done": "Stellaire D6 : migration terminée, {count} document(s) mis à jour.",
+      "none": "Stellaire D6 : migration terminée, aucun document à mettre à jour.",
+      "failed": "Stellaire D6 : {count} document(s) n'ont pas pu être migrés. Voir la console.",
+      "unknownVersion": "une version antérieure"
     }
   }
 }

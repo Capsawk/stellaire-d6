@@ -8,6 +8,14 @@ import SD6 from "./config.mjs";
  * exposer permet à chaque table de les ajuster sans toucher au système.
  */
 export function registerSettings() {
+  // Version de données du monde. Non exposée : c'est la migration qui l'écrit.
+  game.settings.register(SD6.id, "worldVersion", {
+    scope: "world",
+    config: false,
+    type: String,
+    default: ""
+  });
+
   game.settings.register(SD6.id, "maxDice", {
     name: "SD6.settings.maxDice.name",
     hint: "SD6.settings.maxDice.hint",

@@ -5,6 +5,7 @@ import { StellaireItem } from "./module/item.mjs";
 import { CharacterActorSheet } from "./module/sheets/character-sheet.mjs";
 import { StellaireItemSheet } from "./module/sheets/item-sheet.mjs";
 import { registerSettings, applyInitiativeFormula } from "./module/settings.mjs";
+import { migrateWorldIfNeeded } from "./module/migration.mjs";
 
 const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
@@ -33,3 +34,5 @@ Hooks.once("init", () => {
   registerSettings();
   applyInitiativeFormula(game.settings.get(SD6.id, "initiativeFormula"));
 });
+
+Hooks.once("ready", () => migrateWorldIfNeeded());

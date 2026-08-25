@@ -14,7 +14,7 @@
             <div class="stress-pips">
               {{#each stressPips}}<span class="pip{{#if this}} filled{{/if}}"></span>{{/each}}
             </div>
-            <input type="number" name="system.rsc.stress" value="{{system.rsc.stress}}" min="0" max="6" step="1" data-dtype="Number"/>
+            <input type="number" name="system.rsc.stress.value" value="{{system.rsc.stress.value}}" min="0" max="{{system.rsc.stress.max}}" step="1" data-dtype="Number"/>
             <span>/ 6</span>
           </div>
         </div>

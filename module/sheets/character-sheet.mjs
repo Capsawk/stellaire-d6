@@ -91,8 +91,8 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     context.etats = context.system.etats;
 
     const stress = context.system.rsc.stress;
-    context.stressPips = Array.from({ length: 6 }, (_, i) => i < stress);
-    context.stressFull = stress >= 6;
+    context.stressPips = Array.from({ length: stress.max }, (_, i) => i < stress.value);
+    context.stressFull = stress.value >= stress.max;
 
     context.abilitieTypes = {};
     for ( const type of SD6.abilitieTypes ) context.abilitieTypes[type] = game.i18n.localize(`TYPES.Item.${type}`);

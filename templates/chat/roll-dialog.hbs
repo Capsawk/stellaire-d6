@@ -54,7 +54,7 @@
   <div class="form-group">
     <label>{{localize "SD6.jets.gainStress"}}</label>
     <input type="checkbox" name="gainStress" {{#if stressFull}}disabled{{/if}}/>
-    <span class="stress-available">{{localize "SD6.rsc.stress"}} : {{stress}}/6</span>
+    <span class="stress-available">{{localize "SD6.rsc.stress"}} : {{stress}}/{{stressMax}}</span>
   </div>
 
   <footer class="sheet-footer">

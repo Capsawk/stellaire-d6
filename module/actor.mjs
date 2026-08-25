@@ -141,7 +141,7 @@ export class StellaireActor extends Actor {
     if ( skill === undefined ) throw new Error(`Compétence inconnue : ${skillId}`);
     const skillLabel = label ?? game.i18n.localize(SD6.skills[skillId].label);
 
-    const stressGained = gainStress && (this.system.rsc.stress < 6);
+    const stressGained = gainStress && (this.system.rsc.stress.value < this.system.rsc.stress.max);
     const effects = this.getSkillEffectDice(skillId);
     const pool = Math.min(
       skill + bonusDice + (applyBonusEffects ? effects.bonus : 0)
@@ -209,7 +209,7 @@ export class StellaireActor extends Actor {
     await ChatMessage.create(messageData);
 
     if ( stressGained ) {
-      await this.update({ "system.rsc.stress": this.system.rsc.stress + 1 });
+      await this.update({ "system.rsc.stress.value": this.system.rsc.stress.value + 1 });
     }
   }
 

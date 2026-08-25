@@ -82,6 +82,9 @@ SD6.maxDice = 4;
 // déclaration, ce qui n'a pas de sens dans un système à d6.
 SD6.defaultInitiative = "1d6";
 
+// Plafond de Stress d'un personnage.
+SD6.stressMax = 6;
+
 // Types d'effets d'item (dés bonus / dés malus).
 SD6.effectTypes = {
   bonus: "SD6.effets.types.bonus",
