@@ -120,6 +120,7 @@
       "delete": "Retirer l'état",
       "label": "Nom de l'état",
       "empty": "Aucun état",
+      "gravite": "Gravité",
       "gravites": {
         "leger": "Léger",
         "serieux": "Sérieux",
