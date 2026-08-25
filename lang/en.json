@@ -117,7 +117,8 @@
       "inline": {
         "hint": "Roll {skill}",
         "noActor": "Select a token, or have a character assigned to you, to make this roll."
-      }
+      },
+      "poolHint": "Pool: {count}d6"
     },
     "etats": {
       "title": "Conditions and injuries",
@@ -218,6 +219,17 @@
         "auto": "Automatic",
         "dark": "Dark",
         "light": "Light"
+      },
+      "animations": {
+        "worldName": "Animations (table default)",
+        "worldHint": "Highest animation level for this table. Each player may go below it, never above.",
+        "clientName": "Animations",
+        "clientHint": "Your animation level. “Table default” follows the GM setting. Your system's “reduce motion” preference overrides everything.",
+        "defaut": "Table default",
+        "spectaculaire": "Spectacular",
+        "pleine": "Full",
+        "sobre": "Subdued — no ambience",
+        "aucune": "None"
       }
     },
     "migration": {
