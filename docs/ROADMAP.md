@@ -91,3 +91,33 @@ Objectif : Rendre les informations des jets accessibles aux modules tiers via le
 - [x] Documentation API modules (`docs/MODULE-API.md`) : flags ChatMessage et ActiveEffects
 - [x] Getter `actor.isPlayer` pour distinguer joueurs et PNJ
 - [x] Nettoyer dés bonus dans onglet général des items
+
+---
+
+# Version 0.2.0 - Intégration Foundry
+
+Objectif : remplir les points d'accroche que Foundry propose et que le système
+laissait vides, pour qu'il se comporte comme un système mûr, sans toucher aux
+règles du jeu.
+
+## Fonctionnalités
+
+- [x] Mettre en place une migration de monde et une normalisation au chargement
+- [x] Faire du Stress une ressource affichable en barre sur le pion
+- [x] Afficher les états sur les jetons
+- [x] Exposer le plafond de pool, l'initiative et le thème en réglages
+- [x] Implémenter getRollData() sur les acteurs et les items
+- [x] Ajouter un enrichisseur de jet pour les textes
+- [x] Créer des macros au glisser-déposer
+- [x] Exposer une surface publique pour les modules tiers
+- [x] Découper la feuille de style et tokeniser le thème
+- [x] Ajouter une variante claire du thème
+- [x] Traduire le système en anglais
+- [x] Icônes par type, dossier de compendiums, préchargement, rechargement à chaud
+
+## Écarté pour l'instant
+
+- [ ] Découper `personnage.hbs` en partials — les chemins relatifs aux boucles
+      casseraient silencieusement, à faire avec Foundry ouvert
+- [ ] Couche de lavis sémantiques, pour que le thème clair n'ait plus à
+      redéfinir la palette primitive

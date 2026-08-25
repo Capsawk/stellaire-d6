@@ -165,3 +165,94 @@ Ce getter est un raccourci vers `actor.hasPlayerOwner` de Foundry VTT. Il est ca
 ```js
 const actors = game.actors.filter(a => a.isPlayer);
 // Tous les acteurs liés à un joueur
+
+---
+
+## Point d'entrée : `globalThis.stellaire`
+
+Le système expose une surface publique. Elle est plus stable que les chemins de
+fichiers, qui peuvent bouger d'une version à l'autre.
+
+```js
+stellaire.SD6            // configuration : compétences, domaines, types d'items
+stellaire.skillEffects   // lecture et écriture du format d'effets décrit plus haut
+stellaire.rollSkillMacro // ouvre le dialogue de jet pour l'acteur courant
+stellaire.rollItemMacro  // lance l'attaque d'une arme, par UUID
+stellaire.documents      // { StellaireActor, StellaireItem }
+```
+
+---
+
+## Données de jet
+
+`Actor#getRollData()` et `Item#getRollData()` alimentent les expressions `@` de
+Foundry. Les compétences sont exposées deux fois : sous leur chemin de schéma, et
+sous un alias court.
+
+```js
+const data = actor.getRollData();
+data.skills.combattre   // 3
+data.combattre          // 3, alias
+data.stress             // 2
+data.stressMax          // 6
+data.niveau             // 1
+data.maxDice            // plafond de pool en vigueur
+```
+
+Ce qui rend ceci fonctionnel dans un journal ou en chat :
+
+```
+[[/r 1d6 + @combattre]]
+```
+
+Sur un item, les données du porteur sont complétées par `@item`.
+
+---
+
+## Jets cliquables dans un texte
+
+L'enrichisseur `@Jet[compétence]{libellé}` transforme du texte en jet cliquable,
+partout où Foundry enrichit du contenu — journaux, descriptions d'items, chat.
+
+```
+Une porte scellée. @Jet[bricoler] pour l'ouvrir.
+@Jet[resonner]{Écouter le Bifrost} avant qu'il ne soit trop tard.
+```
+
+Le jet est lancé par le pion sélectionné, à défaut par le personnage attribué à
+l'utilisateur. Une compétence inconnue laisse le texte intact plutôt que de
+produire un lien mort.
+
+---
+
+## États et pions
+
+Les trois gravités d'état sont enregistrées comme effets de statut Foundry :
+
+| Gravité | Identifiant de statut |
+|---|---|
+| Léger | `sd6-etat-leger` |
+| Sérieux | `sd6-etat-serieux` |
+| Grave | `sd6-etat-grave` |
+
+```js
+const gravementBlesse = actor.statuses.has("sd6-etat-grave");
+```
+
+La synchronisation va de la fiche vers le pion. `system.etats` fait foi : poser
+ou retirer le statut directement ne modifie pas la fiche, et sera écrasé à la
+prochaine modification de celle-ci.
+
+---
+
+## Versions de données
+
+Le système migre les mondes qu'il ouvre. Deux conséquences pour un module :
+
+- `game.settings.get("stellaire-d6", "worldVersion")` indique la version de
+  données du monde. Elle peut être en retard sur `game.system.version` pendant le
+  tout premier chargement.
+- Les modèles de données normalisent les formats anciens au chargement. Un
+  document lu via l'API a donc toujours la forme courante, même s'il n'a jamais
+  été migré sur disque. C'est notamment le cas de `system.rsc.stress`, qui était
+  un nombre avant la 0.2.0 et qui est désormais `{ value, max }`.

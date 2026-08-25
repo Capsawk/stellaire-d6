@@ -4,6 +4,41 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.2.0 - Intégration Foundry
+
+Date : 2026-08-25
+
+## Ajout
+
+- Migration de monde. Le système parcourt les documents une fois par version et persiste les corrections ; en complément, les modèles de données normalisent à la volée tout document chargé, y compris ceux qu'une migration ne voit jamais — import de compendium, copie depuis un autre monde, delta de jeton non lié.
+- Le Stress devient une ressource `{ value, max }`, ce dont Foundry a besoin pour en dessiner une barre sur le pion.
+- Les états apparaissent sur les jetons, sous forme d'effets de statut Foundry. Le MJ n'a plus à ouvrir chaque fiche pour savoir qui est blessé.
+- Réglages de monde : plafond de la pool de dés, formule d'initiative, thème des fiches.
+- `getRollData()` sur les acteurs et les items : les expressions `@skills.ruser` et `@ruser` fonctionnent dans les journaux, le chat et les formules.
+- Enrichisseur `@Jet[compétence]{libellé}` : un jet cliquable s'écrit directement dans un texte.
+- Glisser une compétence ou une arme sur la barre raccourcis y crée la macro correspondante.
+- Surface publique `globalThis.stellaire`, sur laquelle s'appuient les macros et les modules tiers.
+- Deux méthodes d'écriture des effets de dés, `actor.addSkillEffects()` et `actor.removeSkillEffects()`.
+- Traduction anglaise complète.
+- Variante claire du thème, suivant au choix le système d'exploitation.
+- Icône par défaut pour chacun des dix types d'items, dossier regroupant les compendiums, préchargement des gabarits, rechargement à chaud en développement.
+
+## Update
+
+- La feuille de style unique est découpée en `tokens/`, `base/`, `sheets/` et `components/`, et le thème passe par des tokens de couleur, de rayon et de typographie. Aucun changement visuel : les 807 déclarations calculées sont identiques.
+- Le format des effets de dés est implémenté une seule fois, dans `module/skill-effects.mjs`. La fiche d'item et l'acteur partagent désormais la même implémentation, là où le format documenté dans `docs/MODULE-API.md` était écrit deux fois.
+- `SD6.gravites` porte l'identifiant de statut et l'icône de chaque gravité.
+- `docs/MODULE-API.md` documente les nouvelles surfaces destinées aux modules.
+
+## Fix
+
+- Le tracker de combat lançait `1d20`, faute de formule déclarée, dans un système qui ne lance que des d6.
+- Le Stress du pion s'affichait en valeur nue, sans jauge : `primaryTokenAttribute` pointait sur un nombre là où Foundry attend une ressource.
+- Un effet portant plusieurs `changes` ne voyait que le premier pris en compte dans le calcul des dés. Chaque `change` compte désormais.
+- Le libellé du champ « gravité » d'un état pointait sur une clé de traduction inexistante, `SD6.etats.gravite`, et s'affichait donc en brut.
+
+---
+
 # Version 0.1.5.1 - Métadonnées des jets pour modules
 
 Date : 2026-08-25
