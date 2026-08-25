@@ -1,4 +1,5 @@
 import SD6 from "./config.mjs";
+import { applyTheme } from "./theme.mjs";
 
 /**
  * Réglages de monde du système.
@@ -24,6 +25,21 @@ export function registerSettings() {
     type: Number,
     default: SD6.maxDice,
     range: { min: 1, max: 10, step: 1 }
+  });
+
+  game.settings.register(SD6.id, "sheetTheme", {
+    name: "SD6.settings.theme.name",
+    hint: "SD6.settings.theme.hint",
+    scope: "client",
+    config: true,
+    type: String,
+    choices: {
+      auto: "SD6.settings.theme.auto",
+      dark: "SD6.settings.theme.dark",
+      light: "SD6.settings.theme.light"
+    },
+    default: "auto",
+    onChange: () => applyTheme()
   });
 
   game.settings.register(SD6.id, "initiativeFormula", {
