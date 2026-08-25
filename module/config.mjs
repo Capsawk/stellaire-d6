@@ -38,11 +38,25 @@ SD6.skillGroups = [
   { id: "social", label: "SD6.skills.domaines.social", skills: ["convaincre", "ruser", "resonner"] }
 ];
 
-// État gravité
+// État gravité.
+// `status` et `img` alimentent CONFIG.statusEffects : c'est ce qui rend un état
+// visible sur le pion, et pas seulement au fond d'une fiche.
 SD6.gravites = {
-  leger: "SD6.etats.gravites.leger",
-  serieux: "SD6.etats.gravites.serieux",
-  grave: "SD6.etats.gravites.grave"
+  leger: {
+    label: "SD6.etats.gravites.leger",
+    status: "sd6-etat-leger",
+    img: "icons/svg/blood.svg"
+  },
+  serieux: {
+    label: "SD6.etats.gravites.serieux",
+    status: "sd6-etat-serieux",
+    img: "icons/svg/hazard.svg"
+  },
+  grave: {
+    label: "SD6.etats.gravites.grave",
+    status: "sd6-etat-grave",
+    img: "icons/svg/skull.svg"
+  }
 };
 
 // Position d'action

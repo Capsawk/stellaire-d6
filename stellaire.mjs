@@ -33,6 +33,16 @@ Hooks.once("init", () => {
 
   registerSettings();
   applyInitiativeFormula(game.settings.get(SD6.id, "initiativeFormula"));
+
+  // Les gravités d'état deviennent des effets de statut Foundry : elles
+  // apparaissent alors dans le HUD du pion et sur le jeton lui-même.
+  for ( const gravite of Object.values(SD6.gravites) ) {
+    CONFIG.statusEffects.push({
+      id: gravite.status,
+      name: gravite.label,
+      img: gravite.img
+    });
+  }
 });
 
 Hooks.once("ready", () => migrateWorldIfNeeded());

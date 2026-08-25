@@ -84,8 +84,8 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     }));
 
     context.gravites = {};
-    for (const [key, label] of Object.entries(SD6.gravites)) {
-      context.gravites[key] = game.i18n.localize(label);
+    for (const [key, gravite] of Object.entries(SD6.gravites)) {
+      context.gravites[key] = game.i18n.localize(gravite.label);
     }
 
     context.etats = context.system.etats;

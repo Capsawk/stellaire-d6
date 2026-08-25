@@ -12,6 +12,44 @@ export class StellaireActor extends Actor {
   }
 
   /**
+   * Reflète les états de la fiche sur le pion, via les effets de statut de
+   * Foundry.
+   *
+   * Sans cela, un état ne vit qu'au fond d'une fiche : le MJ doit ouvrir
+   * chaque personnage pour savoir qui est blessé. Une icône sur le jeton le
+   * dit à toute la table d'un coup d'œil.
+   *
+   * La synchronisation va dans un seul sens : la fiche fait foi. Retirer
+   * l'icône depuis le pion la verrait revenir à la prochaine modification,
+   * ce qui serait plus déroutant qu'utile.
+   * @returns {Promise<void>}
+   */
+  async syncEtatStatuses() {
+    const actifs = new Set((this.system.etats ?? []).map(etat => etat.gravite));
+    for ( const [gravite, config] of Object.entries(SD6.gravites) ) {
+      const voulu = actifs.has(gravite);
+      const present = this.statuses.has(config.status);
+      if ( voulu !== present ) await this.toggleStatusEffect(config.status, { active: voulu });
+    }
+  }
+
+  /**
+   * Déclenche la synchronisation quand les états changent.
+   *
+   * Seul le client à l'origine de la modification agit : sinon chaque
+   * navigateur connecté tenterait la même écriture.
+   * @inheritdoc
+   */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    if ( game.user.id !== userId ) return;
+    if ( !foundry.utils.hasProperty(changed, "system.etats") ) return;
+    this.syncEtatStatuses().catch(err => {
+      console.error(`${SD6.title} | synchronisation des états de « ${this.name} » :`, err);
+    });
+  }
+
+  /**
    * Calcule les dés bonus/malus fournis par les effets d'items actifs
    * pour une compétence donnée.
    * Un item équipable n'apporte ses effets que s'il est équipé ;
