@@ -197,6 +197,16 @@
       "protection": "Protection",
       "attack": "Attaquer",
       "empty": "Aucun objet"
+    },
+    "settings": {
+      "maxDice": {
+        "name": "Plafond de la pool",
+        "hint": "Nombre maximum de dés qu'un jet peut lancer, quels que soient les bonus."
+      },
+      "initiative": {
+        "name": "Formule d'initiative",
+        "hint": "Formule utilisée par le tracker de combat. Par défaut : 1d6."
+      }
     }
   }
 }

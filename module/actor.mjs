@@ -1,5 +1,6 @@
 import SD6 from "./config.mjs";
 import { readSkillEffect, buildSkillEffectData, SKILL_EFFECT_TYPES } from "./skill-effects.mjs";
+import { maxDice } from "./settings.mjs";
 
 export class StellaireActor extends Actor {
   get isPlayer() {
@@ -108,7 +109,7 @@ export class StellaireActor extends Actor {
    * Lance un jet de compétence.
    * Pool = score de compétence + dés bonus - dés malus (+1 si Stress généré).
    * Les dés bonus/malus des effets d'items actifs sont ajoutés automatiquement.
-   * Le pool est plafonné à SD6.maxDice dés.
+   * Le pool est plafonné par le réglage de monde « maxDice ».
    * Score résultant <= 0 : 2d6 en gardant le pire (désavantage).
    * Sinon : autant de d6 que le pool, en gardant le meilleur.
    * @param {string} skillId   Identifiant de compétence (clé de SD6.skills).
@@ -146,7 +147,7 @@ export class StellaireActor extends Actor {
       skill + bonusDice + (applyBonusEffects ? effects.bonus : 0)
         - malusDice - (applyMalusEffects ? effects.malus : 0)
         + (stressGained ? 1 : 0),
-      SD6.maxDice
+      maxDice()
     );
     const desavantage = pool <= 0;
     const count = desavantage ? 2 : pool;

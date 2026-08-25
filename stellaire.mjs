@@ -4,6 +4,7 @@ import { StellaireActor } from "./module/actor.mjs";
 import { StellaireItem } from "./module/item.mjs";
 import { CharacterActorSheet } from "./module/sheets/character-sheet.mjs";
 import { StellaireItemSheet } from "./module/sheets/item-sheet.mjs";
+import { registerSettings, applyInitiativeFormula } from "./module/settings.mjs";
 
 const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
@@ -28,4 +29,7 @@ Hooks.once("init", () => {
 
   CONFIG.Item.documentClass = StellaireItem;
   Object.assign(CONFIG.Item.dataModels, itemConfig);
+
+  registerSettings();
+  applyInitiativeFormula(game.settings.get(SD6.id, "initiativeFormula"));
 });

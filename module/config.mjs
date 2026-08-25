@@ -1,5 +1,8 @@
 const SD6 = {};
 
+// Identifiant du systeme, tel que declare dans system.json.
+SD6.id = "stellaire-d6";
+
 SD6.title = "Stellaire D6";
 // Artwork
 SD6.ascii = `
@@ -72,7 +75,12 @@ SD6.roleType = "role";
 SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType, SD6.roleType];
 
 // Nombre maximum de dés qu'un jet peut lancer (pool plafonné).
+// Valeur par défaut : le réglage de monde « maxDice » fait foi en partie.
 SD6.maxDice = 4;
+
+// Formule d'initiative par défaut. Foundry utiliserait 1d20 sans cette
+// déclaration, ce qui n'a pas de sens dans un système à d6.
+SD6.defaultInitiative = "1d6";
 
 // Types d'effets d'item (dés bonus / dés malus).
 SD6.effectTypes = {
