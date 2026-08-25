@@ -163,5 +163,11 @@ export function animateChatCard(message, html) {
   card.style.setProperty("--sd6-outcome-delay", `${last + 600}ms`);
 
   if ( message.getFlag(SD6.id, "desavantage") ) card.classList.add("is-desavantage");
+
+  // L'issue est déjà dans les flags : la feuille n'a plus qu'à la lire.
+  const outcome = message.getFlag(SD6.id, "outcome");
+  if ( outcome === "critique" ) card.classList.add("is-crit");
+  else if ( outcome === "echec" ) card.classList.add("is-echec");
+
   card.classList.add("sd6-animate");
 }
