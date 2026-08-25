@@ -1,0 +1,81 @@
+/* ============================================================
+   Chat : fiche d'item (capacités, pouvoirs & marques)
+   ============================================================ */
+
+.sd6-chat-item {
+  background: linear-gradient(180deg, var(--sd6-panel), var(--sd6-space));
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-lg);
+  box-shadow: 0 0 10px rgb(var(--sd6-c-black-rgb) / 0.35);
+  color: var(--sd6-ice);
+  padding: 0.6rem;
+}
+
+.sd6-chat-item-header {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.sd6-chat-item-header img {
+  border: 1px solid var(--sd6-gold-soft);
+  border-radius: var(--sd6-radius-round);
+  flex: 0 0 2.5rem;
+  height: 2.5rem;
+  object-fit: cover;
+  width: 2.5rem;
+}
+
+.sd6-chat-item-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.sd6-chat-item-type {
+  color: var(--sd6-gold-soft);
+  font-size: var(--sd6-fs-065);
+  letter-spacing: var(--sd6-tracking-2);
+  text-transform: uppercase;
+}
+
+.sd6-chat-item h3 {
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-105);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-1);
+  margin: 0;
+}
+
+#chat-log .message-content .sd6-chat-item h3 {
+  color: var(--sd6-ice);
+}
+
+.sd6-chat-item-description {
+  border-top: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.7);
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-085);
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+}
+
+/* --- Chat : carte d'Origine --- */
+.sd6-chat-origine-block {
+  border-top: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.7);
+  margin-top: 0.4rem;
+  padding-top: 0.35rem;
+}
+
+.sd6-chat-origine-block h4 {
+  color: var(--sd6-gold-soft);
+  font-size: var(--sd6-fs-070);
+  letter-spacing: var(--sd6-tracking-2);
+  margin: 0 0 0.2rem;
+  text-transform: uppercase;
+}
+
+.sd6-chat-origine-text {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-085);
+}

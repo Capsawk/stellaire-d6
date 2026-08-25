@@ -17,7 +17,17 @@
     "verified": "14"
   },
   "esmodules": ["stellaire.mjs"],
-  "styles": ["styles/stellaire.css"],
+  "styles": [
+    "styles/tokens/_palette.css",
+    "styles/tokens/_semantic.css",
+    "styles/base/_root.css",
+    "styles/base/_forms.css",
+    "styles/sheets/_actor.css",
+    "styles/sheets/_item.css",
+    "styles/sheets/_dialog.css",
+    "styles/components/_chat-roll.css",
+    "styles/components/_chat-item.css"
+  ],
   "changelog": "CHANGELOG.md",
   "grid": {
     "distance": 1,

@@ -1,0 +1,10 @@
+/* ============================================================
+   Base — racine du thème
+   La couleur de texte héritée par tout ce que le système affiche.
+   ============================================================ */
+
+.stellaire-d6,
+.sd6-roll,
+.sd6-chat-item {
+  color: var(--sd6-ice);
+}
