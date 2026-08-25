@@ -22,6 +22,13 @@ Date : 2026-08-25
 - Traduction anglaise complète.
 - Variante claire du thème, suivant au choix le système d'exploitation.
 - Icône par défaut pour chacun des dix types d'items, dossier regroupant les compendiums, préchargement des gabarits, rechargement à chaud en développement.
+- Une couche de mouvement : le système n'avait qu'une seule transition déclarée et aucune animation. Les survols, les focus et les changements d'état sont désormais temporisés, et les tokens de durée et de courbe vivent dans `tokens/_motion.css` au même titre que les couleurs.
+- Un jet se lit maintenant comme une scène : les dés se posent l'un après l'autre, le dé gardé s'embrase une fois les autres immobiles, le verdict monte en dernier. La réussite critique et l'échec ont chacun leur traitement, et le désavantage inverse le geste.
+- La fiche met en scène ce qui change réellement : un seul pip de Stress s'allume, les lignes supprimées se replient, les zones de dépôt d'Origine et de Rôle s'éclairent pendant un glisser, un filet glisse d'un onglet à l'autre.
+- Le dialogue de jet affiche la pool en direct, effets et plafond de monde compris, et montre barrés les dés que le plafond retire.
+- Des dés fantômes sur chaque ligne de compétence montrent au survol ce qui partira vraiment — et, quand la pool tombe à zéro, les deux dés de désavantage.
+- Réglages d'animation : le MJ fixe le plafond de sa table, chaque joueur peut descendre en dessous. La préférence système « réduire les animations » prime sur les deux.
+- Traitement holographique : équerres d'angle, bande de balayage, grain, onde runique sur les boutons d'action, liseré de type sur les dix fiches d'objet, lueur réservée aux reliques et aux marques.
 
 ## Update
 
@@ -29,6 +36,9 @@ Date : 2026-08-25
 - Le format des effets de dés est implémenté une seule fois, dans `module/skill-effects.mjs`. La fiche d'item et l'acteur partagent désormais la même implémentation, là où le format documenté dans `docs/MODULE-API.md` était écrit deux fois.
 - `SD6.gravites` porte l'identifiant de statut et l'icône de chaque gravité.
 - `docs/MODULE-API.md` documente les nouvelles surfaces destinées aux modules.
+- Le calcul de la pool sort de `rollSkill()` dans `actor.computeSkillPool()`, qui le rend consultable sans lancer les dés. Aucun comportement ne change et le flag `pool` du message de chat reçoit la même valeur qu'avant.
+- Les champs verrouillés passent d'une opacité réduite à une hachure diagonale : « grisé » se lisait comme « cassé », et la valeur redevenait difficile à lire alors qu'elle reste pertinente.
+- La transition des onglets énumère ses propriétés au lieu d'utiliser `all`, qui animait aussi le `box-shadow` à chaque survol.
 
 ## Fix
 
