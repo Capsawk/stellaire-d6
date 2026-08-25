@@ -219,6 +219,14 @@
       "none": "Stellaire D6 : migration terminée, aucun document à mettre à jour.",
       "failed": "Stellaire D6 : {count} document(s) n'ont pas pu être migrés. Voir la console.",
       "unknownVersion": "une version antérieure"
+    },
+    "macros": {
+      "skillName": "Jet de {skill}",
+      "attackName": "Attaque : {weapon}",
+      "noActor": "Sélectionnez un pion, ou faites-vous attribuer un personnage, pour lancer cette macro.",
+      "unknownSkill": "Compétence inconnue : {skill}.",
+      "notRollable": "Un item de type « {type} » n'a pas de jet associé : aucune macro créée.",
+      "itemMissing": "L'arme de cette macro n'existe plus, ou n'est portée par personne."
     }
   }
 }

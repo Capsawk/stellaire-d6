@@ -118,7 +118,7 @@
             <h3>{{group.label}}</h3>
             {{#each group.skills as |skill|}}
             <div class="skill flexrow">
-              <button type="button" class="skill-roll" data-action="rollSkill" data-skill="{{skill.id}}"
+              <button type="button" class="skill-roll draggable" data-action="rollSkill" data-skill="{{skill.id}}"
                       title="{{localize 'SD6.jets.rollSkill'}} {{skill.label}}">
                 <i class="fa-solid fa-dice-d6"></i>
                 <span class="skill-label">{{skill.label}}</span>

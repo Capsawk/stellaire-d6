@@ -260,6 +260,15 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
         uuid: target.dataset.uuid
       }));
     }
+    // Une compétence n'est pas un document : elle voyage sous un type propre au
+    // système, que le hook hotbarDrop sait reconnaître.
+    if ( target.dataset.skill ) {
+      event.dataTransfer.setData("text/plain", JSON.stringify({
+        type: "sd6.skill",
+        actorUuid: this.document.uuid,
+        skill: target.dataset.skill
+      }));
+    }
   }
 
   /**

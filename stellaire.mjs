@@ -7,6 +7,8 @@ import { StellaireItemSheet } from "./module/sheets/item-sheet.mjs";
 import { registerSettings, applyInitiativeFormula } from "./module/settings.mjs";
 import { migrateWorldIfNeeded } from "./module/migration.mjs";
 import { registerEnrichers, activateEnricherListeners } from "./module/enrichers.mjs";
+import { registerMacroHooks, rollSkillMacro, rollItemMacro } from "./module/macros.mjs";
+import * as skillEffects from "./module/skill-effects.mjs";
 
 const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
@@ -46,6 +48,18 @@ Hooks.once("init", () => {
   }
 
   registerEnrichers();
+  registerMacroHooks();
+
+  // Surface publique du système. Les macros de la barre raccourcis et les
+  // modules tiers passent par ici plutôt que par les chemins internes, qui
+  // peuvent bouger d'une version à l'autre.
+  globalThis.stellaire = {
+    SD6,
+    rollSkillMacro,
+    rollItemMacro,
+    skillEffects,
+    documents: { StellaireActor, StellaireItem }
+  };
 });
 
 Hooks.once("ready", () => {

@@ -1,4 +1,5 @@
 import SD6 from "./config.mjs";
+import { resolveActingActor } from "./helpers.mjs";
 
 /**
  * Enrichisseur de texte « @Jet[compétence]{libellé} ».
@@ -55,7 +56,7 @@ export function activateEnricherListeners() {
     if ( !link ) return;
     event.preventDefault();
 
-    const actor = resolveRollActor();
+    const actor = resolveActingActor();
     if ( !actor ) {
       ui.notifications.warn(game.i18n.localize("SD6.jets.inline.noActor"));
       return;
@@ -64,13 +65,4 @@ export function activateEnricherListeners() {
       console.error(`${SD6.title} | jet enrichi « ${link.dataset.skill} » :`, err);
     });
   });
-}
-
-/**
- * Acteur qui lance un jet enrichi : le pion sélectionné, sinon le personnage
- * assigné à l'utilisateur.
- * @returns {Actor|null}
- */
-function resolveRollActor() {
-  return canvas?.tokens?.controlled?.[0]?.actor ?? game.user?.character ?? null;
 }
