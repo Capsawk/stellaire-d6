@@ -2,7 +2,7 @@
   "id": "stellaire-d6",
   "title": "Stellaire D6",
   "description": "Système Foundry VTT (V14) pour jouer à « La Croisade Stellaire », un jeu de rôle sur table léger.",
-  "version": "0.1.5fx",
+  "version": "0.1.5.1",
   "license": "MIT",
   "authors": [
     {
@@ -11,7 +11,7 @@
   ],
   "url": "https://github.com/Capsawk/stellaire-d6",
   "manifest": "https://github.com/Capsawk/stellaire-d6/releases/latest/download/system.json",
-  "download": "https://github.com/Capsawk/stellaire-d6/releases/download/v0.1.5fx/stellaire-d6.zip",
+  "download": "https://github.com/Capsawk/stellaire-d6/releases/download/v0.1.5.1/stellaire-d6.zip",
   "compatibility": {
     "minimum": "14",
     "verified": "14"

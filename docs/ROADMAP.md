@@ -77,4 +77,17 @@ Objectif : Mettre en place la gestion des effets pour les Items du système.
 
 - [x] Ajouter un onglet « Effets » sur les Items
 - [x] Appliquer les effets au lancer de dés
+
+---
+
+# Version 0.1.5.1 - Métadonnées des jets pour modules
+
+Objectif : Rendre les informations des jets accessibles aux modules tiers via les flags du ChatMessage.
+
+## Fonctionnalités
+
+- [x] Ajout des flags `stellaire-d6` dans le ChatMessage de `rollSkill()`
+- [x] Exposition de skill, weapon, outcome, kept, dice, pool, desavantage, stressGained, position, effet
+- [x] Documentation API modules (`docs/MODULE-API.md`) : flags ChatMessage et ActiveEffects
+- [x] Getter `actor.isPlayer` pour distinguer joueurs et PNJ
 - [x] Nettoyer dés bonus dans onglet général des items

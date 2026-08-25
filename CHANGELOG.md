@@ -4,6 +4,19 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.1.5.1 - Métadonnées des jets pour modules
+
+Date : 2026-08-25
+
+## Ajout
+
+- Exposition des métadonnées de jet dans les flags du ChatMessage (`flags["stellaire-d6"]`) : skill, weapon, outcome, kept, dice, pool, desavantage, stressGained, position, effet.
+- Permet aux modules tiers de lire les informations structurées des jets de compétence.
+- Ajout de la documentation API modules (`docs/MODULE-API.md`) : format des flags ChatMessage et des ActiveEffects pour les bonus/malus de pool.
+- Ajout du getter `actor.isPlayer` : `true` si un joueur est lié à la fiche (basé sur `hasPlayerOwner`).
+
+---
+
 # Version 0.1.5 - Gestion des effets Item
 
 Date : 2026-08-09
