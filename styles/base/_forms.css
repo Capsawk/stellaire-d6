@@ -33,3 +33,37 @@
   color: var(--sd6-gold);
   text-shadow: 0 0 6px rgb(var(--sd6-c-gold-500-rgb) / 0.6);
 }
+
+/* --- Mouvement : champs et boutons --- */
+/* Les règles de focus et de survol existaient déjà ; il ne leur
+   manquait qu'une durée. C'est le meilleur rapport effort / effet
+   de toute la couche. */
+.stellaire-d6 input[type="text"],
+.stellaire-d6 input[type="number"],
+.stellaire-d6 textarea,
+.stellaire-d6 select {
+  transition:
+    border-color var(--sd6-dur-fast) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6 button {
+  transition:
+    border-color var(--sd6-dur-fast) var(--sd6-ease-out),
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-instant) var(--sd6-ease-out);
+}
+
+/* L'appui se voit : sans état actif, on ne sait pas si le clic a pris. */
+.stellaire-d6 button:active {
+  transform: translateY(1px);
+}
+
+.stellaire-d6 input[type="checkbox"] {
+  transition: transform var(--sd6-dur-base) var(--sd6-ease-land);
+}
+
+.stellaire-d6 input[type="checkbox"]:hover {
+  transform: scale(1.15);
+}
