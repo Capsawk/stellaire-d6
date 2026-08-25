@@ -141,7 +141,7 @@
         {{#if equipement.length}}
         <ol class="equipement-list">
           {{#each equipement as |item|}}
-          <li class="equipement flexrow draggable" data-item-id="{{item.id}}">
+          <li class="equipement flexrow draggable" data-item-id="{{item.id}}" data-item-type="{{item.type}}">
             <img class="item-img" src="{{item.img}}" title="{{item.name}}"/>
             <span class="item-name">{{item.name}}</span>
             <span class="item-type">{{item.typeLabel}}</span>
@@ -191,7 +191,7 @@
         {{#if abilites.length}}
         <ol class="item-list">
           {{#each abilites as |item|}}
-          <li class="item flexrow draggable" data-item-id="{{item.id}}">
+          <li class="item flexrow draggable" data-item-id="{{item.id}}" data-item-type="{{item.type}}">
             <img class="item-img" src="{{item.img}}" title="{{item.name}}"/>
             <span class="item-name">{{item.name}}</span>
             <span class="item-type">{{item.typeLabel}}</span>
@@ -226,7 +226,7 @@
         {{#if inventory.length}}
         <ol class="item-list">
           {{#each inventory as |item|}}
-          <li class="item flexrow draggable" data-item-id="{{item.id}}">
+          <li class="item flexrow draggable" data-item-id="{{item.id}}" data-item-type="{{item.type}}">
             <img class="item-img" src="{{item.img}}" title="{{item.name}}"/>
             <input type="checkbox" class="item-equipped" data-action="toggleEquip" data-item-id="{{item.id}}" {{checked item.equipped}} title="{{localize 'SD6.item.equipped'}}"/>
             <span class="item-name">{{item.name}}</span>

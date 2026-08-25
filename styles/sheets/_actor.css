@@ -1080,7 +1080,6 @@
 
 .stellaire-d6.actor .window-content::before,
 .stellaire-d6.actor .window-content::after {
-  animation-play-state: paused;
   content: "";
   inset: -50%;
   pointer-events: none;
@@ -1090,6 +1089,9 @@
 
 .stellaire-d6.actor .window-content::before {
   animation: sd6-drift-near 90s linear infinite;
+  /* Après le raccourci, jamais avant : « animation » réinitialise
+     animation-play-state, et la pause serait perdue. */
+  animation-play-state: paused;
   background-image:
     radial-gradient(1px 1px at 18% 22%, rgb(var(--sd6-c-white-rgb) / 0.55), transparent),
     radial-gradient(1px 1px at 62% 48%, rgb(var(--sd6-c-white-rgb) / 0.45), transparent),
@@ -1100,6 +1102,7 @@
 
 .stellaire-d6.actor .window-content::after {
   animation: sd6-drift-far 190s linear infinite;
+  animation-play-state: paused;
   background-image:
     radial-gradient(1px 1px at 33% 64%, rgb(var(--sd6-c-white-rgb) / 0.35), transparent),
     radial-gradient(1px 1px at 71% 18%, rgb(var(--sd6-c-white-rgb) / 0.3), transparent);
@@ -1318,4 +1321,198 @@
 .stellaire-d6.actor .pool-ghost.disadvantage i {
   background: rgb(var(--sd6-c-coral-500-rgb) / 0.14);
   border-color: rgb(var(--sd6-c-coral-500-rgb) / 0.45);
+}
+
+/* ============================================================
+   Mouvement — traitement holographique
+   ------------------------------------------------------------
+   La répartition tenue ici et dans tout le reste : le contenant
+   est technologique, la règle est runique. Un cadre de section,
+   une barre de défilement, une trame de balayage relèvent de
+   l'écran de vaisseau ; un six, un Stress, une Origine qui
+   s'ancre relèvent de la gravure qui s'allume.
+
+   La règle de partage, pour les ajouts futurs : si l'élément
+   existerait dans un tableur, il est technologique ; s'il
+   n'existe que parce que c'est un jeu de rôle, il est runique.
+   ============================================================ */
+
+/* --- Équerres d'angle sur les sections --- */
+/* Le vocabulaire HUD sans changer une couleur : les équerres se
+   dessinent au survol, du coin vers l'extérieur. */
+.stellaire-d6.actor .sheet-body section > section {
+  position: relative;
+}
+
+.stellaire-d6.actor .sheet-body section > section::before,
+.stellaire-d6.actor .sheet-body section > section::after {
+  border-color: var(--sd6-gold-soft);
+  border-style: solid;
+  content: "";
+  height: 10px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-out);
+  width: 10px;
+}
+
+.stellaire-d6.actor .sheet-body section > section::before {
+  border-width: 1px 0 0 1px;
+  left: -1px;
+  top: -1px;
+  transform: translate(4px, 4px);
+}
+
+.stellaire-d6.actor .sheet-body section > section::after {
+  border-width: 0 1px 1px 0;
+  bottom: -1px;
+  right: -1px;
+  transform: translate(-4px, -4px);
+}
+
+.stellaire-d6.actor .sheet-body section > section:hover::before,
+.stellaire-d6.actor .sheet-body section > section:hover::after {
+  opacity: 0.9;
+  transform: none;
+}
+
+/* --- Trame de balayage --- */
+/* Lignes fixes à très basse opacité, plus une bande qui descend.
+   C'est le poste le plus démonstratif du lot, donc le premier à
+   fatiguer : la bande passe une fois toutes les quatorze secondes
+   et ne tourne que sur la fiche regardée. */
+.stellaire-d6.actor .personnage::after {
+  animation: sd6-scan 14s linear infinite;
+  animation-play-state: paused;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(var(--sd6-c-cyan-500-rgb) / 0.05) 45%,
+      rgb(var(--sd6-c-cyan-500-rgb) / 0.09) 50%,
+      rgb(var(--sd6-c-cyan-500-rgb) / 0.05) 55%,
+      transparent 100%
+    );
+  content: "";
+  height: 22%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.stellaire-d6.actor:hover .personnage::after,
+.stellaire-d6.actor:focus-within .personnage::after {
+  animation-play-state: running;
+}
+
+@keyframes sd6-scan {
+  0%, 70% {
+    opacity: 0;
+    transform: translateY(-30%);
+  }
+  73%, 97% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translateY(480%);
+  }
+}
+
+/* --- Les niveaux qui coupent l'ambiance --- */
+/* Les quatre ambiances vivent sur des pseudo-éléments, que la règle
+   générique de base/_motion.css ne peut pas atteindre : elle cible
+   .sd6-ambient, et un ::after ne porte pas de classe. On les nomme
+   donc ici, au plus près de leur déclaration. */
+body.sd6-motion-sobre .stellaire-d6.actor .window-content::before,
+body.sd6-motion-sobre .stellaire-d6.actor .window-content::after,
+body.sd6-motion-sobre .stellaire-d6.actor .personnage::after,
+body.sd6-motion-sobre .stellaire-d6.actor .sheet-header::after,
+body.sd6-motion-aucune .stellaire-d6.actor .window-content::before,
+body.sd6-motion-aucune .stellaire-d6.actor .window-content::after,
+body.sd6-motion-aucune .stellaire-d6.actor .personnage::after,
+body.sd6-motion-aucune .stellaire-d6.actor .sheet-header::after {
+  animation-play-state: paused !important;
+}
+
+/* --- Grain --- */
+/* Deux services rendus pour un seul calque : il casse le bandage
+   des dégradés sombres, et il donne de la matière à des aplats
+   qui, sans lui, sont parfaitement lisses — donc synthétiques. */
+.stellaire-d6.actor .window-content {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* --- Onde runique sur les boutons d'action --- */
+/* L'onde part du bouton à l'appui. Purement CSS : pas de position
+   du clic, mais pas de JavaScript non plus pour un accusé de
+   réception. */
+.stellaire-d6.actor .skill-roll,
+.stellaire-d6.actor .item-add,
+.stellaire-d6.actor .item-attack {
+  overflow: hidden;
+  position: relative;
+}
+
+.stellaire-d6.actor .skill-roll::after,
+.stellaire-d6.actor .item-add::after,
+.stellaire-d6.actor .item-attack::after {
+  background: radial-gradient(circle, rgb(var(--sd6-c-gold-500-rgb) / 0.5), transparent 65%);
+  border-radius: var(--sd6-radius-round);
+  content: "";
+  height: 140%;
+  left: 50%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.2);
+  width: 140%;
+}
+
+.stellaire-d6.actor .skill-roll:active::after,
+.stellaire-d6.actor .item-add:active::after,
+.stellaire-d6.actor .item-attack:active::after {
+  animation: sd6-rune-pulse 520ms var(--sd6-ease-out);
+}
+
+@keyframes sd6-rune-pulse {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* --- Reliques et marques --- */
+/* Le seul effet permanent que je défendrais sur un objet : ce sont
+   les deux types que la fiction distingue vraiment du matériel. */
+.stellaire-d6.actor .item[data-item-type="relique"] .item-img,
+.stellaire-d6.actor .item[data-item-type="marque"] .item-img,
+.stellaire-d6.actor .equipement[data-item-type="relique"] .item-img {
+  animation: sd6-relic 4.5s var(--sd6-ease-in-out) infinite;
+  animation-play-state: paused;
+  border-color: rgb(var(--sd6-c-violet-500-rgb) / 0.6);
+}
+
+.stellaire-d6.actor:hover .item[data-item-type="relique"] .item-img,
+.stellaire-d6.actor:hover .item[data-item-type="marque"] .item-img,
+.stellaire-d6.actor:hover .equipement[data-item-type="relique"] .item-img,
+.stellaire-d6.actor:focus-within .item[data-item-type="relique"] .item-img,
+.stellaire-d6.actor:focus-within .item[data-item-type="marque"] .item-img {
+  animation-play-state: running;
+}
+
+@keyframes sd6-relic {
+  0%, 100% { box-shadow: 0 0 4px rgb(var(--sd6-c-violet-500-rgb) / 0.3); }
+  50% { box-shadow: 0 0 14px rgb(var(--sd6-c-violet-500-rgb) / 0.65); }
 }
