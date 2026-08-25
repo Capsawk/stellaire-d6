@@ -50,6 +50,7 @@ Hooks.once("init", () => {
 
   registerEnrichers();
   registerMacroHooks();
+  foundry.applications.handlebars.loadTemplates(SD6.templates);
 
   // Surface publique du système. Les macros de la barre raccourcis et les
   // modules tiers passent par ici plutôt que par les chemins internes, qui

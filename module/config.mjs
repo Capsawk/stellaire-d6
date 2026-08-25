@@ -88,6 +88,34 @@ SD6.roleType = "role";
 // Tous les types d'items du système
 SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType, SD6.roleType];
 
+// Icône posée à la création, par type de document. Sans elle, tout arrive avec
+// le sac générique de Foundry et un inventaire devient illisible d'un coup d'œil.
+// Regroupées ici : en changer une est une ligne.
+SD6.itemIcons = {
+  arme: "icons/svg/sword.svg",
+  armure: "icons/svg/shield.svg",
+  outil: "icons/svg/hammer.svg",
+  relique: "icons/svg/aura.svg",
+  equipement: "icons/svg/chest.svg",
+  capacite: "icons/svg/upgrade.svg",
+  pouvoir: "icons/svg/lightning.svg",
+  marque: "icons/svg/eye.svg",
+  origine: "icons/svg/oak.svg",
+  role: "icons/svg/statue.svg"
+};
+
+// Gabarits préchargés à l'init : la première ouverture d'une fiche n'attend
+// alors aucune requête réseau.
+SD6.templates = [
+  "systems/stellaire-d6/templates/actor/personnage.hbs",
+  "systems/stellaire-d6/templates/item/item.hbs",
+  "systems/stellaire-d6/templates/chat/roll.hbs",
+  "systems/stellaire-d6/templates/chat/roll-dialog.hbs",
+  "systems/stellaire-d6/templates/chat/item.hbs",
+  "systems/stellaire-d6/templates/chat/origine.hbs",
+  "systems/stellaire-d6/templates/chat/role.hbs"
+];
+
 // Nombre maximum de dés qu'un jet peut lancer (pool plafonné).
 // Valeur par défaut : le réglage de monde « maxDice » fait foi en partie.
 SD6.maxDice = 4;

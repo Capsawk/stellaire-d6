@@ -82,6 +82,19 @@
       "type": "Item"
     }
   ],
+  "packFolders": [
+    {
+      "name": "Stellaire D6",
+      "sorting": "m",
+      "packs": ["pretires", "origines", "roles"]
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["styles", "templates", "lang"]
+    }
+  },
   "languages": [
     {
       "lang": "fr",

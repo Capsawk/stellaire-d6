@@ -1,6 +1,27 @@
+import SD6 from "./config.mjs";
+
 export class StellaireItem extends Item {
   prepareDerivedData() {
     super.prepareDerivedData();
+  }
+
+  /**
+   * Pose l'icône du type quand aucune n'est fournie.
+   *
+   * Foundry retombe sinon sur son sac générique pour les dix types, ce qui
+   * rend un inventaire illisible d'un coup d'œil. Une icône explicitement
+   * choisie — y compris à l'import d'un compendium — n'est jamais écrasée.
+   * @inheritdoc
+   */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if ( allowed === false ) return false;
+
+    if ( !data.img ) {
+      const img = SD6.itemIcons[this.type];
+      if ( img ) this.updateSource({ img });
+    }
+    return allowed;
   }
 
   /**
