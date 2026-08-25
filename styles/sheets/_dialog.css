@@ -160,3 +160,73 @@
 .stellaire-d6.roll-dialog .sheet-footer button:hover i {
   transform: rotate(-24deg) scale(1.15);
 }
+
+/* --- Aperçu de pool --- */
+/* Quatre champs — bonus, malus, effets, Stress — et le joueur
+   faisait l'addition de tête. Le plafond de monde, lui, ne se
+   découvrait qu'après le jet. */
+.stellaire-d6.roll-dialog .roll-pool {
+  align-items: center;
+  border-bottom: 1px solid var(--sd6-line);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-bottom: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .roll-pool-dice {
+  display: flex;
+  gap: 3px;
+}
+
+.stellaire-d6.roll-dialog .roll-pool-dice i {
+  animation: sd6-pool-die var(--sd6-dur-base) var(--sd6-ease-land) backwards;
+  animation-delay: calc(var(--sd6-i, 0) * 45ms);
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.18);
+  border: 1px solid rgb(var(--sd6-c-gold-500-rgb) / 0.5);
+  border-radius: var(--sd6-radius-xs);
+  display: block;
+  height: 14px;
+  width: 14px;
+}
+
+@keyframes sd6-pool-die {
+  from {
+    opacity: 0;
+    transform: translateY(5px) scale(0.6);
+  }
+}
+
+/* Barré : ce dé a été retiré par le plafond de monde. */
+.stellaire-d6.roll-dialog .roll-pool-dice i.capped {
+  background: transparent;
+  border-color: rgb(var(--sd6-c-night-600-rgb) / 0.6);
+  position: relative;
+}
+
+.stellaire-d6.roll-dialog .roll-pool-dice i.capped::after {
+  background: rgb(var(--sd6-c-coral-500-rgb) / 0.8);
+  content: "";
+  height: 1px;
+  left: -2px;
+  position: absolute;
+  right: -2px;
+  top: 50%;
+  transform: rotate(-45deg);
+}
+
+.stellaire-d6.roll-dialog .roll-pool-count {
+  color: var(--sd6-mist);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-085);
+  letter-spacing: var(--sd6-tracking-1);
+}
+
+.stellaire-d6.roll-dialog .roll-pool.disadvantage .roll-pool-dice i {
+  background: rgb(var(--sd6-c-coral-500-rgb) / 0.18);
+  border-color: rgb(var(--sd6-c-coral-500-rgb) / 0.5);
+}
+
+.stellaire-d6.roll-dialog .roll-pool.disadvantage .roll-pool-count {
+  color: var(--sd6-fail);
+}
