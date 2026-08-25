@@ -9,6 +9,7 @@ import { migrateWorldIfNeeded } from "./module/migration.mjs";
 import { registerEnrichers, activateEnricherListeners } from "./module/enrichers.mjs";
 import { registerMacroHooks, rollSkillMacro, rollItemMacro } from "./module/macros.mjs";
 import { applyTheme, watchSystemTheme } from "./module/theme.mjs";
+import { applyMotionLevel, animateChatCard } from "./module/motion.mjs";
 import * as skillEffects from "./module/skill-effects.mjs";
 
 const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
@@ -64,8 +65,14 @@ Hooks.once("init", () => {
   };
 });
 
+// Met en scène les cartes de jet et d'objet à leur arrivée. Le hook rejoue
+// pour tout le journal à chaque rechargement de page : c'est animateChatCard
+// qui écarte les messages qui ne viennent pas d'être créés.
+Hooks.on("renderChatMessageHTML", (message, html) => animateChatCard(message, html));
+
 Hooks.once("ready", () => {
   applyTheme();
+  applyMotionLevel();
   watchSystemTheme();
   activateEnricherListeners();
   migrateWorldIfNeeded();
