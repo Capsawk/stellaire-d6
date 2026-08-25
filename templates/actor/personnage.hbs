@@ -31,6 +31,7 @@
     {{#each tabs}}
     <button type="button" class="tab-item{{#if active}} active{{/if}}" data-action="tab" data-group="{{group}}" data-tab="{{id}}">{{localize label}}</button>
     {{/each}}
+    <span class="sd6-tab-glider" aria-hidden="true"></span>
   </nav>
 
   <div class="sheet-body">
@@ -123,6 +124,9 @@
                 <i class="fa-solid fa-dice-d6"></i>
                 <span class="skill-label">{{skill.label}}</span>
               </button>
+              <span class="pool-ghost{{#if skill.poolDisadvantage}} disadvantage{{/if}}" aria-hidden="true" title="{{skill.poolHint}}">
+                {{#each skill.poolDice}}<i style="--sd6-i:{{@index}}"></i>{{/each}}
+              </span>
               <input type="number" name="system.skills.{{skill.id}}" value="{{skill.value}}" min="0" max="4" step="1" data-dtype="Number" {{#if ../../locked}}disabled{{/if}}/>
             </div>
             {{/each}}

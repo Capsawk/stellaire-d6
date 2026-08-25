@@ -1057,3 +1057,265 @@
 .stellaire-d6.actor .sheet-footer-runes:hover .footer-rune-line {
   opacity: 1;
 }
+
+/* ============================================================
+   Mouvement — mise en scène
+   ------------------------------------------------------------
+   Ces classes sont posées par module/sheets/character-sheet.mjs,
+   et uniquement quand quelque chose a réellement changé d'un
+   rendu à l'autre. Les règles ci-dessous ne se déclenchent donc
+   jamais d'elles-mêmes.
+   ============================================================ */
+
+/* --- Ambiance : le fond dérive --- */
+/* Deux couches de plus par-dessus le champ d'étoiles fixe de la
+   fiche, à des vitesses différentes : c'est l'écart entre les
+   vitesses qui fait la profondeur, pas le mouvement lui-même.
+
+   Elles ne tournent que si la fiche est survolée ou tient le
+   focus. Six fiches ouvertes ne font donc jamais six boucles. */
+.stellaire-d6.actor .window-content {
+  position: relative;
+}
+
+.stellaire-d6.actor .window-content::before,
+.stellaire-d6.actor .window-content::after {
+  animation-play-state: paused;
+  content: "";
+  inset: -50%;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.stellaire-d6.actor .window-content::before {
+  animation: sd6-drift-near 90s linear infinite;
+  background-image:
+    radial-gradient(1px 1px at 18% 22%, rgb(var(--sd6-c-white-rgb) / 0.55), transparent),
+    radial-gradient(1px 1px at 62% 48%, rgb(var(--sd6-c-white-rgb) / 0.45), transparent),
+    radial-gradient(1.4px 1.4px at 84% 71%, rgb(var(--sd6-c-white-rgb) / 0.5), transparent);
+  background-size: 260px 200px;
+  opacity: 0.7;
+}
+
+.stellaire-d6.actor .window-content::after {
+  animation: sd6-drift-far 190s linear infinite;
+  background-image:
+    radial-gradient(1px 1px at 33% 64%, rgb(var(--sd6-c-white-rgb) / 0.35), transparent),
+    radial-gradient(1px 1px at 71% 18%, rgb(var(--sd6-c-white-rgb) / 0.3), transparent);
+  background-size: 420px 320px;
+  filter: blur(0.6px);
+  opacity: 0.45;
+}
+
+.stellaire-d6.actor:hover .window-content::before,
+.stellaire-d6.actor:hover .window-content::after,
+.stellaire-d6.actor:focus-within .window-content::before,
+.stellaire-d6.actor:focus-within .window-content::after {
+  animation-play-state: running;
+}
+
+@keyframes sd6-drift-near {
+  to { background-position: 780px 340px; }
+}
+
+@keyframes sd6-drift-far {
+  to { background-position: -560px 260px; }
+}
+
+/* Le contenu passe devant l'ambiance. */
+.stellaire-d6.actor .personnage {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Ouverture de fiche --- */
+.stellaire-d6.actor.sd6-entering .sheet-header,
+.stellaire-d6.actor.sd6-entering .tabs {
+  animation: sd6-rise-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+}
+
+.stellaire-d6.actor.sd6-entering .tabs {
+  animation-delay: var(--sd6-stagger);
+}
+
+.stellaire-d6.actor.sd6-entering .sheet-body > .tab.active > section {
+  animation: sd6-rise-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+  animation-delay: calc(var(--sd6-stagger) * (2 + var(--sd6-i, 0)));
+}
+
+@keyframes sd6-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+}
+
+/* --- Onglets : le filet glisse d'un onglet à l'autre --- */
+.stellaire-d6.actor .tabs {
+  position: relative;
+}
+
+.stellaire-d6.actor .sd6-tab-glider {
+  background: linear-gradient(90deg, transparent, var(--sd6-gold), transparent);
+  bottom: -1px;
+  box-shadow: 0 0 10px rgb(var(--sd6-c-gold-500-rgb) / 0.6);
+  height: 2px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(var(--sd6-x, 0));
+  transition:
+    transform var(--sd6-dur-slow) var(--sd6-ease-out),
+    width var(--sd6-dur-slow) var(--sd6-ease-out);
+  width: var(--sd6-w, 0);
+}
+
+/* Seul le panneau entrant est animé : le sortant est masqué d'un
+   coup par Foundry, et display n'est pas animable. */
+.stellaire-d6.actor .tab.sd6-tab-enter > section {
+  animation: sd6-rise-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+  animation-delay: calc(var(--sd6-i, 0) * var(--sd6-stagger));
+}
+
+/* --- Stress --- */
+.stellaire-d6.actor .stress-pips .pip.sd6-just-lit {
+  animation: sd6-pip-pop 480ms var(--sd6-ease-land);
+}
+
+@keyframes sd6-pip-pop {
+  0% { transform: rotate(45deg) scale(0.4); }
+  55% { transform: rotate(45deg) scale(1.5); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+
+/* L'onde se propage sans déplacer quoi que ce soit. */
+.stellaire-d6.actor .stress-pips .pip.sd6-just-lit::after {
+  animation: sd6-pip-ring 620ms var(--sd6-ease-out) both;
+  border: 1px solid var(--sd6-crit);
+  content: "";
+  inset: -2px;
+  pointer-events: none;
+  position: absolute;
+}
+
+@keyframes sd6-pip-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+.stellaire-d6.actor .resource-value.sd6-bump {
+  animation: sd6-bump 380ms var(--sd6-ease-land);
+}
+
+@keyframes sd6-bump {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* Stress au maximum : la seule boucle que je défendrais sur la
+   fiche. Un état critique doit rester visible APRÈS qu'on s'y soit
+   habitué — un aplat rouge cesse d'être vu au bout de dix minutes. */
+.stellaire-d6.actor .resource.stress.full {
+  animation: sd6-alarm 2.2s var(--sd6-ease-in-out) infinite;
+}
+
+@keyframes sd6-alarm {
+  0%, 100% {
+    box-shadow: inset 0 0 12px rgb(var(--sd6-c-coral-500-rgb) / 0.25);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 20px rgb(var(--sd6-c-coral-500-rgb) / 0.45),
+      0 0 16px rgb(var(--sd6-c-coral-500-rgb) / 0.3);
+  }
+}
+
+/* --- Lignes qui arrivent et qui partent --- */
+.stellaire-d6.actor .item.sd6-arriving,
+.stellaire-d6.actor .etat.sd6-arriving {
+  animation: sd6-row-in var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+@keyframes sd6-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+
+/* La hauteur est la seule propriété non compositée de toute la
+   couche. C'est assumé : replier la ligne est ce qui empêche la
+   liste de sauter d'un cran sous le curseur, et il n'existe pas
+   d'équivalent en transform. */
+.stellaire-d6.actor .item.sd6-leaving,
+.stellaire-d6.actor .etat.sd6-leaving,
+.stellaire-d6.actor .equipement.sd6-leaving {
+  animation: sd6-row-out var(--sd6-dur-slow) var(--sd6-ease-in-out) forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@keyframes sd6-row-out {
+  to {
+    margin-bottom: -2rem;
+    opacity: 0;
+    transform: translateX(26px) scaleY(0.6);
+  }
+}
+
+/* --- Zones de dépôt Origine / Rôle --- */
+.stellaire-d6.actor .origine-drop.sd6-dragover,
+.stellaire-d6.actor .role-drop.sd6-dragover {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.12);
+  border-color: var(--sd6-gold);
+  border-style: solid;
+  color: var(--sd6-gold);
+}
+
+/* --- Aperçu de pool --- */
+/* La fiche affiche un score ; la règle lance une pool. Les deux ne
+   coïncident que si aucun effet ne s'applique — d'où ces dés
+   fantômes, qui montrent au survol ce qui partira vraiment. */
+.stellaire-d6.actor .pool-ghost {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.stellaire-d6.actor .pool-ghost i {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.14);
+  border: 1px solid rgb(var(--sd6-c-gold-500-rgb) / 0.4);
+  border-radius: var(--sd6-radius-xs);
+  display: block;
+  height: 9px;
+  opacity: 0;
+  transform: translateY(4px) scale(0.6);
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+  transition-delay: calc(var(--sd6-i, 0) * 45ms);
+  width: 9px;
+}
+
+.stellaire-d6.actor .skill:hover .pool-ghost i,
+.stellaire-d6.actor .skill:focus-within .pool-ghost i {
+  opacity: 1;
+  transform: none;
+}
+
+/* Pool nulle : 2d6 en gardant le pire, et aucune critique possible.
+   C'est l'information la plus lourde de la règle et elle n'était
+   visible nulle part. */
+.stellaire-d6.actor .pool-ghost.disadvantage i {
+  background: rgb(var(--sd6-c-coral-500-rgb) / 0.14);
+  border-color: rgb(var(--sd6-c-coral-500-rgb) / 0.45);
+}

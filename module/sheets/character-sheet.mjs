@@ -1,5 +1,7 @@
 import SD6 from "../config.mjs";
 import { RollSkillDialog } from "./roll-dialog.mjs";
+import { animateOut, flash, motionEnabled, stagger } from "../motion.mjs";
+import { maxDice } from "../settings.mjs";
 
 const { ActorSheetV2 } = foundry.applications.sheets;
 const { HandlebarsApplicationMixin } = foundry.applications.api;
@@ -51,6 +53,118 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     }
   };
 
+  /** Valeur de Stress au rendu précédent, pour n'animer que le pip qui change. */
+  #lastStress = null;
+
+  /** Identifiants d'items au rendu précédent, pour faire entrer les nouveaux. */
+  #lastItemIds = null;
+
+  /**
+   * Met en scène ce qui vient de changer.
+   *
+   * Toute la difficulté tient en une phrase : une sheet ApplicationV2 se
+   * redessine entièrement à chaque modification du document, et le formulaire
+   * est en submitOnChange. Une animation posée sans discernement se rejouerait
+   * donc à chaque frappe validée dans un champ. Chaque effet ci-dessous est
+   * conditionné à un changement réel, constaté d'un rendu à l'autre.
+   */
+  _onRender(context, options) {
+    super._onRender?.(context, options);
+    const root = this.element;
+    if ( !root ) return;
+
+    const stress = this.document.system.rsc?.stress?.value ?? 0;
+    const itemIds = new Set(this.document.items.map(i => i.id));
+    const first = options?.isFirstRender ?? (this.#lastStress === null);
+
+    this.#alignTabGlider();
+    this.#watchDropZones(root);
+
+    if ( first ) {
+      // L'ouverture compose la fiche : en-tête, onglets, puis sections.
+      if ( motionEnabled() ) {
+        stagger(root.querySelectorAll(".sheet-body > .tab.active > section"));
+        root.classList.add("sd6-entering");
+        window.setTimeout(() => root.classList.remove("sd6-entering"), 900);
+      }
+    } else {
+      // Un seul pip s'allume : celui qui vient de passer.
+      if ( stress > this.#lastStress ) {
+        const pips = root.querySelectorAll(".stress-pips .pip");
+        flash(pips[stress - 1], "sd6-just-lit");
+        flash(root.querySelector(".resource.stress .resource-value"), "sd6-bump");
+      }
+      // Les items apparus depuis le dernier rendu entrent par la gauche.
+      for ( const id of itemIds ) {
+        if ( this.#lastItemIds?.has(id) ) continue;
+        for ( const row of root.querySelectorAll(`[data-item-id="${id}"]`) ) {
+          flash(row, "sd6-arriving");
+        }
+      }
+    }
+
+    this.#lastStress = stress;
+    this.#lastItemIds = itemIds;
+  }
+
+  /**
+   * Place le filet sous l'onglet actif.
+   *
+   * Mesuré après chargement des polices : tant que la police d'affichage n'est
+   * pas là, les boutons n'ont pas leur largeur définitive et le filet se pose
+   * à côté.
+   */
+  #alignTabGlider() {
+    const move = () => {
+      const nav = this.element?.querySelector(".tabs");
+      const glider = nav?.querySelector(".sd6-tab-glider");
+      const active = nav?.querySelector(".tab-item.active");
+      if ( !glider || !active ) return;
+      glider.style.setProperty("--sd6-x", `${active.offsetLeft}px`);
+      glider.style.setProperty("--sd6-w", `${active.offsetWidth}px`);
+    };
+    move();
+    document.fonts?.ready.then(move);
+  }
+
+  /**
+   * Éclaire les zones de dépôt d'Origine et de Rôle pendant un glisser.
+   *
+   * dragleave se déclenche aussi au passage sur un enfant de la zone : sans
+   * compteur, la bordure clignoterait pendant tout le survol. On ne retire la
+   * classe qu'une fois les entrées et les sorties revenues à égalité.
+   */
+  #watchDropZones(root) {
+    for ( const zone of root.querySelectorAll(".origine-drop, .role-drop") ) {
+      if ( zone.dataset.sd6Watched ) continue;
+      zone.dataset.sd6Watched = "1";
+      let depth = 0;
+      const leave = () => {
+        depth = 0;
+        zone.classList.remove("sd6-dragover");
+      };
+      zone.addEventListener("dragenter", () => {
+        depth += 1;
+        zone.classList.add("sd6-dragover");
+      });
+      zone.addEventListener("dragleave", () => {
+        depth -= 1;
+        if ( depth <= 0 ) leave();
+      });
+      zone.addEventListener("drop", leave);
+    }
+  }
+
+  /** Déplace le filet et fait entrer le panneau, sans toucher au sortant. */
+  changeTab(tab, group, options) {
+    super.changeTab(tab, group, options);
+    this.#alignTabGlider();
+    const panel = this.element?.querySelector(`.tab.active[data-group="${group}"]`);
+    if ( !panel ) return;
+    stagger(panel.querySelectorAll("section"));
+    flash(panel, "sd6-tab-enter");
+  }
+
   _getFrameButtons(options) {
     const locked = this.document.getFlag("stellaire-d6", "locked") ?? false;
     return [
@@ -73,14 +187,29 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
       context.tabActive[tab.id] = tab.active;
     }
 
+    // Le score affiché n'est pas la pool : les effets d'items s'y ajoutent, et
+    // le plafond de monde la borne. Les dés fantômes montrent au survol ce qui
+    // partira réellement, sans avoir à ouvrir le dialogue.
+    const cap = maxDice();
     context.skillGroups = SD6.skillGroups.map(group => ({
       id: group.id,
       label: game.i18n.localize(group.label),
-      skills: group.skills.map(id => ({
-        id,
-        label: game.i18n.localize(SD6.skills[id].label),
-        value: context.system.skills[id]
-      }))
+      skills: group.skills.map(id => {
+        const value = context.system.skills[id];
+        const effects = this.document.getSkillEffectDice(id);
+        const pool = Math.min(value + effects.bonus - effects.malus, cap);
+        const disadvantage = pool <= 0;
+        return {
+          id,
+          label: game.i18n.localize(SD6.skills[id].label),
+          value,
+          poolDice: Array.from({ length: disadvantage ? 2 : pool }, (_, i) => i),
+          poolDisadvantage: disadvantage,
+          poolHint: disadvantage
+            ? game.i18n.localize("SD6.jets.desavantage")
+            : game.i18n.format("SD6.jets.poolHint", { count: pool })
+        };
+      })
     }));
 
     context.gravites = {};
@@ -176,7 +305,15 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     const index = Number(target.dataset.index);
     const etats = foundry.utils.duplicate(this.document.system.etats);
     etats.splice(index, 1);
-    await this.document.update({ "system.etats": etats });
+    const row = target.closest(".etat");
+    if ( row?.classList.contains("sd6-leaving") ) return;
+    await animateOut(row, "sd6-leaving");
+    try {
+      await this.document.update({ "system.etats": etats });
+    } catch ( err ) {
+      row?.classList.remove("sd6-leaving");
+      throw err;
+    }
   }
 
   static async _onAddAbilitie(event, target) {
@@ -192,7 +329,7 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 
   static async _onDeleteAbilitie(event, target) {
     const item = this.document.items.get(target.dataset.itemId);
-    await item.delete();
+    await CharacterActorSheet.#deleteRow(item, target.closest(".item"));
   }
 
   static async _onChatAbilitie(event, target) {
@@ -243,7 +380,27 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
 
   static async _onDeleteItem(event, target) {
     const item = this.document.items.get(target.dataset.itemId);
-    await item.delete();
+    await CharacterActorSheet.#deleteRow(item, target.closest(".item"));
+  }
+
+  /**
+   * Fait sortir la ligne avant de supprimer le document.
+   *
+   * Si la suppression échoue — droits insuffisants, document déjà parti — la
+   * ligne est remise dans son état normal : rien ne doit rester à l'écran en
+   * cours de disparition pour une action qui n'a pas eu lieu.
+   * @param {Item} item
+   * @param {HTMLElement|null} row
+   */
+  static async #deleteRow(item, row) {
+    if ( !item || row?.classList.contains("sd6-leaving") ) return;
+    await animateOut(row, "sd6-leaving");
+    try {
+      await item.delete();
+    } catch ( err ) {
+      row?.classList.remove("sd6-leaving");
+      throw err;
+    }
   }
 
   static async _onToggleEquip(event, target) {
