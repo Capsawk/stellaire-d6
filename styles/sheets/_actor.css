@@ -735,3 +735,325 @@
   opacity: 0.8;
   text-transform: uppercase;
 }
+
+/* ============================================================
+   Mouvement
+   ------------------------------------------------------------
+   Ajouté par la couche de mouvement. Tout ce qui suit est
+   supprimable d'un bloc sans toucher aux règles ci-dessus.
+
+   Deux principes tenus partout :
+
+   - On n'anime que transform et opacity. box-shadow, filter et
+     text-shadow sont tolérés sur un survol ponctuel, jamais dans
+     une boucle ni sur une grande surface.
+
+   - Une animation d'ambiance est déclarée « paused » et ne tourne
+     que si la fenêtre est survolée ou tient le focus. C'est ce qui
+     permet d'avoir six fiches ouvertes sans six boucles actives —
+     et ça désigne au passage la fiche qu'on regarde.
+   ============================================================ */
+
+/* --- Liseré Bifrost : le dégradé défile --- */
+.stellaire-d6.actor .sheet-header::after {
+  animation: sd6-bifrost 9s linear infinite;
+  animation-play-state: paused;
+  background-size: 200% 100%;
+}
+
+.stellaire-d6.actor:hover .sheet-header::after,
+.stellaire-d6.actor:focus-within .sheet-header::after {
+  animation-play-state: running;
+}
+
+@keyframes sd6-bifrost {
+  to { background-position: -200% 0; }
+}
+
+/* --- Titres de section : la rune s'allume, le filet se dessine --- */
+.stellaire-d6.actor h2::before {
+  opacity: 0.75;
+  transition:
+    color var(--sd6-dur-base) var(--sd6-ease-out),
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor section:hover > h2::before {
+  color: var(--sd6-gold);
+  opacity: 1;
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.55);
+}
+
+.stellaire-d6.actor h2::after {
+  transform: scaleX(0.82);
+  transform-origin: left center;
+  transition: transform var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor section:hover > h2::after {
+  transform: scaleX(1);
+}
+
+.stellaire-d6.actor h2 .etat-add {
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor h2 .etat-add:hover {
+  transform: rotate(90deg);
+}
+
+/* --- Portrait --- */
+.stellaire-d6.actor .profile-img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .sheet-header:hover .profile-img {
+  border-color: var(--sd6-gold);
+  box-shadow:
+    0 0 24px rgb(var(--sd6-c-gold-500-rgb) / 0.45),
+    inset 0 0 10px rgb(var(--sd6-c-black-rgb) / 0.6);
+}
+
+/* --- Onglets --- */
+/* La règle d'origine utilise « all », ce qui anime aussi le
+   box-shadow à chaque survol. On énumère à la place. */
+.stellaire-d6.actor .tab-item {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .tab-item:hover {
+  transform: translateY(-1px);
+}
+
+.stellaire-d6.actor .tab-item:active {
+  transform: translateY(0);
+}
+
+/* --- Compétences --- */
+.stellaire-d6.actor .skill {
+  border-radius: var(--sd6-radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Une lueur entre par la gauche. En dessous du texte, donc jamais
+   au détriment de la lisibilité. */
+.stellaire-d6.actor .skill::before {
+  background: linear-gradient(90deg, rgb(var(--sd6-c-gold-500-rgb) / 0.14), transparent 78%);
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-8%);
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill:hover::before,
+.stellaire-d6.actor .skill:focus-within::before {
+  opacity: 1;
+  transform: none;
+}
+
+.stellaire-d6.actor .skill-roll {
+  position: relative;
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill:hover .skill-roll {
+  transform: translateX(4px);
+}
+
+/* Le dé bascule : le bouton annonce le geste qu'il déclenche. */
+.stellaire-d6.actor .skill-roll i {
+  transition:
+    opacity var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor .skill:hover .skill-roll i {
+  transform: rotate(-24deg) scale(1.2);
+}
+
+.stellaire-d6.actor .skill input[type="number"] {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill:hover input[type="number"] {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 10px rgb(var(--sd6-c-gold-500-rgb) / 0.25);
+  color: var(--sd6-c-gold-250);
+}
+
+/* --- Domaine mis en avant --- */
+.stellaire-d6.actor .skill-group {
+  transition: border-color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill-group:hover {
+  border-color: var(--sd6-line-bright);
+}
+
+.stellaire-d6.actor .skill-group h3::before,
+.stellaire-d6.actor .skill-group h3::after {
+  opacity: 0.7;
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill-group:hover h3::before,
+.stellaire-d6.actor .skill-group:hover h3::after {
+  opacity: 1;
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.6);
+}
+
+/* --- Lignes de liste : objets, équipement, capacités --- */
+.stellaire-d6.actor .item,
+.stellaire-d6.actor .equipement {
+  border-radius: var(--sd6-radius-sm);
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .item:hover,
+.stellaire-d6.actor .equipement:hover {
+  background: linear-gradient(90deg, rgb(var(--sd6-c-gold-500-rgb) / 0.1), transparent 70%);
+  box-shadow: inset 2px 0 0 var(--sd6-gold);
+  transform: translateX(3px);
+}
+
+.stellaire-d6.actor .item-img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor .item:hover .item-img,
+.stellaire-d6.actor .equipement:hover .item-img {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 12px rgb(var(--sd6-c-gold-500-rgb) / 0.35);
+  transform: scale(1.1);
+}
+
+/* --- Boutons d'action de ligne --- */
+.stellaire-d6.actor .item-edit,
+.stellaire-d6.actor .item-chat,
+.stellaire-d6.actor .item-attack,
+.stellaire-d6.actor .item-delete,
+.stellaire-d6.actor .etat-delete {
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor .item-edit:hover,
+.stellaire-d6.actor .item-chat:hover,
+.stellaire-d6.actor .item-delete:hover,
+.stellaire-d6.actor .etat-delete:hover {
+  transform: scale(1.2);
+}
+
+/* Le réticule se resserre plutôt que de grossir. */
+.stellaire-d6.actor .item-attack:hover {
+  transform: scale(0.88);
+}
+
+/* --- Zones de dépôt Origine / Rôle --- */
+.stellaire-d6.actor .origine-drop,
+.stellaire-d6.actor .role-drop {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .origine-drop:hover,
+.stellaire-d6.actor .role-drop:hover {
+  border-color: var(--sd6-gold-soft);
+  color: var(--sd6-ice);
+}
+
+/* --- Pépites de Stress : la transition, sans la mise en scène --- */
+/* L'animation du pip qui vient de s'allumer demande de savoir
+   lequel a changé : c'est le rôle de la sheet, pas de la feuille. */
+.stellaire-d6.actor .stress-pips .pip {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .resource {
+  transition:
+    border-color var(--sd6-dur-slow) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+/* --- Champ verrouillé : hachure plutôt qu'opacité --- */
+/* « Grisé » se lit comme « cassé ». Une hachure dit « pas
+   maintenant » en gardant la valeur lisible. */
+.stellaire-d6.actor input:disabled,
+.stellaire-d6.actor select:disabled {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 5px,
+    rgb(var(--sd6-c-night-600-rgb) / 0.14) 5px 6px
+  );
+  opacity: 0.85;
+}
+
+/* --- Barre de défilement --- */
+.stellaire-d6.actor .sheet-body {
+  scrollbar-color: var(--sd6-gold-soft) rgb(var(--sd6-c-night-950-rgb) / 0.5);
+  scrollbar-width: thin;
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar {
+  width: 9px;
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar-track {
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.5);
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar-thumb {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.45);
+  border-radius: var(--sd6-radius-lg);
+  transition: background var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.75);
+}
+
+/* --- Pied de fiche --- */
+.stellaire-d6.actor .footer-rune-line {
+  transition: opacity var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .sheet-footer-runes:hover .footer-rune-line {
+  opacity: 1;
+}
