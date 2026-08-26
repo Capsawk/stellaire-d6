@@ -111,7 +111,6 @@ règles du jeu.
 - [x] Créer des macros au glisser-déposer
 - [x] Exposer une surface publique pour les modules tiers
 - [x] Découper la feuille de style et tokeniser le thème
-- [x] Ajouter une variante claire du thème
 - [x] Traduire le système en anglais
 - [x] Icônes par type, dossier de compendiums, préchargement, rechargement à chaud
 
@@ -119,5 +118,3 @@ règles du jeu.
 
 - [ ] Découper `personnage.hbs` en partials — les chemins relatifs aux boucles
       casseraient silencieusement, à faire avec Foundry ouvert
-- [ ] Couche de lavis sémantiques, pour que le thème clair n'ait plus à
-      redéfinir la palette primitive

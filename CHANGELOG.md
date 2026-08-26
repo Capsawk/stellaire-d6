@@ -20,7 +20,6 @@ Date : 2026-08-25
 - Surface publique `globalThis.stellaire`, sur laquelle s'appuient les macros et les modules tiers.
 - Deux méthodes d'écriture des effets de dés, `actor.addSkillEffects()` et `actor.removeSkillEffects()`.
 - Traduction anglaise complète.
-- Variante claire du thème, suivant au choix le système d'exploitation.
 - Icône par défaut pour chacun des dix types d'items, dossier regroupant les compendiums, préchargement des gabarits, rechargement à chaud en développement.
 
 ## Update
