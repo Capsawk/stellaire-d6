@@ -21,7 +21,6 @@
     "styles/tokens/_palette.css",
     "styles/tokens/_semantic.css",
     "styles/tokens/_motion.css",
-    "styles/tokens/_theme-light.css",
     "styles/base/_root.css",
     "styles/base/_forms.css",
     "styles/base/_motion.css",

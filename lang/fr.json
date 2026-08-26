@@ -213,13 +213,6 @@
         "name": "Formule d'initiative",
         "hint": "Formule utilisée par le tracker de combat. Par défaut : 1d6."
       },
-      "theme": {
-        "name": "Thème des fiches",
-        "hint": "Apparence des fiches et des cartes de chat. « Automatique » suit la préférence de votre système.",
-        "auto": "Automatique",
-        "dark": "Sombre",
-        "light": "Clair"
-      },
       "animations": {
         "worldName": "Animations (défaut de la table)",
         "worldHint": "Niveau maximal d'animation pour cette table. Chaque joueur peut descendre en dessous, jamais au-dessus.",

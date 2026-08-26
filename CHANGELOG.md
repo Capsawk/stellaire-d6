@@ -20,7 +20,6 @@ Date : 2026-08-25
 - Surface publique `globalThis.stellaire`, sur laquelle s'appuient les macros et les modules tiers.
 - Deux méthodes d'écriture des effets de dés, `actor.addSkillEffects()` et `actor.removeSkillEffects()`.
 - Traduction anglaise complète.
-- Variante claire du thème, suivant au choix le système d'exploitation.
 - Icône par défaut pour chacun des dix types d'items, dossier regroupant les compendiums, préchargement des gabarits, rechargement à chaud en développement.
 - Une couche de mouvement : le système n'avait qu'une seule transition déclarée et aucune animation. Les survols, les focus et les changements d'état sont désormais temporisés, et les tokens de durée et de courbe vivent dans `tokens/_motion.css` au même titre que les couleurs.
 - Un jet se lit maintenant comme une scène : les dés se posent l'un après l'autre, le dé gardé s'embrase une fois les autres immobiles, le verdict monte en dernier. La réussite critique et l'échec ont chacun leur traitement, et le désavantage inverse le geste.

@@ -213,13 +213,6 @@
         "name": "Initiative formula",
         "hint": "Formula used by the combat tracker. Defaults to 1d6."
       },
-      "theme": {
-        "name": "Sheet theme",
-        "hint": "Appearance of sheets and chat cards. “Automatic” follows your operating system preference.",
-        "auto": "Automatic",
-        "dark": "Dark",
-        "light": "Light"
-      },
       "animations": {
         "worldName": "Animations (table default)",
         "worldHint": "Highest animation level for this table. Each player may go below it, never above.",

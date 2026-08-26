@@ -8,7 +8,6 @@ import { registerSettings, applyInitiativeFormula } from "./module/settings.mjs"
 import { migrateWorldIfNeeded } from "./module/migration.mjs";
 import { registerEnrichers, activateEnricherListeners } from "./module/enrichers.mjs";
 import { registerMacroHooks, rollSkillMacro, rollItemMacro } from "./module/macros.mjs";
-import { applyTheme, watchSystemTheme } from "./module/theme.mjs";
 import { applyMotionLevel, animateChatCard } from "./module/motion.mjs";
 import * as skillEffects from "./module/skill-effects.mjs";
 
@@ -71,9 +70,7 @@ Hooks.once("init", () => {
 Hooks.on("renderChatMessageHTML", (message, html) => animateChatCard(message, html));
 
 Hooks.once("ready", () => {
-  applyTheme();
   applyMotionLevel();
-  watchSystemTheme();
   activateEnricherListeners();
   migrateWorldIfNeeded();
 });
