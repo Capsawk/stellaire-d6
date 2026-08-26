@@ -1,0 +1,31 @@
+/* ============================================================
+   Jets enrichis « @Jet[compétence] » dans les journaux et le chat
+   ============================================================ */
+
+a.sd6-inline-roll {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  padding: 0 0.3rem;
+  border: 1px solid rgb(var(--sd6-c-gold-500-rgb) / 0.45);
+  border-radius: var(--sd6-radius-sm);
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.1);
+  color: var(--sd6-gold);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.sd6-inline-roll:hover {
+  border-color: var(--sd6-gold);
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.2);
+  text-shadow: 0 0 6px rgb(var(--sd6-c-gold-500-rgb) / 0.7);
+}
+
+a.sd6-inline-roll:focus-visible {
+  outline: 1px solid var(--sd6-gold);
+  outline-offset: 2px;
+}
+
+a.sd6-inline-roll i {
+  font-size: var(--sd6-fs-085);
+}

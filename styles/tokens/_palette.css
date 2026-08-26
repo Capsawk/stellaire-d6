@@ -17,7 +17,8 @@
 
 .stellaire-d6,
 .sd6-roll,
-.sd6-chat-item {
+.sd6-chat-item,
+a.sd6-inline-roll {
 
   /* --- Nuit spatiale --- */
   --sd6-c-night-950: #070b1e;

@@ -1,0 +1,232 @@
+{
+  "TYPES": {
+    "Actor": {
+      "personnage": "Character"
+    },
+    "Item": {
+      "arme": "Weapon",
+      "armure": "Armor",
+      "outil": "Tool",
+      "relique": "Relic",
+      "equipement": "Gear",
+      "capacite": "Ability",
+      "pouvoir": "Power",
+      "marque": "Mark",
+      "origine": "Origin",
+      "role": "Role"
+    }
+  },
+  "SD6": {
+    "name": "Name",
+    "title": "Stellaire D6",
+    "tabs": {
+      "personnage": "Character",
+      "biographie": "Biography",
+      "details": "Details",
+      "effets": "Effects"
+    },
+    "biographie": {
+      "title": "Biography",
+      "notes": "Notes"
+    },
+    "lock": {
+      "lock": "Lock sheet",
+      "unlock": "Unlock sheet"
+    },
+    "identite": {
+      "title": "Identity",
+      "origine": "Origin",
+      "serment": "Oath",
+      "role": "Role",
+      "niveau": "Level"
+    },
+    "skills": {
+      "title": "Skills",
+      "domaines": {
+        "physique": "Physical",
+        "mental": "Mental",
+        "social": "Social / mystic"
+      },
+      "combattre": "Fight",
+      "combattreAbr": "Fgt",
+      "endurer": "Endure",
+      "endurerAbr": "End",
+      "sedep": "Move",
+      "sedepAbr": "Mov",
+      "analyser": "Analyze",
+      "analyserAbr": "Ana",
+      "bricoler": "Tinker",
+      "bricolerAbr": "Tnk",
+      "survivre": "Survive",
+      "survivreAbr": "Srv",
+      "convaincre": "Persuade",
+      "convaincreAbr": "Per",
+      "ruser": "Scheme",
+      "ruserAbr": "Sch",
+      "resonner": "Resonate",
+      "resonnerAbr": "Res"
+    },
+    "rsc": {
+      "stress": "Stress",
+      "stressMax": "Maximum stress"
+    },
+    "xp": "XP",
+    "jets": {
+      "title": "Skill roll",
+      "skillTitle": "{skill} roll",
+      "roll": "Roll",
+      "rollSkill": "Roll",
+      "attack": "Attack · {weapon}",
+      "position": "Position",
+      "positions": {
+        "controlee": "Controlled",
+        "risquee": "Risky",
+        "desesperee": "Desperate"
+      },
+      "effet": "Effect",
+      "effets": {
+        "limite": "Limited",
+        "normal": "Normal",
+        "puissant": "Great"
+      },
+      "bonus": "Bonus dice",
+      "malus": "Penalty dice",
+      "gainStress": "Take 1 Stress",
+      "effetBonus": "Bonus dice (effects)",
+      "effetMalus": "Penalty dice (effects)",
+      "desavantage": "Disadvantage: 2d6, keep the worst",
+      "stress": "+1d6 · Stress taken",
+      "outcomes": {
+        "critique": {
+          "title": "Critical success",
+          "detail": "At least two 6s: the action succeeds brilliantly, and its effect is multiplied."
+        },
+        "net": {
+          "title": "Clean success",
+          "detail": "6: the action succeeds without complication."
+        },
+        "complication": {
+          "title": "Success with a complication",
+          "detail": "4-5: the action succeeds, but something goes wrong."
+        },
+        "echec": {
+          "title": "Failure, or success at great cost",
+          "detail": "1-3: failure, or success paid for with a heavy consequence."
+        }
+      },
+      "inline": {
+        "hint": "Roll {skill}",
+        "noActor": "Select a token, or have a character assigned to you, to make this roll."
+      }
+    },
+    "etats": {
+      "title": "Conditions and injuries",
+      "add": "Add a condition",
+      "delete": "Remove condition",
+      "label": "Condition name",
+      "empty": "No conditions",
+      "gravite": "Severity",
+      "gravites": {
+        "leger": "Minor",
+        "serieux": "Serious",
+        "grave": "Severe"
+      }
+    },
+    "capacites": {
+      "title": "Abilities, powers & marks",
+      "label": "Name",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Remove",
+      "chat": "Show in chat",
+      "empty": "No ability, power or mark"
+    },
+    "equipement": {
+      "title": "Equipment",
+      "empty": "Nothing equipped"
+    },
+    "effets": {
+      "add": "Add an effect",
+      "delete": "Remove effect",
+      "empty": "No effects",
+      "bonus": "Bonus dice",
+      "malus": "Penalty dice",
+      "unknown": "Unknown skill",
+      "equippedHint": "Effects only apply to the character while the item is equipped.",
+      "carrier": "Applied effects",
+      "types": {
+        "bonus": "Bonus",
+        "malus": "Penalty"
+      }
+    },
+    "origine": {
+      "drop": "Drop your Origin here",
+      "drag": "Drag to move the Origin",
+      "detach": "Detach origin",
+      "open": "Open the origin sheet",
+      "chat": "Show the origin in chat",
+      "empty": "No origin attached",
+      "invalid": "The selected element is not an Origin.",
+      "drop_invalid": "An Origin cannot grant another Origin.",
+      "bonus": "Bonus",
+      "malus": "Penalty",
+      "items": "Granted items",
+      "items_drop": "Drop items here to grant them",
+      "items_remove": "Remove item",
+      "items_open": "Open item",
+      "items_empty": "No granted items"
+    },
+    "role": {
+      "drop": "Drop your Role here",
+      "drag": "Drag to move the Role",
+      "detach": "Detach role",
+      "open": "Open the role sheet",
+      "chat": "Show the role in chat",
+      "empty": "No role attached",
+      "invalid": "The selected element is not a Role.",
+      "drop_invalid": "A Role cannot grant another Role.",
+      "items": "Granted items",
+      "items_drop": "Drop items here to grant them",
+      "items_remove": "Remove item",
+      "items_open": "Open item",
+      "items_empty": "No granted items"
+    },
+    "item": {
+      "title": "Inventory",
+      "add": "Add an item",
+      "edit": "Edit item",
+      "delete": "Remove item",
+      "equipped": "Equipped",
+      "description": "Description",
+      "effet": "Effect",
+      "protection": "Protection",
+      "attack": "Attack",
+      "empty": "No items"
+    },
+    "settings": {
+      "maxDice": {
+        "name": "Dice pool cap",
+        "hint": "Maximum number of dice a roll may use, whatever the bonuses."
+      },
+      "initiative": {
+        "name": "Initiative formula",
+        "hint": "Formula used by the combat tracker. Defaults to 1d6."
+      }
+    },
+    "migration": {
+      "begin": "Stellaire D6: migrating data from {from} to {to}. Do not close the world.",
+      "done": "Stellaire D6: migration complete, {count} document(s) updated.",
+      "none": "Stellaire D6: migration complete, no document needed updating.",
+      "failed": "Stellaire D6: {count} document(s) could not be migrated. See the console.",
+      "unknownVersion": "an earlier version"
+    },
+    "macros": {
+      "skillName": "{skill} roll",
+      "attackName": "Attack: {weapon}",
+      "noActor": "Select a token, or have a character assigned to you, to run this macro.",
+      "unknownSkill": "Unknown skill: {skill}.",
+      "notRollable": "A “{type}” item has no roll attached, so no macro was created.",
+      "itemMissing": "This macro's weapon no longer exists, or is not carried by anyone."
+    }
+  }
+}

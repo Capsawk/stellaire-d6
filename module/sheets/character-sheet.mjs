@@ -84,15 +84,15 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
     }));
 
     context.gravites = {};
-    for (const [key, label] of Object.entries(SD6.gravites)) {
-      context.gravites[key] = game.i18n.localize(label);
+    for (const [key, gravite] of Object.entries(SD6.gravites)) {
+      context.gravites[key] = game.i18n.localize(gravite.label);
     }
 
     context.etats = context.system.etats;
 
     const stress = context.system.rsc.stress;
-    context.stressPips = Array.from({ length: 6 }, (_, i) => i < stress);
-    context.stressFull = stress >= 6;
+    context.stressPips = Array.from({ length: stress.max }, (_, i) => i < stress.value);
+    context.stressFull = stress.value >= stress.max;
 
     context.abilitieTypes = {};
     for ( const type of SD6.abilitieTypes ) context.abilitieTypes[type] = game.i18n.localize(`TYPES.Item.${type}`);
@@ -258,6 +258,15 @@ export class CharacterActorSheet extends HandlebarsApplicationMixin(ActorSheetV2
       event.dataTransfer.setData("text/plain", JSON.stringify({
         type: "Item",
         uuid: target.dataset.uuid
+      }));
+    }
+    // Une compétence n'est pas un document : elle voyage sous un type propre au
+    // système, que le hook hotbarDrop sait reconnaître.
+    if ( target.dataset.skill ) {
+      event.dataTransfer.setData("text/plain", JSON.stringify({
+        type: "sd6.skill",
+        actorUuid: this.document.uuid,
+        skill: target.dataset.skill
       }));
     }
   }

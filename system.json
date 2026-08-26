@@ -2,7 +2,7 @@
   "id": "stellaire-d6",
   "title": "Stellaire D6",
   "description": "Système Foundry VTT (V14) pour jouer à « La Croisade Stellaire », un jeu de rôle sur table léger.",
-  "version": "0.1.5.1",
+  "version": "0.2.0",
   "license": "MIT",
   "authors": [
     {
@@ -11,7 +11,7 @@
   ],
   "url": "https://github.com/Capsawk/stellaire-d6",
   "manifest": "https://github.com/Capsawk/stellaire-d6/releases/latest/download/system.json",
-  "download": "https://github.com/Capsawk/stellaire-d6/releases/download/v0.1.5.1/stellaire-d6.zip",
+  "download": "https://github.com/Capsawk/stellaire-d6/releases/download/v0.2.0/stellaire-d6.zip",
   "compatibility": {
     "minimum": "14",
     "verified": "14"
@@ -26,7 +26,8 @@
     "styles/sheets/_item.css",
     "styles/sheets/_dialog.css",
     "styles/components/_chat-roll.css",
-    "styles/components/_chat-item.css"
+    "styles/components/_chat-item.css",
+    "styles/components/_inline-roll.css"
   ],
   "changelog": "CHANGELOG.md",
   "grid": {
@@ -80,11 +81,29 @@
       "type": "Item"
     }
   ],
+  "packFolders": [
+    {
+      "name": "Stellaire D6",
+      "sorting": "m",
+      "packs": ["pretires", "origines", "roles"]
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["styles", "templates", "lang"]
+    }
+  },
   "languages": [
     {
       "lang": "fr",
       "name": "Francais",
       "path": "lang/fr.json"
+    },
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
     }
   ],
   "socket": false,

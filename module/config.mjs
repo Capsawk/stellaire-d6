@@ -1,5 +1,8 @@
 const SD6 = {};
 
+// Identifiant du systeme, tel que declare dans system.json.
+SD6.id = "stellaire-d6";
+
 SD6.title = "Stellaire D6";
 // Artwork
 SD6.ascii = `
@@ -35,11 +38,25 @@ SD6.skillGroups = [
   { id: "social", label: "SD6.skills.domaines.social", skills: ["convaincre", "ruser", "resonner"] }
 ];
 
-// État gravité
+// État gravité.
+// `status` et `img` alimentent CONFIG.statusEffects : c'est ce qui rend un état
+// visible sur le pion, et pas seulement au fond d'une fiche.
 SD6.gravites = {
-  leger: "SD6.etats.gravites.leger",
-  serieux: "SD6.etats.gravites.serieux",
-  grave: "SD6.etats.gravites.grave"
+  leger: {
+    label: "SD6.etats.gravites.leger",
+    status: "sd6-etat-leger",
+    img: "icons/svg/blood.svg"
+  },
+  serieux: {
+    label: "SD6.etats.gravites.serieux",
+    status: "sd6-etat-serieux",
+    img: "icons/svg/hazard.svg"
+  },
+  grave: {
+    label: "SD6.etats.gravites.grave",
+    status: "sd6-etat-grave",
+    img: "icons/svg/skull.svg"
+  }
 };
 
 // Position d'action
@@ -71,8 +88,44 @@ SD6.roleType = "role";
 // Tous les types d'items du système
 SD6.allItemTypes = [...SD6.itemTypes, ...SD6.abilitieTypes, SD6.origineType, SD6.roleType];
 
+// Icône posée à la création, par type de document. Sans elle, tout arrive avec
+// le sac générique de Foundry et un inventaire devient illisible d'un coup d'œil.
+// Regroupées ici : en changer une est une ligne.
+SD6.itemIcons = {
+  arme: "icons/svg/sword.svg",
+  armure: "icons/svg/shield.svg",
+  outil: "icons/svg/hammer.svg",
+  relique: "icons/svg/aura.svg",
+  equipement: "icons/svg/chest.svg",
+  capacite: "icons/svg/upgrade.svg",
+  pouvoir: "icons/svg/lightning.svg",
+  marque: "icons/svg/eye.svg",
+  origine: "icons/svg/oak.svg",
+  role: "icons/svg/statue.svg"
+};
+
+// Gabarits préchargés à l'init : la première ouverture d'une fiche n'attend
+// alors aucune requête réseau.
+SD6.templates = [
+  "systems/stellaire-d6/templates/actor/personnage.hbs",
+  "systems/stellaire-d6/templates/item/item.hbs",
+  "systems/stellaire-d6/templates/chat/roll.hbs",
+  "systems/stellaire-d6/templates/chat/roll-dialog.hbs",
+  "systems/stellaire-d6/templates/chat/item.hbs",
+  "systems/stellaire-d6/templates/chat/origine.hbs",
+  "systems/stellaire-d6/templates/chat/role.hbs"
+];
+
 // Nombre maximum de dés qu'un jet peut lancer (pool plafonné).
+// Valeur par défaut : le réglage de monde « maxDice » fait foi en partie.
 SD6.maxDice = 4;
+
+// Formule d'initiative par défaut. Foundry utiliserait 1d20 sans cette
+// déclaration, ce qui n'a pas de sens dans un système à d6.
+SD6.defaultInitiative = "1d6";
+
+// Plafond de Stress d'un personnage.
+SD6.stressMax = 6;
 
 // Types d'effets d'item (dés bonus / dés malus).
 SD6.effectTypes = {

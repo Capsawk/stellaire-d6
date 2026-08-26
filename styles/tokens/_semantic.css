@@ -9,7 +9,8 @@
 
 .stellaire-d6,
 .sd6-roll,
-.sd6-chat-item {
+.sd6-chat-item,
+a.sd6-inline-roll {
 
   /* --- Surfaces --- */
   --sd6-space: var(--sd6-c-night-900);

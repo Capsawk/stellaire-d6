@@ -37,7 +37,8 @@ export class RollSkillDialog extends HandlebarsApplicationMixin(ApplicationV2) {
     for ( const [id, label] of Object.entries(SD6.positions) ) context.positions[id] = game.i18n.localize(label);
     context.effets = {};
     for ( const [id, label] of Object.entries(SD6.effets) ) context.effets[id] = game.i18n.localize(label);
-    context.stress = this.actor.system.rsc.stress;
+    context.stress = this.actor.system.rsc.stress.value;
+    context.stressMax = this.actor.system.rsc.stress.max;
     context.stressFull = context.stress >= 6;
 
     const skillEffects = this.actor.getSkillEffectDice(this.skillId);

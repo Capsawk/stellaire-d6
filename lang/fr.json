@@ -67,7 +67,8 @@
       "resonnerAbr": "Réso"
     },
     "rsc": {
-      "stress": "Stress"
+      "stress": "Stress",
+      "stressMax": "Stress maximum"
     },
     "xp": "XP",
     "jets": {
@@ -112,6 +113,10 @@
           "title": "Échec ou réussite très coûteuse",
           "detail": "1-3 : échec, ou réussite au prix d'une conséquence très lourde."
         }
+      },
+      "inline": {
+        "hint": "Lancer un jet de {skill}",
+        "noActor": "Sélectionnez un pion, ou faites-vous attribuer un personnage, pour lancer ce jet."
       }
     },
     "etats": {
@@ -148,6 +153,7 @@
       "malus": "Dés malus",
       "unknown": "Compétence inconnue",
       "equippedHint": "Les effets ne s'appliquent au personnage que si l'item est équipé.",
+      "carrier": "Effets appliqués",
       "types": {
         "bonus": "Bonus",
         "malus": "Malus"
@@ -196,6 +202,31 @@
       "protection": "Protection",
       "attack": "Attaquer",
       "empty": "Aucun objet"
+    },
+    "settings": {
+      "maxDice": {
+        "name": "Plafond de la pool",
+        "hint": "Nombre maximum de dés qu'un jet peut lancer, quels que soient les bonus."
+      },
+      "initiative": {
+        "name": "Formule d'initiative",
+        "hint": "Formule utilisée par le tracker de combat. Par défaut : 1d6."
+      }
+    },
+    "migration": {
+      "begin": "Stellaire D6 : migration des données de {from} vers {to}. Ne fermez pas la partie.",
+      "done": "Stellaire D6 : migration terminée, {count} document(s) mis à jour.",
+      "none": "Stellaire D6 : migration terminée, aucun document à mettre à jour.",
+      "failed": "Stellaire D6 : {count} document(s) n'ont pas pu être migrés. Voir la console.",
+      "unknownVersion": "une version antérieure"
+    },
+    "macros": {
+      "skillName": "Jet de {skill}",
+      "attackName": "Attaque : {weapon}",
+      "noActor": "Sélectionnez un pion, ou faites-vous attribuer un personnage, pour lancer cette macro.",
+      "unknownSkill": "Compétence inconnue : {skill}.",
+      "notRollable": "Un item de type « {type} » n'a pas de jet associé : aucune macro créée.",
+      "itemMissing": "L'arme de cette macro n'existe plus, ou n'est portée par personne."
     }
   }
 }

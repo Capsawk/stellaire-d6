@@ -1,4 +1,6 @@
 import SD6 from "./config.mjs";
+import { readSkillEffect, buildSkillEffectData, SKILL_EFFECT_TYPES } from "./skill-effects.mjs";
+import { maxDice } from "./settings.mjs";
 
 export class StellaireActor extends Actor {
   get isPlayer() {
@@ -7,6 +9,74 @@ export class StellaireActor extends Actor {
 
   prepareDerivedData() {
     super.prepareDerivedData();
+  }
+
+  /**
+   * Données exposées aux formules et aux expressions « @… ».
+   *
+   * C'est ce que Foundry interroge pour résoudre `[[/r 1d6 + @combattre]]`
+   * dans un journal ou en chat. Sans cette méthode, aucune référence `@` ne
+   * fonctionne dans un texte.
+   *
+   * Les neuf compétences sont exposées deux fois : sous `@skills.combattre`,
+   * fidèle au schéma, et sous `@combattre`, plus court à écrire à la table.
+   *
+   * @returns {object}
+   * @inheritdoc
+   */
+  getRollData() {
+    // toObject(false) rend une copie profonde et simple : une formule qui
+    // muterait ces données ne peut pas atteindre le modèle vivant.
+    const data = this.system.toObject(false);
+
+    for ( const id of Object.keys(SD6.skills) ) data[id] = data.skills?.[id] ?? 0;
+
+    data.stress = data.rsc?.stress?.value ?? 0;
+    data.stressMax = data.rsc?.stress?.max ?? SD6.stressMax;
+    data.niveau = data.identite?.niveau ?? 1;
+    data.maxDice = maxDice();
+    data.name = this.name;
+    data.type = this.type;
+
+    return data;
+  }
+
+  /**
+   * Reflète les états de la fiche sur le pion, via les effets de statut de
+   * Foundry.
+   *
+   * Sans cela, un état ne vit qu'au fond d'une fiche : le MJ doit ouvrir
+   * chaque personnage pour savoir qui est blessé. Une icône sur le jeton le
+   * dit à toute la table d'un coup d'œil.
+   *
+   * La synchronisation va dans un seul sens : la fiche fait foi. Retirer
+   * l'icône depuis le pion la verrait revenir à la prochaine modification,
+   * ce qui serait plus déroutant qu'utile.
+   * @returns {Promise<void>}
+   */
+  async syncEtatStatuses() {
+    const actifs = new Set((this.system.etats ?? []).map(etat => etat.gravite));
+    for ( const [gravite, config] of Object.entries(SD6.gravites) ) {
+      const voulu = actifs.has(gravite);
+      const present = this.statuses.has(config.status);
+      if ( voulu !== present ) await this.toggleStatusEffect(config.status, { active: voulu });
+    }
+  }
+
+  /**
+   * Déclenche la synchronisation quand les états changent.
+   *
+   * Seul le client à l'origine de la modification agit : sinon chaque
+   * navigateur connecté tenterait la même écriture.
+   * @inheritdoc
+   */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+    if ( game.user.id !== userId ) return;
+    if ( !foundry.utils.hasProperty(changed, "system.etats") ) return;
+    this.syncEtatStatuses().catch(err => {
+      console.error(`${SD6.title} | synchronisation des états de « ${this.name} » :`, err);
+    });
   }
 
   /**
@@ -30,26 +100,84 @@ export class StellaireActor extends Actor {
       if ( item.system.equipped !== undefined && !item.system.equipped ) continue;
       for ( const effect of item.effects ) {
         if ( effect.disabled ) continue;
-        const skill = effect.getFlag("stellaire-d6", "skill")
-          ?? effect.changes[0]?.key?.split(".")?.[2];
-        if ( skill !== skillId ) continue;
-        const type = effect.getFlag("stellaire-d6", "type")
-          ?? effect.changes[0]?.key?.split(".")?.[3];
-        const value = Number(effect.changes[0]?.value) || 1;
-        if ( type === "bonus" ) bonus += value;
-        else if ( type === "malus" ) malus += value;
-        else continue;
-        sources.push({ name: item.name, type, value });
+        for ( const entry of readSkillEffect(effect) ) {
+          if ( entry.skill !== skillId ) continue;
+          if ( entry.type === "bonus" ) bonus += entry.value;
+          else malus += entry.value;
+          sources.push({ name: item.name, type: entry.type, value: entry.value });
+        }
       }
     }
     return { bonus, malus, sources };
   }
 
   /**
+   * Applique des dés bonus/malus de compétence au personnage.
+   *
+   * Les effets sont portés par un item équipé créé pour l'occasion : ils
+   * restent ainsi visibles et supprimables depuis la fiche, comme n'importe
+   * quel autre effet du système. Destiné aux modules tiers, pour leur éviter
+   * de reproduire à la main le format lu par getSkillEffectDice().
+   *
+   * @param {Array<{skill: string, type: string, value?: number}>|object} entries
+   *   Une entrée, ou un tableau d'entrées. `type` vaut "bonus" ou "malus",
+   *   `value` est le nombre de dés (1 par défaut).
+   * @param {object} [options]
+   * @param {string} [options.name]  Nom de l'item porteur.
+   * @param {string} [options.itemType="capacite"]  Type de l'item porteur.
+   * @param {string} [options.source]  Identifiant libre de l'appelant, stocké en
+   *   flag pour permettre un retrait ciblé via removeSkillEffects().
+   * @returns {Promise<Item>}  L'item porteur créé.
+   *
+   * @example
+   * await actor.addSkillEffects(
+   *   [{ skill: "combattre", type: "bonus", value: 1 }],
+   *   { name: "Fureur", source: "mon-module" }
+   * );
+   */
+  async addSkillEffects(entries, { name, itemType = "capacite", source = null } = {}) {
+    const list = Array.isArray(entries) ? entries : [entries];
+    if ( !list.length ) throw new Error("Aucun effet à appliquer.");
+    if ( !SD6.effectItemTypes.includes(itemType) ) {
+      throw new Error(`Ce type d'item ne porte pas d'effets : ${itemType}`);
+    }
+    for ( const { skill, type } of list ) {
+      if ( !(skill in SD6.skills) ) throw new Error(`Compétence inconnue : ${skill}`);
+      if ( !SKILL_EFFECT_TYPES.includes(type) ) throw new Error(`Type d'effet inconnu : ${type}`);
+    }
+
+    const [item] = await Item.create([{
+      name: name ?? game.i18n.localize("SD6.effets.carrier"),
+      type: itemType,
+      system: { equipped: true },
+      effects: list.map(({ skill, type, value = 1 }) => ({
+        ...buildSkillEffectData(skill, type, value),
+        transfer: false,
+        disabled: false
+      })),
+      flags: { "stellaire-d6": { skillEffectSource: source } }
+    }], { parent: this });
+    return item;
+  }
+
+  /**
+   * Retire les items d'effets créés par addSkillEffects() pour une source donnée.
+   * @param {string|null} [source]  Identifiant passé à addSkillEffects().
+   * @returns {Promise<string[]>}  Identifiants des items supprimés.
+   */
+  async removeSkillEffects(source = null) {
+    const ids = this.items
+      .filter(item => item.getFlag("stellaire-d6", "skillEffectSource") === source)
+      .map(item => item.id);
+    if ( ids.length ) await this.deleteEmbeddedDocuments("Item", ids);
+    return ids;
+  }
+
+  /**
    * Lance un jet de compétence.
    * Pool = score de compétence + dés bonus - dés malus (+1 si Stress généré).
    * Les dés bonus/malus des effets d'items actifs sont ajoutés automatiquement.
-   * Le pool est plafonné à SD6.maxDice dés.
+   * Le pool est plafonné par le réglage de monde « maxDice ».
    * Score résultant <= 0 : 2d6 en gardant le pire (désavantage).
    * Sinon : autant de d6 que le pool, en gardant le meilleur.
    * @param {string} skillId   Identifiant de compétence (clé de SD6.skills).
@@ -81,13 +209,13 @@ export class StellaireActor extends Actor {
     if ( skill === undefined ) throw new Error(`Compétence inconnue : ${skillId}`);
     const skillLabel = label ?? game.i18n.localize(SD6.skills[skillId].label);
 
-    const stressGained = gainStress && (this.system.rsc.stress < 6);
+    const stressGained = gainStress && (this.system.rsc.stress.value < this.system.rsc.stress.max);
     const effects = this.getSkillEffectDice(skillId);
     const pool = Math.min(
       skill + bonusDice + (applyBonusEffects ? effects.bonus : 0)
         - malusDice - (applyMalusEffects ? effects.malus : 0)
         + (stressGained ? 1 : 0),
-      SD6.maxDice
+      maxDice()
     );
     const desavantage = pool <= 0;
     const count = desavantage ? 2 : pool;
@@ -149,7 +277,7 @@ export class StellaireActor extends Actor {
     await ChatMessage.create(messageData);
 
     if ( stressGained ) {
-      await this.update({ "system.rsc.stress": this.system.rsc.stress + 1 });
+      await this.update({ "system.rsc.stress.value": this.system.rsc.stress.value + 1 });
     }
   }
 
