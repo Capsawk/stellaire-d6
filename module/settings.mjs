@@ -8,9 +8,10 @@ import { applyMotionLevel } from "./motion.mjs";
  * et, par défaut de déclaration, la formule d'initiative de Foundry. Les
  * exposer permet à chaque table de les ajuster sans toucher au système.
  *
- * S'y ajoutent l'apparence et le mouvement, qui relèvent du confort de
- * chacun : le thème et le niveau d'animation sont des réglages de joueur,
- * le second étant plafonné par un défaut de table.
+ * S'y ajoute le mouvement, qui relève du confort de chacun : le niveau
+ * d'animation est un réglage de joueur, plafonné par un défaut de table.
+ * Le thème (clair / sombre) suit le réglage natif de Foundry via les
+ * sélecteurs body.theme-light / .themed.theme-light dans le CSS.
  */
 export function registerSettings() {
   // Version de données du monde. Non exposée : c'est la migration qui l'écrit.

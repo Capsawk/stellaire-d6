@@ -4,6 +4,25 @@ Toutes les modifications importantes de ce projet sont listées ici.
 
 ---
 
+# Version 0.2.1 - Pimp My Roll
+
+Date : 2026-08-26
+
+## Ajout
+
+- Thème clair pour les feuilles du système. Le choix du thème suit le réglage natif de Foundry (Configure Settings → Interface → Appearance) et le sélecteur par feuille (⋯ → Configure Sheet). Le fichier `tokens/_theme-light.css` redéfinit la palette primitive sans toucher une seule règle de composant — les rôles sémantiques de `_semantic.css` suivent automatiquement.
+
+## Fix
+
+- Les popouts de chat suivaient le thème global au lieu de le forcer en clair. Le sélecteur `.themed.theme-light` de Foundry sur `ChatPopout` interceptait la palette sombre. Correction : les sélecteurs de thème clair ne ciblent plus `.themed.theme-light .sd6-roll` (trop large) mais uniquement `body.theme-light` pour le chat et `.themed.theme-light.stellaire-d6` pour la feuille personnage. Le popout hérite désormais du thème global sansoverride spécifique.
+
+## Update
+
+- Le thème n'est plus un réglage propre au système : il s'appuie sur les deux systèmes de thème de Foundry V14 (global `core.uiConfig` et par feuille `core.sheetThemes`), sans JavaScript supplémentaire — le CSS lit directement les classes natives `body.theme-light` et `.themed.theme-light`.
+- Le JSDoc de `settings.mjs` reflète désormais que le thème est géré par Foundry, plus par le système.
+
+---
+
 # Version 0.2.0 - Intégration Foundry
 
 Date : 2026-08-25

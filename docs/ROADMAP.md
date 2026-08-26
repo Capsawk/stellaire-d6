@@ -94,6 +94,20 @@ Objectif : Rendre les informations des jets accessibles aux modules tiers via le
 
 ---
 
+# Version 0.2.1 - Pimp My Roll
+
+Objectif : intégrer le thème clair / sombre du système avec les mécanismes
+natifs de Foundry V14.
+
+## Fonctionnalités
+
+- [x] Thème clair via `tokens/_theme-light.css` (redéfinition de la palette)
+- [x] Suivi du thème global Foundry (`core.uiConfig.colorScheme.applications`)
+- [x] Suivi du thème par feuille (`core.sheetThemes`)
+- [x] Popouts de chat ne suivent pas le thème global (corrigé)
+
+---
+
 # Version 0.2.0 - Intégration Foundry
 
 Objectif : remplir les points d'accroche que Foundry propose et que le système
