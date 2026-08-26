@@ -735,3 +735,787 @@
   opacity: 0.8;
   text-transform: uppercase;
 }
+
+/* ============================================================
+   Mouvement
+   ------------------------------------------------------------
+   Ajouté par la couche de mouvement. Tout ce qui suit est
+   supprimable d'un bloc sans toucher aux règles ci-dessus.
+
+   Deux principes tenus partout :
+
+   - On n'anime que transform et opacity. box-shadow, filter et
+     text-shadow sont tolérés sur un survol ponctuel, jamais dans
+     une boucle ni sur une grande surface.
+
+   - Une animation d'ambiance est déclarée « paused » et ne tourne
+     que si la fenêtre est survolée ou tient le focus. C'est ce qui
+     permet d'avoir six fiches ouvertes sans six boucles actives —
+     et ça désigne au passage la fiche qu'on regarde.
+   ============================================================ */
+
+/* --- Liseré Bifrost : le dégradé défile --- */
+.stellaire-d6.actor .sheet-header::after {
+  animation: sd6-bifrost 9s linear infinite;
+  animation-play-state: paused;
+  background-size: 200% 100%;
+}
+
+.stellaire-d6.actor:hover .sheet-header::after,
+.stellaire-d6.actor:focus-within .sheet-header::after {
+  animation-play-state: running;
+}
+
+@keyframes sd6-bifrost {
+  to { background-position: -200% 0; }
+}
+
+/* --- Titres de section : la rune s'allume, le filet se dessine --- */
+.stellaire-d6.actor h2::before {
+  opacity: 0.75;
+  transition:
+    color var(--sd6-dur-base) var(--sd6-ease-out),
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor section:hover > h2::before {
+  color: var(--sd6-gold);
+  opacity: 1;
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.55);
+}
+
+.stellaire-d6.actor h2::after {
+  transform: scaleX(0.82);
+  transform-origin: left center;
+  transition: transform var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor section:hover > h2::after {
+  transform: scaleX(1);
+}
+
+.stellaire-d6.actor h2 .etat-add {
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor h2 .etat-add:hover {
+  transform: rotate(90deg);
+}
+
+/* --- Portrait --- */
+.stellaire-d6.actor .profile-img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .sheet-header:hover .profile-img {
+  border-color: var(--sd6-gold);
+  box-shadow:
+    0 0 24px rgb(var(--sd6-c-gold-500-rgb) / 0.45),
+    inset 0 0 10px rgb(var(--sd6-c-black-rgb) / 0.6);
+}
+
+/* --- Onglets --- */
+/* La règle d'origine utilise « all », ce qui anime aussi le
+   box-shadow à chaque survol. On énumère à la place. */
+.stellaire-d6.actor .tab-item {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .tab-item:hover {
+  transform: translateY(-1px);
+}
+
+.stellaire-d6.actor .tab-item:active {
+  transform: translateY(0);
+}
+
+/* --- Compétences --- */
+.stellaire-d6.actor .skill {
+  border-radius: var(--sd6-radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Une lueur entre par la gauche. En dessous du texte, donc jamais
+   au détriment de la lisibilité. */
+.stellaire-d6.actor .skill::before {
+  background: linear-gradient(90deg, rgb(var(--sd6-c-gold-500-rgb) / 0.14), transparent 78%);
+  content: "";
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-8%);
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill:hover::before,
+.stellaire-d6.actor .skill:focus-within::before {
+  opacity: 1;
+  transform: none;
+}
+
+.stellaire-d6.actor .skill-roll {
+  position: relative;
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill:hover .skill-roll {
+  transform: translateX(4px);
+}
+
+/* Le dé bascule : le bouton annonce le geste qu'il déclenche. */
+.stellaire-d6.actor .skill-roll i {
+  transition:
+    opacity var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor .skill:hover .skill-roll i {
+  transform: rotate(-24deg) scale(1.2);
+}
+
+.stellaire-d6.actor .skill input[type="number"] {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill:hover input[type="number"] {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 10px rgb(var(--sd6-c-gold-500-rgb) / 0.25);
+  color: var(--sd6-c-gold-250);
+}
+
+/* --- Domaine mis en avant --- */
+.stellaire-d6.actor .skill-group {
+  transition: border-color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill-group:hover {
+  border-color: var(--sd6-line-bright);
+}
+
+.stellaire-d6.actor .skill-group h3::before,
+.stellaire-d6.actor .skill-group h3::after {
+  opacity: 0.7;
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .skill-group:hover h3::before,
+.stellaire-d6.actor .skill-group:hover h3::after {
+  opacity: 1;
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.6);
+}
+
+/* --- Lignes de liste : objets, équipement, capacités --- */
+.stellaire-d6.actor .item,
+.stellaire-d6.actor .equipement {
+  border-radius: var(--sd6-radius-sm);
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .item:hover,
+.stellaire-d6.actor .equipement:hover {
+  background: linear-gradient(90deg, rgb(var(--sd6-c-gold-500-rgb) / 0.1), transparent 70%);
+  box-shadow: inset 2px 0 0 var(--sd6-gold);
+  transform: translateX(3px);
+}
+
+.stellaire-d6.actor .item-img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor .item:hover .item-img,
+.stellaire-d6.actor .equipement:hover .item-img {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 12px rgb(var(--sd6-c-gold-500-rgb) / 0.35);
+  transform: scale(1.1);
+}
+
+/* --- Boutons d'action de ligne --- */
+.stellaire-d6.actor .item-edit,
+.stellaire-d6.actor .item-chat,
+.stellaire-d6.actor .item-attack,
+.stellaire-d6.actor .item-delete,
+.stellaire-d6.actor .etat-delete {
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+}
+
+.stellaire-d6.actor .item-edit:hover,
+.stellaire-d6.actor .item-chat:hover,
+.stellaire-d6.actor .item-delete:hover,
+.stellaire-d6.actor .etat-delete:hover {
+  transform: scale(1.2);
+}
+
+/* Le réticule se resserre plutôt que de grossir. */
+.stellaire-d6.actor .item-attack:hover {
+  transform: scale(0.88);
+}
+
+/* --- Zones de dépôt Origine / Rôle --- */
+.stellaire-d6.actor .origine-drop,
+.stellaire-d6.actor .role-drop {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .origine-drop:hover,
+.stellaire-d6.actor .role-drop:hover {
+  border-color: var(--sd6-gold-soft);
+  color: var(--sd6-ice);
+}
+
+/* --- Pépites de Stress : la transition, sans la mise en scène --- */
+/* L'animation du pip qui vient de s'allumer demande de savoir
+   lequel a changé : c'est le rôle de la sheet, pas de la feuille. */
+.stellaire-d6.actor .stress-pips .pip {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .resource {
+  transition:
+    border-color var(--sd6-dur-slow) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+/* --- Champ verrouillé : hachure plutôt qu'opacité --- */
+/* « Grisé » se lit comme « cassé ». Une hachure dit « pas
+   maintenant » en gardant la valeur lisible. */
+.stellaire-d6.actor input:disabled,
+.stellaire-d6.actor select:disabled {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 5px,
+    rgb(var(--sd6-c-night-600-rgb) / 0.14) 5px 6px
+  );
+  opacity: 0.85;
+}
+
+/* --- Barre de défilement --- */
+.stellaire-d6.actor .sheet-body {
+  scrollbar-color: var(--sd6-gold-soft) rgb(var(--sd6-c-night-950-rgb) / 0.5);
+  scrollbar-width: thin;
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar {
+  width: 9px;
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar-track {
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.5);
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar-thumb {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.45);
+  border-radius: var(--sd6-radius-lg);
+  transition: background var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .sheet-body::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.75);
+}
+
+/* --- Pied de fiche --- */
+.stellaire-d6.actor .footer-rune-line {
+  transition: opacity var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.actor .sheet-footer-runes:hover .footer-rune-line {
+  opacity: 1;
+}
+
+/* ============================================================
+   Mouvement — mise en scène
+   ------------------------------------------------------------
+   Ces classes sont posées par module/sheets/character-sheet.mjs,
+   et uniquement quand quelque chose a réellement changé d'un
+   rendu à l'autre. Les règles ci-dessous ne se déclenchent donc
+   jamais d'elles-mêmes.
+   ============================================================ */
+
+/* --- Ambiance : le fond dérive --- */
+/* Deux couches de plus par-dessus le champ d'étoiles fixe de la
+   fiche, à des vitesses différentes : c'est l'écart entre les
+   vitesses qui fait la profondeur, pas le mouvement lui-même.
+
+   Elles ne tournent que si la fiche est survolée ou tient le
+   focus. Six fiches ouvertes ne font donc jamais six boucles. */
+.stellaire-d6.actor .window-content {
+  position: relative;
+}
+
+.stellaire-d6.actor .window-content::before,
+.stellaire-d6.actor .window-content::after {
+  content: "";
+  inset: -50%;
+  pointer-events: none;
+  position: absolute;
+  z-index: 0;
+}
+
+.stellaire-d6.actor .window-content::before {
+  animation: sd6-drift-near 90s linear infinite;
+  /* Après le raccourci, jamais avant : « animation » réinitialise
+     animation-play-state, et la pause serait perdue. */
+  animation-play-state: paused;
+  background-image:
+    radial-gradient(1px 1px at 18% 22%, rgb(var(--sd6-c-white-rgb) / 0.55), transparent),
+    radial-gradient(1px 1px at 62% 48%, rgb(var(--sd6-c-white-rgb) / 0.45), transparent),
+    radial-gradient(1.4px 1.4px at 84% 71%, rgb(var(--sd6-c-white-rgb) / 0.5), transparent);
+  background-size: 260px 200px;
+  opacity: 0.7;
+}
+
+.stellaire-d6.actor .window-content::after {
+  animation: sd6-drift-far 190s linear infinite;
+  animation-play-state: paused;
+  background-image:
+    radial-gradient(1px 1px at 33% 64%, rgb(var(--sd6-c-white-rgb) / 0.35), transparent),
+    radial-gradient(1px 1px at 71% 18%, rgb(var(--sd6-c-white-rgb) / 0.3), transparent);
+  background-size: 420px 320px;
+  filter: blur(0.6px);
+  opacity: 0.45;
+}
+
+.stellaire-d6.actor:hover .window-content::before,
+.stellaire-d6.actor:hover .window-content::after,
+.stellaire-d6.actor:focus-within .window-content::before,
+.stellaire-d6.actor:focus-within .window-content::after {
+  animation-play-state: running;
+}
+
+@keyframes sd6-drift-near {
+  to { background-position: 780px 340px; }
+}
+
+@keyframes sd6-drift-far {
+  to { background-position: -560px 260px; }
+}
+
+/* Le contenu passe devant l'ambiance. */
+.stellaire-d6.actor .personnage {
+  position: relative;
+  z-index: 1;
+}
+
+/* --- Ouverture de fiche --- */
+.stellaire-d6.actor.sd6-entering .sheet-header,
+.stellaire-d6.actor.sd6-entering .tabs {
+  animation: sd6-rise-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+}
+
+.stellaire-d6.actor.sd6-entering .tabs {
+  animation-delay: var(--sd6-stagger);
+}
+
+.stellaire-d6.actor.sd6-entering .sheet-body > .tab.active > section {
+  animation: sd6-rise-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+  animation-delay: calc(var(--sd6-stagger) * (2 + var(--sd6-i, 0)));
+}
+
+@keyframes sd6-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+}
+
+/* --- Onglets : le filet glisse d'un onglet à l'autre --- */
+.stellaire-d6.actor .tabs {
+  position: relative;
+}
+
+.stellaire-d6.actor .sd6-tab-glider {
+  background: linear-gradient(90deg, transparent, var(--sd6-gold), transparent);
+  bottom: -1px;
+  box-shadow: 0 0 10px rgb(var(--sd6-c-gold-500-rgb) / 0.6);
+  height: 2px;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(var(--sd6-x, 0));
+  transition:
+    transform var(--sd6-dur-slow) var(--sd6-ease-out),
+    width var(--sd6-dur-slow) var(--sd6-ease-out);
+  width: var(--sd6-w, 0);
+}
+
+/* Seul le panneau entrant est animé : le sortant est masqué d'un
+   coup par Foundry, et display n'est pas animable. */
+.stellaire-d6.actor .tab.sd6-tab-enter > section {
+  animation: sd6-rise-in var(--sd6-dur-slow) var(--sd6-ease-out) backwards;
+  animation-delay: calc(var(--sd6-i, 0) * var(--sd6-stagger));
+}
+
+/* --- Stress --- */
+.stellaire-d6.actor .stress-pips .pip.sd6-just-lit {
+  animation: sd6-pip-pop 480ms var(--sd6-ease-land);
+}
+
+@keyframes sd6-pip-pop {
+  0% { transform: rotate(45deg) scale(0.4); }
+  55% { transform: rotate(45deg) scale(1.5); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+
+/* L'onde se propage sans déplacer quoi que ce soit. */
+.stellaire-d6.actor .stress-pips .pip.sd6-just-lit::after {
+  animation: sd6-pip-ring 620ms var(--sd6-ease-out) both;
+  border: 1px solid var(--sd6-crit);
+  content: "";
+  inset: -2px;
+  pointer-events: none;
+  position: absolute;
+}
+
+@keyframes sd6-pip-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+.stellaire-d6.actor .resource-value.sd6-bump {
+  animation: sd6-bump 380ms var(--sd6-ease-land);
+}
+
+@keyframes sd6-bump {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+
+/* Stress au maximum : la seule boucle que je défendrais sur la
+   fiche. Un état critique doit rester visible APRÈS qu'on s'y soit
+   habitué — un aplat rouge cesse d'être vu au bout de dix minutes. */
+.stellaire-d6.actor .resource.stress.full {
+  animation: sd6-alarm 2.2s var(--sd6-ease-in-out) infinite;
+}
+
+@keyframes sd6-alarm {
+  0%, 100% {
+    box-shadow: inset 0 0 12px rgb(var(--sd6-c-coral-500-rgb) / 0.25);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 20px rgb(var(--sd6-c-coral-500-rgb) / 0.45),
+      0 0 16px rgb(var(--sd6-c-coral-500-rgb) / 0.3);
+  }
+}
+
+/* --- Lignes qui arrivent et qui partent --- */
+.stellaire-d6.actor .item.sd6-arriving,
+.stellaire-d6.actor .etat.sd6-arriving {
+  animation: sd6-row-in var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+@keyframes sd6-row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+
+/* La hauteur est la seule propriété non compositée de toute la
+   couche. C'est assumé : replier la ligne est ce qui empêche la
+   liste de sauter d'un cran sous le curseur, et il n'existe pas
+   d'équivalent en transform. */
+.stellaire-d6.actor .item.sd6-leaving,
+.stellaire-d6.actor .etat.sd6-leaving,
+.stellaire-d6.actor .equipement.sd6-leaving {
+  animation: sd6-row-out var(--sd6-dur-slow) var(--sd6-ease-in-out) forwards;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@keyframes sd6-row-out {
+  to {
+    margin-bottom: -2rem;
+    opacity: 0;
+    transform: translateX(26px) scaleY(0.6);
+  }
+}
+
+/* --- Zones de dépôt Origine / Rôle --- */
+.stellaire-d6.actor .origine-drop.sd6-dragover,
+.stellaire-d6.actor .role-drop.sd6-dragover {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.12);
+  border-color: var(--sd6-gold);
+  border-style: solid;
+  color: var(--sd6-gold);
+}
+
+/* --- Aperçu de pool --- */
+/* La fiche affiche un score ; la règle lance une pool. Les deux ne
+   coïncident que si aucun effet ne s'applique — d'où ces dés
+   fantômes, qui montrent au survol ce qui partira vraiment. */
+.stellaire-d6.actor .pool-ghost {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.stellaire-d6.actor .pool-ghost i {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.14);
+  border: 1px solid rgb(var(--sd6-c-gold-500-rgb) / 0.4);
+  border-radius: var(--sd6-radius-xs);
+  display: block;
+  height: 9px;
+  opacity: 0;
+  transform: translateY(4px) scale(0.6);
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+  transition-delay: calc(var(--sd6-i, 0) * 45ms);
+  width: 9px;
+}
+
+.stellaire-d6.actor .skill:hover .pool-ghost i,
+.stellaire-d6.actor .skill:focus-within .pool-ghost i {
+  opacity: 1;
+  transform: none;
+}
+
+/* Pool nulle : 2d6 en gardant le pire, et aucune critique possible.
+   C'est l'information la plus lourde de la règle et elle n'était
+   visible nulle part. */
+.stellaire-d6.actor .pool-ghost.disadvantage i {
+  background: rgb(var(--sd6-c-coral-500-rgb) / 0.14);
+  border-color: rgb(var(--sd6-c-coral-500-rgb) / 0.45);
+}
+
+/* ============================================================
+   Mouvement — traitement holographique
+   ------------------------------------------------------------
+   La répartition tenue ici et dans tout le reste : le contenant
+   est technologique, la règle est runique. Un cadre de section,
+   une barre de défilement, une trame de balayage relèvent de
+   l'écran de vaisseau ; un six, un Stress, une Origine qui
+   s'ancre relèvent de la gravure qui s'allume.
+
+   La règle de partage, pour les ajouts futurs : si l'élément
+   existerait dans un tableur, il est technologique ; s'il
+   n'existe que parce que c'est un jeu de rôle, il est runique.
+   ============================================================ */
+
+/* --- Équerres d'angle sur les sections --- */
+/* Le vocabulaire HUD sans changer une couleur : les équerres se
+   dessinent au survol, du coin vers l'extérieur. */
+.stellaire-d6.actor .sheet-body section > section {
+  position: relative;
+}
+
+.stellaire-d6.actor .sheet-body section > section::before,
+.stellaire-d6.actor .sheet-body section > section::after {
+  border-color: var(--sd6-gold-soft);
+  border-style: solid;
+  content: "";
+  height: 10px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition:
+    opacity var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-out);
+  width: 10px;
+}
+
+.stellaire-d6.actor .sheet-body section > section::before {
+  border-width: 1px 0 0 1px;
+  left: -1px;
+  top: -1px;
+  transform: translate(4px, 4px);
+}
+
+.stellaire-d6.actor .sheet-body section > section::after {
+  border-width: 0 1px 1px 0;
+  bottom: -1px;
+  right: -1px;
+  transform: translate(-4px, -4px);
+}
+
+.stellaire-d6.actor .sheet-body section > section:hover::before,
+.stellaire-d6.actor .sheet-body section > section:hover::after {
+  opacity: 0.9;
+  transform: none;
+}
+
+/* --- Trame de balayage --- */
+/* Lignes fixes à très basse opacité, plus une bande qui descend.
+   C'est le poste le plus démonstratif du lot, donc le premier à
+   fatiguer : la bande passe une fois toutes les quatorze secondes
+   et ne tourne que sur la fiche regardée. */
+.stellaire-d6.actor .personnage::after {
+  animation: sd6-scan 14s linear infinite;
+  animation-play-state: paused;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgb(var(--sd6-c-cyan-500-rgb) / 0.05) 45%,
+      rgb(var(--sd6-c-cyan-500-rgb) / 0.09) 50%,
+      rgb(var(--sd6-c-cyan-500-rgb) / 0.05) 55%,
+      transparent 100%
+    );
+  content: "";
+  height: 22%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+
+.stellaire-d6.actor:hover .personnage::after,
+.stellaire-d6.actor:focus-within .personnage::after {
+  animation-play-state: running;
+}
+
+@keyframes sd6-scan {
+  0%, 70% {
+    opacity: 0;
+    transform: translateY(-30%);
+  }
+  73%, 97% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translateY(480%);
+  }
+}
+
+/* --- Les niveaux qui coupent l'ambiance --- */
+/* Les quatre ambiances vivent sur des pseudo-éléments, que la règle
+   générique de base/_motion.css ne peut pas atteindre : elle cible
+   .sd6-ambient, et un ::after ne porte pas de classe. On les nomme
+   donc ici, au plus près de leur déclaration. */
+body.sd6-motion-sobre .stellaire-d6.actor .window-content::before,
+body.sd6-motion-sobre .stellaire-d6.actor .window-content::after,
+body.sd6-motion-sobre .stellaire-d6.actor .personnage::after,
+body.sd6-motion-sobre .stellaire-d6.actor .sheet-header::after,
+body.sd6-motion-aucune .stellaire-d6.actor .window-content::before,
+body.sd6-motion-aucune .stellaire-d6.actor .window-content::after,
+body.sd6-motion-aucune .stellaire-d6.actor .personnage::after,
+body.sd6-motion-aucune .stellaire-d6.actor .sheet-header::after {
+  animation-play-state: paused !important;
+}
+
+/* --- Grain --- */
+/* Deux services rendus pour un seul calque : il casse le bandage
+   des dégradés sombres, et il donne de la matière à des aplats
+   qui, sans lui, sont parfaitement lisses — donc synthétiques. */
+.stellaire-d6.actor .window-content {
+  /* Le grain doit se sentir sans se voir : à peine 5 % d'opacité sur
+     une trame fine. Au-delà, il moutonne sur les grandes surfaces
+     sombres — ce qui est exactement le défaut qu'il devait corriger. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* --- Onde runique sur les boutons d'action --- */
+/* L'onde part du bouton à l'appui. Purement CSS : pas de position
+   du clic, mais pas de JavaScript non plus pour un accusé de
+   réception. */
+.stellaire-d6.actor .skill-roll,
+.stellaire-d6.actor .item-add,
+.stellaire-d6.actor .item-attack {
+  overflow: hidden;
+  position: relative;
+}
+
+.stellaire-d6.actor .skill-roll::after,
+.stellaire-d6.actor .item-add::after,
+.stellaire-d6.actor .item-attack::after {
+  background: radial-gradient(circle, rgb(var(--sd6-c-gold-500-rgb) / 0.5), transparent 65%);
+  border-radius: var(--sd6-radius-round);
+  content: "";
+  height: 140%;
+  left: 50%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.2);
+  width: 140%;
+}
+
+.stellaire-d6.actor .skill-roll:active::after,
+.stellaire-d6.actor .item-add:active::after,
+.stellaire-d6.actor .item-attack:active::after {
+  animation: sd6-rune-pulse 520ms var(--sd6-ease-out);
+}
+
+@keyframes sd6-rune-pulse {
+  0% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* --- Reliques et marques --- */
+/* Le seul effet permanent que je défendrais sur un objet : ce sont
+   les deux types que la fiction distingue vraiment du matériel. */
+.stellaire-d6.actor .item[data-item-type="relique"] .item-img,
+.stellaire-d6.actor .item[data-item-type="marque"] .item-img,
+.stellaire-d6.actor .equipement[data-item-type="relique"] .item-img {
+  animation: sd6-relic 4.5s var(--sd6-ease-in-out) infinite;
+  animation-play-state: paused;
+  border-color: rgb(var(--sd6-c-violet-500-rgb) / 0.6);
+}
+
+.stellaire-d6.actor:hover .item[data-item-type="relique"] .item-img,
+.stellaire-d6.actor:hover .item[data-item-type="marque"] .item-img,
+.stellaire-d6.actor:hover .equipement[data-item-type="relique"] .item-img,
+.stellaire-d6.actor:focus-within .item[data-item-type="relique"] .item-img,
+.stellaire-d6.actor:focus-within .item[data-item-type="marque"] .item-img {
+  animation-play-state: running;
+}
+
+@keyframes sd6-relic {
+  0%, 100% { box-shadow: 0 0 4px rgb(var(--sd6-c-violet-500-rgb) / 0.3); }
+  50% { box-shadow: 0 0 14px rgb(var(--sd6-c-violet-500-rgb) / 0.65); }
+}

@@ -357,3 +357,157 @@
   margin: 0.25rem 0;
   opacity: 0.8;
 }
+
+/* ============================================================
+   Mouvement
+   ============================================================ */
+
+.stellaire-d6.item .profile-img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-slow) var(--sd6-ease-out);
+}
+
+.stellaire-d6.item .sheet-header:hover .profile-img {
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 20px rgb(var(--sd6-c-gold-500-rgb) / 0.4);
+}
+
+.stellaire-d6.item .tab-item {
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6.item .tab-item:hover {
+  transform: translateY(-1px);
+}
+
+.stellaire-d6.item .origine-items-editor .item {
+  border-radius: var(--sd6-radius-sm);
+  transition:
+    background var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.item .origine-items-editor .item:hover {
+  background: linear-gradient(90deg, rgb(var(--sd6-c-gold-500-rgb) / 0.1), transparent 70%);
+  box-shadow: inset 2px 0 0 var(--sd6-gold);
+  transform: translateX(3px);
+}
+
+.stellaire-d6.item .origine-items-editor .item-img {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    box-shadow var(--sd6-dur-base) var(--sd6-ease-out),
+    transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+.stellaire-d6.item .origine-items-editor .item:hover .item-img {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 12px rgb(var(--sd6-c-gold-500-rgb) / 0.35);
+  transform: scale(1.1);
+}
+
+.stellaire-d6.item .origine-items-editor .item-edit,
+.stellaire-d6.item .origine-items-editor .item-delete,
+.stellaire-d6.item .effect-delete {
+  transition:
+    color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-base) var(--sd6-ease-land);
+}
+
+.stellaire-d6.item .origine-items-editor .item-edit:hover,
+.stellaire-d6.item .origine-items-editor .item-delete:hover,
+.stellaire-d6.item .effect-delete:hover {
+  transform: scale(1.2);
+}
+
+.stellaire-d6.item .origine-drop-hint {
+  transition:
+    border-color var(--sd6-dur-base) var(--sd6-ease-out),
+    color var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.item .effect {
+  border-radius: var(--sd6-radius-sm);
+  transition: background var(--sd6-dur-base) var(--sd6-ease-out);
+}
+
+.stellaire-d6.item .effect:hover {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.06);
+}
+
+.stellaire-d6.item .sheet-body {
+  scrollbar-color: var(--sd6-gold-soft) rgb(var(--sd6-c-night-950-rgb) / 0.5);
+  scrollbar-width: thin;
+}
+
+.stellaire-d6.item .sheet-body::-webkit-scrollbar {
+  width: 9px;
+}
+
+.stellaire-d6.item .sheet-body::-webkit-scrollbar-track {
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.5);
+}
+
+.stellaire-d6.item .sheet-body::-webkit-scrollbar-thumb {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.45);
+  border-radius: var(--sd6-radius-lg);
+  transition: background var(--sd6-dur-fast) var(--sd6-ease-out);
+}
+
+.stellaire-d6.item .sheet-body::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.75);
+}
+
+.stellaire-d6.item input:disabled,
+.stellaire-d6.item select:disabled {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 5px,
+    rgb(var(--sd6-c-night-600-rgb) / 0.14) 5px 6px
+  );
+}
+
+/* --- Liseré de type --- */
+/* Dix types d'objets partageaient exactement la même fiche. Le
+   liseré les distingue d'un coup d'œil, en piochant dans les
+   accents Bifrost déjà définis : aucune couleur nouvelle, une
+   affectation. */
+.stellaire-d6.item[data-item-type] {
+  border-left: 3px solid var(--sd6-line-bright);
+}
+
+.stellaire-d6.item[data-item-type="arme"] { border-left-color: var(--sd6-fail); }
+.stellaire-d6.item[data-item-type="armure"] { border-left-color: var(--sd6-c-cyan-500); }
+.stellaire-d6.item[data-item-type="outil"] { border-left-color: var(--sd6-mist); }
+.stellaire-d6.item[data-item-type="equipement"] { border-left-color: var(--sd6-mist); }
+.stellaire-d6.item[data-item-type="relique"] { border-left-color: var(--sd6-c-violet-500); }
+.stellaire-d6.item[data-item-type="capacite"] { border-left-color: var(--sd6-success); }
+.stellaire-d6.item[data-item-type="pouvoir"] { border-left-color: var(--sd6-c-magenta-500); }
+.stellaire-d6.item[data-item-type="marque"] { border-left-color: var(--sd6-c-rose-500); }
+.stellaire-d6.item[data-item-type="origine"] { border-left-color: var(--sd6-gold); }
+.stellaire-d6.item[data-item-type="role"] { border-left-color: var(--sd6-gold); }
+
+/* Reliques et marques : la lueur qui les distingue du matériel. */
+.stellaire-d6.item[data-item-type="relique"] .profile-img,
+.stellaire-d6.item[data-item-type="marque"] .profile-img {
+  animation: sd6-relic-sheet 4.5s var(--sd6-ease-in-out) infinite;
+  animation-play-state: paused;
+  border-color: rgb(var(--sd6-c-violet-500-rgb) / 0.6);
+}
+
+.stellaire-d6.item[data-item-type="relique"]:hover .profile-img,
+.stellaire-d6.item[data-item-type="marque"]:hover .profile-img {
+  animation-play-state: running;
+}
+
+@keyframes sd6-relic-sheet {
+  0%, 100% { box-shadow: 0 0 6px rgb(var(--sd6-c-violet-500-rgb) / 0.3); }
+  50% { box-shadow: 0 0 18px rgb(var(--sd6-c-violet-500-rgb) / 0.6); }
+}

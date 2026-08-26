@@ -117,7 +117,8 @@
       "inline": {
         "hint": "Lancer un jet de {skill}",
         "noActor": "Sélectionnez un pion, ou faites-vous attribuer un personnage, pour lancer ce jet."
-      }
+      },
+      "poolHint": "Pool : {count}d6"
     },
     "etats": {
       "title": "États et blessures",
@@ -211,6 +212,17 @@
       "initiative": {
         "name": "Formule d'initiative",
         "hint": "Formule utilisée par le tracker de combat. Par défaut : 1d6."
+      },
+      "animations": {
+        "worldName": "Animations (défaut de la table)",
+        "worldHint": "Niveau maximal d'animation pour cette table. Chaque joueur peut descendre en dessous, jamais au-dessus.",
+        "clientName": "Animations",
+        "clientHint": "Votre niveau d'animation. « Défaut de la table » suit le réglage du MJ. La préférence « réduire les animations » de votre système prime sur tout.",
+        "defaut": "Défaut de la table",
+        "spectaculaire": "Spectaculaire",
+        "pleine": "Pleine",
+        "sobre": "Sobre — sans ambiance",
+        "aucune": "Aucune"
       }
     },
     "migration": {

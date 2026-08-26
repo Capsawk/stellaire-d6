@@ -29,3 +29,24 @@ a.sd6-inline-roll:focus-visible {
 a.sd6-inline-roll i {
   font-size: var(--sd6-fs-085);
 }
+
+/* --- Mouvement --- */
+a.sd6-inline-roll {
+  transition:
+    background var(--sd6-dur-fast) var(--sd6-ease-out),
+    border-color var(--sd6-dur-fast) var(--sd6-ease-out),
+    text-shadow var(--sd6-dur-fast) var(--sd6-ease-out),
+    transform var(--sd6-dur-instant) var(--sd6-ease-out);
+}
+
+a.sd6-inline-roll:active {
+  transform: translateY(1px);
+}
+
+a.sd6-inline-roll i {
+  transition: transform var(--sd6-dur-slow) var(--sd6-ease-land);
+}
+
+a.sd6-inline-roll:hover i {
+  transform: rotate(-24deg) scale(1.15);
+}

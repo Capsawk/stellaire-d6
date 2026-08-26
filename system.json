@@ -20,8 +20,10 @@
   "styles": [
     "styles/tokens/_palette.css",
     "styles/tokens/_semantic.css",
+    "styles/tokens/_motion.css",
     "styles/base/_root.css",
     "styles/base/_forms.css",
+    "styles/base/_motion.css",
     "styles/sheets/_actor.css",
     "styles/sheets/_item.css",
     "styles/sheets/_dialog.css",

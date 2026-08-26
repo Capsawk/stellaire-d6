@@ -1,6 +1,11 @@
 <div class="stellaire-roll-dialog">
   <p class="roll-dialog-title">{{skillLabel}}</p>
 
+  <div class="roll-pool" data-pool>
+    <span class="roll-pool-dice" aria-hidden="true"></span>
+    <span class="roll-pool-count"></span>
+  </div>
+
   <div class="form-group">
     <label>{{localize "SD6.jets.position"}}</label>
     <select name="position">{{selectOptions positions selected="risquee"}}</select>

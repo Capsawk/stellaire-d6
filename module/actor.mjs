@@ -174,6 +174,47 @@ export class StellaireActor extends Actor {
   }
 
   /**
+   * Calcule la pool d'un jet sans le lancer.
+   *
+   * Extrait de rollSkill() pour que le dialogue puisse afficher à l'avance ce
+   * qui partira réellement. Le calcul n'existe qu'ici : un aperçu qui
+   * recalculerait de son côté finirait tôt ou tard par mentir.
+   *
+   * Deux valeurs distinctes en sortent, et il ne faut pas les confondre :
+   * `pool` est le résultat du calcul, qui peut être nul ou négatif ; `count`
+   * est le nombre de dés effectivement lancés, qui vaut 2 en désavantage.
+   *
+   * @param {string} skillId
+   * @param {object} [options]  Mêmes options que rollSkill().
+   * @returns {{pool: number, raw: number, count: number, desavantage: boolean,
+   *   stressGained: boolean, effects: object}}
+   *   `raw` est la pool avant plafonnement : l'écart avec `pool` est ce que le
+   *   plafond de monde a retiré.
+   */
+  computeSkillPool(skillId, options = {}) {
+    const {
+      bonusDice = 0,
+      malusDice = 0,
+      applyBonusEffects = true,
+      applyMalusEffects = true,
+      gainStress = false
+    } = options;
+
+    const skill = this.system.skills?.[skillId];
+    if ( skill === undefined ) throw new Error(`Compétence inconnue : ${skillId}`);
+
+    const stressGained = gainStress && (this.system.rsc.stress.value < this.system.rsc.stress.max);
+    const effects = this.getSkillEffectDice(skillId);
+    const raw = skill + bonusDice + (applyBonusEffects ? effects.bonus : 0)
+      - malusDice - (applyMalusEffects ? effects.malus : 0)
+      + (stressGained ? 1 : 0);
+    const pool = Math.min(raw, maxDice());
+    const desavantage = pool <= 0;
+
+    return { pool, raw, count: desavantage ? 2 : pool, desavantage, stressGained, effects };
+  }
+
+  /**
    * Lance un jet de compétence.
    * Pool = score de compétence + dés bonus - dés malus (+1 si Stress généré).
    * Les dés bonus/malus des effets d'items actifs sont ajoutés automatiquement.
@@ -205,20 +246,11 @@ export class StellaireActor extends Actor {
       weapon = null
     } = options;
 
-    const skill = this.system.skills?.[skillId];
-    if ( skill === undefined ) throw new Error(`Compétence inconnue : ${skillId}`);
     const skillLabel = label ?? game.i18n.localize(SD6.skills[skillId].label);
 
-    const stressGained = gainStress && (this.system.rsc.stress.value < this.system.rsc.stress.max);
-    const effects = this.getSkillEffectDice(skillId);
-    const pool = Math.min(
-      skill + bonusDice + (applyBonusEffects ? effects.bonus : 0)
-        - malusDice - (applyMalusEffects ? effects.malus : 0)
-        + (stressGained ? 1 : 0),
-      maxDice()
-    );
-    const desavantage = pool <= 0;
-    const count = desavantage ? 2 : pool;
+    const { pool, count, desavantage, stressGained } = this.computeSkillPool(skillId, {
+      bonusDice, malusDice, applyBonusEffects, applyMalusEffects, gainStress
+    });
 
     const roll = new foundry.dice.Roll(`${count}d6`);
     await roll.evaluate();

@@ -1,0 +1,42 @@
+/* ============================================================
+   Tokens — mouvement
+   ------------------------------------------------------------
+   Les durées et les courbes du thème, et rien d'autre. Même
+   principe que la palette : aucune règle de style ne devrait
+   écrire une durée en dur, sous peine de voir le système se
+   désaccorder au fil des ajouts.
+
+   Les durées sont nommées par l'intention, pas par la valeur.
+   « fast » reste fast même si on décide un jour que c'est 140ms
+   plutôt que 160 — et ce jour-là, une seule ligne change.
+
+   Ces tokens ne portent aucune couleur : ils traversent donc le
+   thème clair sans avoir à y être redéfinis.
+   ============================================================ */
+
+.stellaire-d6,
+.sd6-roll,
+.sd6-chat-item,
+a.sd6-inline-roll {
+
+  /* --- Durées --- */
+  --sd6-dur-instant: 90ms;   /* accusé de réception : coche, focus       */
+  --sd6-dur-fast: 160ms;     /* survol, changement de couleur            */
+  --sd6-dur-base: 240ms;     /* déplacement, apparition d'un élément     */
+  --sd6-dur-slow: 420ms;     /* onglet, panneau, ligne qui se replie     */
+  --sd6-dur-cine: 900ms;     /* séquence de jet, critique                */
+
+  /* --- Courbes --- */
+  /* Défaut : démarre vite, s'arrête doucement. */
+  --sd6-ease-out: cubic-bezier(0.22, 0.8, 0.3, 1);
+  /* Dépasse puis se pose — pour ce qui « arrive » : un dé, un pip. */
+  --sd6-ease-land: cubic-bezier(0.16, 1.05, 0.3, 1);
+  /* Symétrique — pour les va-et-vient : pulsation, secousse. */
+  --sd6-ease-in-out: cubic-bezier(0.6, 0, 0.35, 1);
+
+  /* --- Décalages en cascade --- */
+  /* Écart entre deux éléments d'une même série. Au-delà de ~120ms
+     la série cesse d'être lue comme un groupe. */
+  --sd6-stagger: 60ms;
+  --sd6-stagger-dice: 110ms;
+}

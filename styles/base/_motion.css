@@ -1,0 +1,93 @@
+/* ============================================================
+   Base — mouvement : garde-fous et niveaux
+   ------------------------------------------------------------
+   Trois niveaux de retrait, du plus fort au plus faible.
+
+   1. prefers-reduced-motion : contrainte d'accessibilité. Prime
+      sur tout, y compris sur le choix du joueur et celui du MJ.
+   2. .sd6-motion-aucune : plus rien ne bouge.
+   3. .sd6-motion-sobre  : les rétroactions restent, l'ambiance
+      s'arrête. C'est le mode utile sur une machine modeste.
+
+   Les classes sont posées sur le <body> par module/motion.mjs.
+   Tant que ce module n'existe pas, elles sont inertes : cette
+   feuille est utilisable seule.
+
+   Pourquoi 1ms et non « none » : animation: none annule aussi
+   l'ÉTAT FINAL de l'animation. Un élément qui n'existe qu'en fin
+   de keyframes disparaîtrait purement et simplement — et il
+   disparaîtrait précisément pour les gens qu'on cherche à
+   ménager. À 1ms la séquence se joue en une image, et l'état
+   final est correct.
+   ============================================================ */
+
+/* --- Niveau « sobre » : plus une seule boucle --- */
+body.sd6-motion-sobre .stellaire-d6 *,
+body.sd6-motion-sobre .stellaire-d6 *::before,
+body.sd6-motion-sobre .stellaire-d6 *::after,
+body.sd6-motion-sobre .sd6-roll *,
+body.sd6-motion-sobre .sd6-chat-item * {
+  animation-iteration-count: 1 !important;
+}
+
+/* L'ambiance est décorative par définition : elle s'efface. */
+body.sd6-motion-sobre .sd6-ambient,
+body.sd6-motion-aucune .sd6-ambient {
+  animation: none !important;
+  opacity: 0 !important;
+}
+
+/* --- Niveau « aucune » --- */
+body.sd6-motion-aucune .stellaire-d6 *,
+body.sd6-motion-aucune .stellaire-d6 *::before,
+body.sd6-motion-aucune .stellaire-d6 *::after,
+body.sd6-motion-aucune .sd6-roll *,
+body.sd6-motion-aucune .sd6-roll *::before,
+body.sd6-motion-aucune .sd6-roll *::after,
+body.sd6-motion-aucune .sd6-chat-item *,
+body.sd6-motion-aucune a.sd6-inline-roll {
+  animation-delay: 0ms !important;
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 1ms !important;
+}
+
+/* --- Accessibilité : prime sur les deux réglages --- */
+@media (prefers-reduced-motion: reduce) {
+  .stellaire-d6 *,
+  .stellaire-d6 *::before,
+  .stellaire-d6 *::after,
+  .sd6-roll *,
+  .sd6-roll *::before,
+  .sd6-roll *::after,
+  .sd6-chat-item *,
+  a.sd6-inline-roll {
+    animation-delay: 0ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .stellaire-d6 .sd6-ambient {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+/* --- Sélection de texte aux couleurs du système --- */
+.stellaire-d6 ::selection,
+.sd6-roll ::selection,
+.sd6-chat-item ::selection {
+  background: rgb(var(--sd6-c-gold-500-rgb) / 0.28);
+  color: var(--sd6-ice);
+}
+
+/* --- Focus clavier : visible partout où l'on peut agir --- */
+.stellaire-d6 button:focus-visible,
+.stellaire-d6 [data-action]:focus-visible,
+.stellaire-d6 input:focus-visible,
+.stellaire-d6 select:focus-visible,
+.stellaire-d6 textarea:focus-visible {
+  outline: 2px solid var(--sd6-gold);
+  outline-offset: 2px;
+}

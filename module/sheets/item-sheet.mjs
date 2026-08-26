@@ -35,6 +35,15 @@ export class StellaireItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) 
     }
   };
 
+  /**
+   * Reporte le type sur la racine, pour que la feuille puisse teinter la
+   * fiche sans qu'aucune couleur ne soit choisie dans un gabarit.
+   */
+  _onRender(context, options) {
+    super._onRender?.(context, options);
+    if ( this.element ) this.element.dataset.itemType = this.document.type;
+  }
+
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
     context.item = this.document;

@@ -113,8 +113,20 @@ règles du jeu.
 - [x] Découper la feuille de style et tokeniser le thème
 - [x] Traduire le système en anglais
 - [x] Icônes par type, dossier de compendiums, préchargement, rechargement à chaud
+- [x] Tokeniser les durées et les courbes, et poser le garde-fou `prefers-reduced-motion`
+- [x] Temporiser les survols, les focus et les états de la fiche
+- [x] Mettre en scène la séquence de jet, la critique et l'échec
+- [x] Signaler ce qui change : Stress, lignes ajoutées et supprimées, zones de dépôt
+- [x] Afficher la pool réelle sur la fiche et dans le dialogue de jet
+- [x] Exposer le niveau d'animation en réglage de table et de joueur
+- [x] Traitement holographique : équerres, balayage, grain, liseré par type
 
 ## Écarté pour l'instant
 
 - [ ] Découper `personnage.hbs` en partials — les chemins relatifs aux boucles
       casseraient silencieusement, à faire avec Foundry ouvert
+- [ ] Réordonnancement de l'inventaire au glisser-déposer, avec trait
+      d'insertion — le seul poste du chantier graphique laissé de côté,
+      parce qu'il demande une logique de tri et non de la mise en scène
+- [ ] Rôles sémantiques « accent par type d'objet », pour que le liseré des
+      fiches n'aille plus chercher dans la palette primitive
