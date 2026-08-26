@@ -1,0 +1,76 @@
+/* ============================================================
+   Tokens — rôles sémantiques et échelles
+   ------------------------------------------------------------
+   Ce que le reste de la feuille est censé utiliser. Les noms
+   décrivent un rôle dans l'interface, pas une couleur : changer
+   ce qu'ils pointent reteinte le système sans toucher une seule
+   règle de style.
+   ============================================================ */
+
+.stellaire-d6,
+.sd6-roll,
+.sd6-chat-item {
+
+  /* --- Surfaces --- */
+  --sd6-space: var(--sd6-c-night-900);
+  --sd6-space-2: var(--sd6-c-night-850);
+  --sd6-panel: var(--sd6-c-night-800);
+  --sd6-panel-2: var(--sd6-c-night-750);
+
+  /* --- Traits et bordures --- */
+  --sd6-line: var(--sd6-c-night-700);
+  --sd6-line-bright: var(--sd6-c-night-600);
+
+  /* --- Texte --- */
+  --sd6-ice: var(--sd6-c-ice-300);
+  --sd6-mist: var(--sd6-c-ice-500);
+
+  /* --- Accent runique --- */
+  --sd6-gold: var(--sd6-c-gold-500);
+  --sd6-gold-soft: var(--sd6-c-gold-600);
+
+  /* --- Issues de jet --- */
+  --sd6-success: var(--sd6-c-jade-500);
+  --sd6-mixed: var(--sd6-c-gold-450);
+  --sd6-fail: var(--sd6-c-coral-500);
+  --sd6-crit: var(--sd6-c-gold-350);
+
+  /* --- Typographie --- */
+  --sd6-font-display: "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+
+  /* Échelle de tailles, nommée d'après la valeur : --sd6-fs-085 vaut
+     0.85rem. Le nommage est volontairement littéral — quinze paliers
+     dont quatre séparés par moins de 0.08rem ne forment pas une
+     échelle t-shirt crédible, et le dire est plus utile que le
+     maquiller. Les fusionner est désormais un changement d'une ligne.
+     Candidats évidents : 065/068/070/072, puis 105/110/115. */
+  --sd6-fs-065: 0.65rem;
+  --sd6-fs-068: 0.68rem;
+  --sd6-fs-070: 0.7rem;
+  --sd6-fs-072: 0.72rem;
+  --sd6-fs-075: 0.75rem;
+  --sd6-fs-078: 0.78rem;
+  --sd6-fs-080: 0.8rem;
+  --sd6-fs-085: 0.85rem;
+  --sd6-fs-090: 0.9rem;
+  --sd6-fs-095: 0.95rem;
+  --sd6-fs-105: 1.05rem;
+  --sd6-fs-110: 1.1rem;
+  --sd6-fs-115: 1.15rem;
+  --sd6-fs-130: 1.3rem;
+  --sd6-fs-170: 1.7rem;
+
+  /* --- Interlettrage --- */
+  --sd6-tracking-1: 1px;
+  --sd6-tracking-2: 2px;
+  --sd6-tracking-3: 3px;
+  --sd6-tracking-4: 4px;
+  --sd6-tracking-6: 6px;
+
+  /* --- Rayons --- */
+  --sd6-radius-xs: 2px;
+  --sd6-radius-sm: 3px;
+  --sd6-radius-md: 4px;
+  --sd6-radius-lg: 5px;
+  --sd6-radius-round: 50%;
+}

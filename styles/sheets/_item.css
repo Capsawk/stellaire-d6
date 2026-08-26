@@ -1,0 +1,359 @@
+/* ============================================================
+   Fiche item
+   ============================================================ */
+
+.stellaire-d6.item {
+  background-color: var(--sd6-space);
+  background-image:
+    radial-gradient(ellipse 130% 55% at 50% -12%, rgb(var(--sd6-c-blue-550-rgb) / 0.18), transparent 62%),
+    radial-gradient(1px 1px at 18% 25%, rgb(var(--sd6-c-white-rgb) / 0.7), transparent 100%),
+    radial-gradient(1px 1px at 62% 70%, rgb(var(--sd6-c-white-rgb) / 0.5), transparent 100%),
+    radial-gradient(1.5px 1.5px at 84% 22%, rgb(var(--sd6-c-white-rgb) / 0.6), transparent 100%),
+    linear-gradient(180deg, var(--sd6-space-2) 0%, var(--sd6-space) 100%);
+}
+
+.stellaire-d6.item .window-content {
+  padding: 0;
+}
+
+.stellaire-d6.item .item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.stellaire-d6.item .sheet-header {
+  align-items: center;
+  border-bottom: 2px solid var(--sd6-gold-soft);
+  display: flex;
+  gap: 0.75rem;
+  padding-bottom: 0.35rem;
+}
+
+.stellaire-d6.item .profile-img {
+  border: 1px solid var(--sd6-gold-soft);
+  border-radius: var(--sd6-radius-round);
+  box-shadow: 0 0 10px rgb(var(--sd6-c-gold-500-rgb) / 0.3);
+  flex: 0 0 64px;
+  height: 64px;
+  object-fit: cover;
+  width: 64px;
+}
+
+.stellaire-d6.item .header-fields {
+  flex: 1;
+}
+
+.stellaire-d6.item .charname {
+  margin: 0;
+}
+
+.stellaire-d6.item .charname input {
+  background: transparent;
+  border: none;
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-130);
+  font-weight: bold;
+  height: auto;
+  width: 100%;
+}
+
+.stellaire-d6.item .item-type-label {
+  color: var(--sd6-gold-soft);
+  font-size: var(--sd6-fs-072);
+  letter-spacing: var(--sd6-tracking-2);
+  text-transform: uppercase;
+}
+
+.stellaire-d6.item .item-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.item .form-group {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.item .form-group label {
+  color: var(--sd6-mist);
+  flex: 0 0 6rem;
+  font-size: var(--sd6-fs-080);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-1);
+  padding-top: 0.2rem;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.item .form-group input,
+.stellaire-d6.item .form-group textarea {
+  flex: 1;
+}
+
+.stellaire-d6.item .form-group.description {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.stellaire-d6.item .form-group.description label {
+  flex: 0 0 auto;
+  padding-top: 0;
+}
+
+.stellaire-d6.item .form-group prose-mirror {
+  flex: 1;
+  width: 100%;
+}
+
+.stellaire-d6.item .form-group input[type="checkbox"] {
+  accent-color: var(--sd6-gold);
+  flex: 0 0 auto;
+}
+
+/* --- Fiche item : objets transmis d'une Origine ou d'un Rôle --- */
+.stellaire-d6.item .form-group.origine-items {
+  align-items: flex-start;
+}
+
+.stellaire-d6.item .origine-items-editor {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.stellaire-d6.item .origine-items-editor .item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.item .origine-items-editor .item {
+  align-items: center;
+  border-bottom: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.5);
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.item .origine-items-editor .item-img {
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-round);
+  flex: 0 0 2rem;
+  height: 2rem;
+  object-fit: cover;
+  width: 2rem;
+}
+
+.stellaire-d6.item .origine-items-editor .item-name {
+  color: var(--sd6-ice);
+  flex: 1;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-090);
+  font-weight: bold;
+}
+
+.stellaire-d6.item .origine-items-editor .item-type {
+  color: var(--sd6-gold-soft);
+  flex: 0 0 6rem;
+  font-size: var(--sd6-fs-070);
+  letter-spacing: var(--sd6-tracking-1);
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.item .origine-items-editor .item-edit,
+.stellaire-d6.item .origine-items-editor .item-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.item .origine-items-editor .item-edit:hover {
+  color: var(--sd6-ice);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-cyan-500-rgb) / 0.7);
+}
+
+.stellaire-d6.item .origine-items-editor .item-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-coral-500-rgb) / 0.7);
+}
+
+.stellaire-d6.item .origine-drop-hint {
+  align-items: center;
+  border: 1px dashed var(--sd6-line-bright);
+  border-radius: var(--sd6-radius-md);
+  color: var(--sd6-mist);
+  display: flex;
+  font-size: var(--sd6-fs-075);
+  font-style: italic;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 0.3rem;
+}
+
+/* --- Fiche item : onglets --- */
+.stellaire-d6.item .tabs {
+  align-items: center;
+  border-bottom: 1px solid var(--sd6-line);
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.4rem 0.5rem;
+}
+
+.stellaire-d6.item .tab-item {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-night-750-rgb) / 0.55), rgb(var(--sd6-c-night-800-rgb) / 0.8));
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  box-shadow: 0 1px 2px rgb(var(--sd6-c-black-rgb) / 0.4);
+  color: var(--sd6-mist);
+  cursor: pointer;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-080);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-2);
+  line-height: 1;
+  padding: 0.4rem 1rem;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.stellaire-d6.item .tab-item:hover {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-night-650-rgb) / 0.65), rgb(var(--sd6-c-night-750-rgb) / 0.85));
+  border-color: var(--sd6-line-bright);
+  box-shadow: 0 0 6px rgb(var(--sd6-c-night-600-rgb) / 0.35);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6.item .tab-item.active {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-gold-900-rgb) / 0.4), rgb(var(--sd6-c-gold-950-rgb) / 0.65));
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.35), inset 0 0 6px rgb(var(--sd6-c-gold-500-rgb) / 0.12);
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.5);
+}
+
+.stellaire-d6.item .sheet-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.stellaire-d6.item .sheet-body > .tab {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.stellaire-d6.item .sheet-body > .tab:not(.active) {
+  display: none;
+}
+
+/* --- Fiche item : éditeur d'effets --- */
+.stellaire-d6.item .item-effects {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-night-800-rgb) / 0.85), rgb(var(--sd6-c-night-900-rgb) / 0.75));
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+.stellaire-d6.item .effect-hint {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-075);
+  font-style: italic;
+  margin: 0;
+  opacity: 0.85;
+}
+
+.stellaire-d6.item .effect-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.item .effect {
+  align-items: center;
+  border-bottom: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.5);
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.item .effect:last-child {
+  border-bottom: none;
+}
+
+.stellaire-d6.item .effect select {
+  flex: 1;
+  min-width: 0;
+}
+
+.stellaire-d6.item .effect select[data-effect-field="type"] {
+  flex: 0 0 7rem;
+}
+
+.stellaire-d6.item .effect input[type="number"] {
+  flex: 0 0 3rem;
+  text-align: center;
+  width: 3rem;
+}
+
+.stellaire-d6.item .effect-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.item .effect-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-coral-500-rgb) / 0.7);
+}
+
+.stellaire-d6.item .effect-add {
+  width: 100%;
+}
+
+.stellaire-d6.item .effect-empty {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-085);
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}

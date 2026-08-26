@@ -1,0 +1,95 @@
+/* ============================================================
+   Tokens — palette primitive
+   ------------------------------------------------------------
+   Les couleurs brutes du thème « Espace & Vikings », et rien
+   d'autre. Aucune règle de style ne devrait piocher ici
+   directement : passer par les rôles de _semantic.css.
+
+   Chaque couleur existe en deux formes :
+     --sd6-c-<nom>      la couleur, pour un usage opaque
+     --sd6-c-<nom>-rgb  ses canaux, pour les variantes translucides
+                        via rgb(var(--sd6-c-<nom>-rgb) / 0.35)
+
+   Cette seconde forme est ce qui permet de retoucher l'or une
+   seule fois et de voir suivre ses dix-neuf usages, translucides
+   compris.
+   ============================================================ */
+
+.stellaire-d6,
+.sd6-roll,
+.sd6-chat-item {
+
+  /* --- Nuit spatiale --- */
+  --sd6-c-night-950: #070b1e;
+  --sd6-c-night-950-rgb: 7 11 30;
+  --sd6-c-night-930: #080c1c;
+  --sd6-c-night-930-rgb: 8 12 28;
+  --sd6-c-night-900: #0a0e22;
+  --sd6-c-night-900-rgb: 10 14 34;
+  --sd6-c-night-850: #0d1430;
+  --sd6-c-night-850-rgb: 13 20 48;
+  --sd6-c-night-800: #121b3b;
+  --sd6-c-night-800-rgb: 18 27 59;
+  --sd6-c-night-750: #182450;
+  --sd6-c-night-750-rgb: 24 36 80;
+  --sd6-c-night-700: #2c3a66;
+  --sd6-c-night-700-rgb: 44 58 102;
+  --sd6-c-night-650: #253876;
+  --sd6-c-night-650-rgb: 37 56 118;
+  --sd6-c-night-600: #42579c;
+  --sd6-c-night-600-rgb: 66 87 156;
+  --sd6-c-blue-550: #4060dc;
+  --sd6-c-blue-550-rgb: 64 96 220;
+
+  /* --- Or runique --- */
+  --sd6-c-gold-950: #2f2512;
+  --sd6-c-gold-950-rgb: 47 37 18;
+  --sd6-c-gold-900: #423418;
+  --sd6-c-gold-900-rgb: 66 52 24;
+  --sd6-c-gold-600: #a98a4a;
+  --sd6-c-gold-600-rgb: 169 138 74;
+  --sd6-c-gold-500: #e3b45e;
+  --sd6-c-gold-500-rgb: 227 180 94;
+  --sd6-c-gold-450: #f2b95c;
+  --sd6-c-gold-450-rgb: 242 185 92;
+  --sd6-c-gold-350: #ffe066;
+  --sd6-c-gold-350-rgb: 255 224 102;
+  --sd6-c-gold-250: #ffe6a0;
+  --sd6-c-gold-250-rgb: 255 230 160;
+
+  /* --- Glace --- */
+  --sd6-c-ice-500: #94a6cf;
+  --sd6-c-ice-500-rgb: 148 166 207;
+  --sd6-c-ice-300: #d9e4ff;
+  --sd6-c-ice-300-rgb: 217 228 255;
+
+  /* --- Bifrost — issues de jet et accents --- */
+  --sd6-c-jade-500: #62d68a;
+  --sd6-c-jade-500-rgb: 98 214 138;
+  --sd6-c-coral-500: #ef6b73;
+  --sd6-c-coral-500-rgb: 239 107 115;
+  --sd6-c-coral-400: #f58f95;
+  --sd6-c-coral-400-rgb: 245 143 149;
+  --sd6-c-coral-200: #ffd7da;
+  --sd6-c-coral-200-rgb: 255 215 218;
+  --sd6-c-cyan-500: #58c7f3;
+  --sd6-c-cyan-500-rgb: 88 199 243;
+  --sd6-c-cyan-400: #8fd8f7;
+  --sd6-c-cyan-400-rgb: 143 216 247;
+  --sd6-c-violet-500: #8f7cf0;
+  --sd6-c-violet-500-rgb: 143 124 240;
+  --sd6-c-violet-400: #b5a8f5;
+  --sd6-c-violet-400-rgb: 181 168 245;
+  --sd6-c-rose-500: #f18bc0;
+  --sd6-c-rose-500-rgb: 241 139 192;
+  --sd6-c-rose-400: #f3a9d0;
+  --sd6-c-rose-400-rgb: 243 169 208;
+  --sd6-c-magenta-500: #be6edc;
+  --sd6-c-magenta-500-rgb: 190 110 220;
+
+  /* --- Neutres --- */
+  --sd6-c-white: #ffffff;
+  --sd6-c-white-rgb: 255 255 255;
+  --sd6-c-black: #000000;
+  --sd6-c-black-rgb: 0 0 0;
+}

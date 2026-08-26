@@ -1,0 +1,110 @@
+/* ============================================================
+   Dialogue de jet
+   ============================================================ */
+
+.stellaire-d6.roll-dialog {
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgb(var(--sd6-c-blue-550-rgb) / 0.15), transparent 60%),
+    linear-gradient(180deg, var(--sd6-space-2), var(--sd6-space));
+}
+
+.stellaire-d6.roll-dialog .stellaire-roll-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .roll-dialog-title {
+  color: var(--sd6-gold);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-110);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-3);
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.roll-dialog .roll-dialog-title::before {
+  content: "᛭ ";
+  color: var(--sd6-gold-soft);
+}
+
+.stellaire-d6.roll-dialog .roll-dialog-title::after {
+  content: " ᛭";
+  color: var(--sd6-gold-soft);
+}
+
+.stellaire-d6.roll-dialog .form-group {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .form-group label {
+  color: var(--sd6-mist);
+  flex: 0 0 9rem;
+  font-size: var(--sd6-fs-085);
+  letter-spacing: var(--sd6-tracking-1);
+  text-transform: uppercase;
+}
+
+.stellaire-d6.roll-dialog .form-group select,
+.stellaire-d6.roll-dialog .form-group input[type="number"] {
+  flex: 1;
+}
+
+.stellaire-d6.roll-dialog .form-group input[type="number"] {
+  width: 4rem;
+}
+
+.stellaire-d6.roll-dialog .form-group.stress input {
+  flex: 0 0 auto;
+}
+
+.stellaire-d6.roll-dialog .stress-available {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-080);
+  opacity: 0.8;
+}
+
+.stellaire-d6.roll-dialog .sheet-footer {
+  border-top: 1px solid var(--sd6-line);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .form-group.effect .effect-value {
+  color: var(--sd6-gold);
+  flex: 1;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-090);
+  font-weight: bold;
+  text-align: center;
+}
+
+.stellaire-d6.roll-dialog .form-group.effect input[type="checkbox"] {
+  accent-color: var(--sd6-gold);
+  flex: 0 0 auto;
+}
+
+.stellaire-d6.roll-dialog .effect-sources {
+  border-left: 2px solid var(--sd6-line);
+  font-size: var(--sd6-fs-078);
+  list-style: none;
+  margin: 0 0 0.5rem 1.5rem;
+  padding: 0.25rem 0 0 0.5rem;
+}
+
+.stellaire-d6.roll-dialog .effect-sources li {
+  color: var(--sd6-text-dim, inherit);
+  line-height: 1.5;
+}
+
+.stellaire-d6.roll-dialog .effect-sources li i {
+  color: var(--sd6-gold);
+  font-size: var(--sd6-fs-070);
+  margin-right: 0.25rem;
+}

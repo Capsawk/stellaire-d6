@@ -1,0 +1,35 @@
+/* --- Champs de formulaire communs --- */
+.stellaire-d6 input[type="text"],
+.stellaire-d6 input[type="number"],
+.stellaire-d6 textarea,
+.stellaire-d6 select {
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.65);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-sm);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6 input:focus,
+.stellaire-d6 textarea:focus,
+.stellaire-d6 select:focus {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: 0 0 0 1px rgb(var(--sd6-c-gold-500-rgb) / 0.25);
+}
+
+.stellaire-d6 select option {
+  background: var(--sd6-panel-2);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6 button {
+  background: rgb(var(--sd6-c-night-750-rgb) / 0.7);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-sm);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6 button:hover {
+  border-color: var(--sd6-gold-soft);
+  color: var(--sd6-gold);
+  text-shadow: 0 0 6px rgb(var(--sd6-c-gold-500-rgb) / 0.6);
+}

@@ -1,0 +1,737 @@
+/* ============================================================
+   Feuille de personnage
+   ============================================================ */
+
+.stellaire-d6.actor {
+  background-color: var(--sd6-space);
+  background-image:
+    radial-gradient(ellipse 130% 55% at 50% -12%, rgb(var(--sd6-c-blue-550-rgb) / 0.20), transparent 62%),
+    radial-gradient(ellipse 90% 40% at 85% 110%, rgb(var(--sd6-c-magenta-500-rgb) / 0.10), transparent 60%),
+    radial-gradient(1px 1px at 10% 12%, rgb(var(--sd6-c-white-rgb) / 0.75), transparent 100%),
+    radial-gradient(1px 1px at 24% 68%, rgb(var(--sd6-c-white-rgb) / 0.50), transparent 100%),
+    radial-gradient(1px 1px at 38% 26%, rgb(var(--sd6-c-white-rgb) / 0.85), transparent 100%),
+    radial-gradient(1.5px 1.5px at 46% 82%, rgb(var(--sd6-c-white-rgb) / 0.55), transparent 100%),
+    radial-gradient(1px 1px at 55% 44%, rgb(var(--sd6-c-white-rgb) / 0.45), transparent 100%),
+    radial-gradient(1px 1px at 63% 15%, rgb(var(--sd6-c-white-rgb) / 0.70), transparent 100%),
+    radial-gradient(1.5px 1.5px at 71% 58%, rgb(var(--sd6-c-white-rgb) / 0.50), transparent 100%),
+    radial-gradient(1px 1px at 79% 34%, rgb(var(--sd6-c-white-rgb) / 0.80), transparent 100%),
+    radial-gradient(1px 1px at 87% 74%, rgb(var(--sd6-c-white-rgb) / 0.55), transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 90%, rgb(var(--sd6-c-white-rgb) / 0.50), transparent 100%),
+    radial-gradient(1px 1px at 66% 94%, rgb(var(--sd6-c-white-rgb) / 0.60), transparent 100%),
+    linear-gradient(180deg, var(--sd6-space-2) 0%, var(--sd6-space) 100%);
+}
+
+.stellaire-d6.actor .window-content {
+  padding: 0;
+}
+
+.stellaire-d6.actor .personnage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+
+/* --- Titres de sections (runes + filet d'or) --- */
+.stellaire-d6.actor h2 {
+  align-items: center;
+  color: var(--sd6-gold);
+  display: flex;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-105);
+  font-weight: bold;
+  gap: 0.5rem;
+  letter-spacing: var(--sd6-tracking-3);
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor h2::before {
+  font-size: 0.95em;
+  font-weight: normal;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.stellaire-d6.actor h2::after {
+  background: linear-gradient(90deg, var(--sd6-gold-soft), transparent);
+  content: "";
+  flex: 1;
+  height: 1px;
+  order: 1;
+}
+
+.stellaire-d6.actor h2 .etat-add {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 1.5rem;
+  justify-content: center;
+  order: 2;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.actor h2 .etat-add:hover {
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.7);
+}
+
+.stellaire-d6.actor .sheet-identite h2::before { content: "ᛟ"; }
+.stellaire-d6.actor .sheet-skills h2::before { content: "ᚱ"; }
+.stellaire-d6.actor .sheet-etats h2::before { content: "ᛏ"; }
+.stellaire-d6.actor .sheet-capacites h2::before { content: "ᛊ"; }
+.stellaire-d6.actor .sheet-equipement h2::before { content: "ᚲ"; }
+
+/* --- Header --- */
+.stellaire-d6.actor .sheet-header {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.75rem;
+  position: relative;
+  padding-bottom: 0.35rem;
+}
+
+.stellaire-d6.actor .sheet-header::after {
+  background: linear-gradient(90deg,
+    var(--sd6-c-cyan-500), var(--sd6-c-violet-500), var(--sd6-c-rose-500), var(--sd6-c-gold-450), var(--sd6-c-rose-500), var(--sd6-c-violet-500), var(--sd6-c-cyan-500));
+  border-radius: var(--sd6-radius-xs);
+  bottom: 0;
+  box-shadow: 0 0 8px rgb(var(--sd6-c-violet-500-rgb) / 0.6);
+  content: "";
+  height: 2px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.stellaire-d6.actor .profile-img {
+  border: 2px solid var(--sd6-gold-soft);
+  border-radius: var(--sd6-radius-round);
+  box-shadow: 0 0 12px rgb(var(--sd6-c-gold-500-rgb) / 0.35), inset 0 0 10px rgb(var(--sd6-c-black-rgb) / 0.6);
+  flex: 0 0 100px;
+  height: 100px;
+  object-fit: cover;
+  width: 100px;
+}
+
+.stellaire-d6.actor .header-fields {
+  flex: 1;
+  gap: 0.4rem;
+}
+
+.stellaire-d6.actor input:disabled,
+.stellaire-d6.actor select:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.stellaire-d6.actor .charname {
+  margin: 0;
+}
+
+.stellaire-d6.actor .charname input {
+  background: transparent;
+  border: none;
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-170);
+  font-weight: bold;
+  height: auto;
+  letter-spacing: var(--sd6-tracking-1);
+  text-shadow: 0 0 10px rgb(var(--sd6-c-cyan-500-rgb) / 0.25);
+  width: 100%;
+}
+
+.stellaire-d6.actor .resources {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.actor .resource {
+  align-items: center;
+  background: linear-gradient(180deg, rgb(var(--sd6-c-night-750-rgb) / 0.65), rgb(var(--sd6-c-night-900-rgb) / 0.7));
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.25rem 0.75rem;
+}
+
+.stellaire-d6.actor .resource label {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-068);
+  letter-spacing: var(--sd6-tracking-2);
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .resource.stress {
+  border-color: var(--sd6-gold-soft);
+  box-shadow: inset 0 0 10px rgb(var(--sd6-c-gold-500-rgb) / 0.08);
+}
+
+.stellaire-d6.actor .resource-value {
+  align-items: center;
+  display: flex;
+  gap: 0.3rem;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-115);
+}
+
+.stellaire-d6.actor .resource-value span {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-090);
+}
+
+.stellaire-d6.actor .resource input[type="number"] {
+  background: transparent;
+  border: none;
+  color: var(--sd6-gold);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-115);
+  font-weight: bold;
+  height: auto;
+  padding: 0;
+  text-align: center;
+  width: 2.6rem;
+}
+
+.stellaire-d6.actor .resource input[type="number"]:focus {
+  box-shadow: none;
+}
+
+/* --- Pépites de Stress --- */
+.stellaire-d6.actor .stress-pips {
+  display: flex;
+  gap: 3px;
+}
+
+.stellaire-d6.actor .stress-pips .pip {
+  border: 1px solid var(--sd6-gold-soft);
+  box-shadow: 0 0 3px rgb(var(--sd6-c-gold-500-rgb) / 0.25);
+  height: 9px;
+  transform: rotate(45deg);
+  width: 9px;
+}
+
+.stellaire-d6.actor .stress-pips .pip.filled {
+  background: linear-gradient(135deg, var(--sd6-c-gold-250), var(--sd6-gold));
+  box-shadow: 0 0 5px rgb(var(--sd6-c-gold-500-rgb) / 0.7);
+}
+
+.stellaire-d6.actor .resource.stress.full {
+  border-color: var(--sd6-fail);
+  box-shadow: inset 0 0 12px rgb(var(--sd6-c-coral-500-rgb) / 0.25);
+}
+
+.stellaire-d6.actor .resource.stress.full .stress-pips .pip.filled {
+  background: linear-gradient(135deg, var(--sd6-c-coral-200), var(--sd6-fail));
+  box-shadow: 0 0 6px rgb(var(--sd6-c-coral-500-rgb) / 0.8);
+}
+
+/* --- Onglets --- */
+.stellaire-d6.actor .tabs {
+  align-items: center;
+  border-bottom: 1px solid var(--sd6-line);
+  display: flex;
+  flex: 0 0 auto;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.6rem 0.5rem 0.5rem;
+}
+
+.stellaire-d6.actor .tab-item {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-night-750-rgb) / 0.55), rgb(var(--sd6-c-night-800-rgb) / 0.8));
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  box-shadow: 0 1px 2px rgb(var(--sd6-c-black-rgb) / 0.4);
+  color: var(--sd6-mist);
+  cursor: pointer;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-085);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-2);
+  line-height: 1;
+  padding: 0.5rem 1.25rem;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.stellaire-d6.actor .tab-item:hover {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-night-650-rgb) / 0.65), rgb(var(--sd6-c-night-750-rgb) / 0.85));
+  border-color: var(--sd6-line-bright);
+  box-shadow: 0 0 6px rgb(var(--sd6-c-night-600-rgb) / 0.35);
+  color: var(--sd6-ice);
+}
+
+.stellaire-d6.actor .tab-item.active {
+  background: linear-gradient(180deg, rgb(var(--sd6-c-gold-900-rgb) / 0.4), rgb(var(--sd6-c-gold-950-rgb) / 0.65));
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.35), inset 0 0 6px rgb(var(--sd6-c-gold-500-rgb) / 0.12);
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.5);
+}
+
+.stellaire-d6.actor .sheet-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.stellaire-d6.actor .sheet-body > .tab {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .sheet-body > .tab:not(.active) {
+  display: none;
+}
+
+/* --- Sections --- */
+.stellaire-d6.actor section {
+  background:
+    linear-gradient(180deg, rgb(var(--sd6-c-night-800-rgb) / 0.85), rgb(var(--sd6-c-night-900-rgb) / 0.75));
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  padding: 0.5rem;
+}
+
+/* --- Identité --- */
+.stellaire-d6.actor .identite-grid {
+  display: grid;
+  gap: 0.3rem 0.75rem;
+  grid-template-columns: 1fr 1fr;
+}
+
+.stellaire-d6.actor .form-group {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.stellaire-d6.actor .form-group label {
+  flex: 0 0 5.5rem;
+  font-size: var(--sd6-fs-080);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-1);
+  opacity: 0.9;
+}
+
+.stellaire-d6.actor .form-group input {
+  flex: 1;
+}
+
+/* --- Origine & Rôle (fiche personnage) --- */
+.stellaire-d6.actor .origine-attached,
+.stellaire-d6.actor .role-attached {
+  align-items: center;
+  flex: 1;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.stellaire-d6.actor .origine-drop,
+.stellaire-d6.actor .role-drop {
+  align-items: center;
+  border: 1px dashed var(--sd6-line-bright);
+  border-radius: var(--sd6-radius-md);
+  color: var(--sd6-mist);
+  display: flex;
+  flex: 1;
+  font-size: var(--sd6-fs-080);
+  font-style: italic;
+  gap: 0.4rem;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.35rem;
+}
+
+.stellaire-d6.actor .form-group.origine.locked .origine-attached,
+.stellaire-d6.actor .form-group.role.locked .role-attached {
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.65);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-sm);
+  padding: 0.1rem 0.4rem;
+}
+
+.stellaire-d6.actor .form-group.origine.locked .item-empty,
+.stellaire-d6.actor .form-group.role.locked .item-empty {
+  align-items: center;
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.65);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-sm);
+  display: flex;
+  flex: 1;
+  min-height: 2rem;
+  padding: 0.1rem 0.4rem;
+}
+
+/* --- Biographie --- */
+.stellaire-d6.actor .sheet-biographie {
+  gap: 0.75rem;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group.description {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group.description label {
+  flex: 0 0 auto;
+  padding-top: 0;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group prose-mirror {
+  flex: 1;
+  min-height: 14rem;
+  width: 100%;
+}
+
+.stellaire-d6.actor .sheet-biographie .form-group.description.notes prose-mirror {
+  min-height: 10rem;
+}
+
+/* --- Compétences --- */
+.stellaire-d6.actor .skills-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.stellaire-d6.actor .skill-group {
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, rgb(var(--sd6-c-blue-550-rgb) / 0.10), transparent 70%),
+    rgb(var(--sd6-c-night-930-rgb) / 0.5);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  padding: 0.35rem;
+}
+
+.stellaire-d6.actor .skill-group h3 {
+  color: var(--sd6-mist);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-078);
+  letter-spacing: var(--sd6-tracking-2);
+  margin: 0 0 0.35rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .skill-group h3::before,
+.stellaire-d6.actor .skill-group h3::after {
+  color: var(--sd6-gold-soft);
+  font-size: 0.85em;
+  padding: 0 0.35rem;
+}
+
+.stellaire-d6.actor .skill-group[data-group="physique"] h3::before { content: "ᛏ"; }
+.stellaire-d6.actor .skill-group[data-group="physique"] h3::after { content: "ᛏ"; }
+.stellaire-d6.actor .skill-group[data-group="mental"] h3::before { content: "ᛟ"; }
+.stellaire-d6.actor .skill-group[data-group="mental"] h3::after { content: "ᛟ"; }
+.stellaire-d6.actor .skill-group[data-group="social"] h3::before { content: "ᛉ"; }
+.stellaire-d6.actor .skill-group[data-group="social"] h3::after { content: "ᛉ"; }
+
+.stellaire-d6.actor .skill {
+  align-items: center;
+  border-bottom: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.5);
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.actor .skill:last-child {
+  border-bottom: none;
+}
+
+.stellaire-d6.actor .skill-roll {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 1;
+  gap: 0.35rem;
+  height: auto;
+  justify-content: flex-start;
+  line-height: 1;
+  padding: 0;
+  text-align: left;
+}
+
+.stellaire-d6.actor .skill-roll:hover {
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.8);
+}
+
+.stellaire-d6.actor .skill-roll .skill-label {
+  color: inherit;
+  flex: 1;
+  font-size: var(--sd6-fs-085);
+}
+
+.stellaire-d6.actor .skill input[type="number"] {
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.7);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-sm);
+  color: var(--sd6-gold);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-095);
+  font-weight: bold;
+  height: auto;
+  padding: 0.1rem;
+  text-align: center;
+  width: 2.5rem;
+}
+
+.stellaire-d6.actor .skill input[type="number"]:focus {
+  box-shadow: 0 0 0 2px rgb(var(--sd6-c-gold-500-rgb) / 0.2);
+}
+
+/* --- États --- */
+.stellaire-d6.actor .etats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .etat {
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.stellaire-d6.actor .etat select {
+  flex: 0 0 7rem;
+}
+
+.stellaire-d6.actor .etat input[type="text"] {
+  flex: 1;
+}
+
+.stellaire-d6.actor .etat-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.actor .etat-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-coral-500-rgb) / 0.7);
+}
+
+.stellaire-d6.actor .etats-empty {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-085);
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.stellaire-d6.actor .item-add {
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+/* --- Capacités, pouvoirs & marques --- */
+.stellaire-d6.actor .sheet-capacites .item-list {
+  gap: 0.3rem;
+}
+
+.stellaire-d6.actor .capacites-empty {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-085);
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+/* --- Équipement --- */
+.stellaire-d6.actor .equipement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .equipement {
+  align-items: center;
+  border-bottom: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.5);
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.actor .equipement:last-child {
+  border-bottom: none;
+}
+
+/* --- Inventaire --- */
+.stellaire-d6.actor .item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stellaire-d6.actor .item {
+  align-items: center;
+  border-bottom: 1px dashed rgb(var(--sd6-c-night-700-rgb) / 0.5);
+  gap: 0.4rem;
+  padding: 0.2rem 0;
+}
+
+.stellaire-d6.actor .item:last-child {
+  border-bottom: none;
+}
+
+.stellaire-d6.actor .item-img {
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-round);
+  flex: 0 0 2rem;
+  height: 2rem;
+  object-fit: cover;
+  width: 2rem;
+}
+
+.stellaire-d6.actor .item input[type="checkbox"] {
+  accent-color: var(--sd6-gold);
+  flex: 0 0 auto;
+}
+
+.stellaire-d6.actor .item-edit,
+.stellaire-d6.actor .item-chat,
+.stellaire-d6.actor .item-attack,
+.stellaire-d6.actor .item-delete {
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--sd6-mist);
+  display: inline-flex;
+  flex: 0 0 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.stellaire-d6.actor .item-chat:hover {
+  color: var(--sd6-ice);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-cyan-500-rgb) / 0.7);
+}
+
+.stellaire-d6.actor .item-edit:hover {
+  color: var(--sd6-ice);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-cyan-500-rgb) / 0.7);
+}
+
+.stellaire-d6.actor .item-attack:hover {
+  color: var(--sd6-gold);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.8);
+}
+
+.stellaire-d6.actor .item-delete:hover {
+  color: var(--sd6-fail);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-coral-500-rgb) / 0.7);
+}
+
+.stellaire-d6.actor .item-name {
+  color: var(--sd6-ice);
+  flex: 1;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-090);
+  font-weight: bold;
+}
+
+.stellaire-d6.actor .item-type {
+  color: var(--sd6-gold-soft);
+  flex: 0 0 6rem;
+  font-size: var(--sd6-fs-070);
+  letter-spacing: var(--sd6-tracking-1);
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.stellaire-d6.actor .item-empty {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-085);
+  font-style: italic;
+  margin: 0.25rem 0;
+  opacity: 0.8;
+}
+
+.stellaire-d6.actor .item-add-row {
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.stellaire-d6.actor .item-add-row select {
+  flex: 1;
+  min-width: 0;
+}
+
+.stellaire-d6.actor .item-add-row .item-add {
+  flex: 0 0 25%;
+  margin-top: 0;
+  max-width: 25%;
+  padding: 0.3rem;
+  width: 25%;
+}
+
+/* --- Pied de fiche --- */
+.stellaire-d6.actor .sheet-footer-runes {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.15rem 0 0.1rem;
+}
+
+.stellaire-d6.actor .footer-rune-line {
+  color: var(--sd6-gold-soft);
+  font-size: var(--sd6-fs-085);
+  letter-spacing: var(--sd6-tracking-6);
+  line-height: 1;
+  opacity: 0.75;
+  text-align: center;
+}
+
+.stellaire-d6.actor .footer-title {
+  color: var(--sd6-mist);
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-070);
+  letter-spacing: var(--sd6-tracking-4);
+  opacity: 0.8;
+  text-transform: uppercase;
+}

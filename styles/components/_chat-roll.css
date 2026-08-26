@@ -1,0 +1,149 @@
+/* ============================================================
+   Carte de jet (chat) — couleurs homogènes avec la fiche
+   ============================================================ */
+
+.sd6-roll {
+  background: var(--sd6-panel);
+  border: 1px solid var(--sd6-line);
+  border-left: 3px solid var(--sd6-gold-soft);
+  border-radius: var(--sd6-radius-lg);
+  box-shadow: 0 2px 8px rgb(var(--sd6-c-black-rgb) / 0.4);
+  padding: 0.5rem;
+}
+
+.sd6-roll-header {
+  align-items: baseline;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sd6-roll-actor {
+  color: var(--sd6-ice);
+  font-family: var(--sd6-font-display);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-1);
+}
+
+.sd6-roll-skill {
+  color: var(--sd6-gold);
+  font-size: var(--sd6-fs-090);
+  font-style: italic;
+}
+
+.sd6-roll-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.4rem 0;
+}
+
+.sd6-tag {
+  border-radius: var(--sd6-radius-sm);
+  font-size: var(--sd6-fs-068);
+  letter-spacing: var(--sd6-tracking-1);
+  padding: 0.1rem 0.4rem;
+  text-transform: uppercase;
+}
+
+.sd6-tag.position {
+  background: rgb(var(--sd6-c-cyan-500-rgb) / 0.14);
+  border: 1px solid rgb(var(--sd6-c-cyan-500-rgb) / 0.4);
+  color: var(--sd6-c-cyan-400);
+}
+
+.sd6-tag.effet {
+  background: rgb(var(--sd6-c-violet-500-rgb) / 0.14);
+  border: 1px solid rgb(var(--sd6-c-violet-500-rgb) / 0.4);
+  color: var(--sd6-c-violet-400);
+}
+
+.sd6-tag.desavantage {
+  background: rgb(var(--sd6-c-coral-500-rgb) / 0.14);
+  border: 1px solid rgb(var(--sd6-c-coral-500-rgb) / 0.4);
+  color: var(--sd6-c-coral-400);
+}
+
+.sd6-tag.stress {
+  background: rgb(var(--sd6-c-rose-500-rgb) / 0.14);
+  border: 1px solid rgb(var(--sd6-c-rose-500-rgb) / 0.4);
+  color: var(--sd6-c-rose-400);
+}
+
+.sd6-dice {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.sd6-die {
+  align-items: center;
+  background: rgb(var(--sd6-c-night-950-rgb) / 0.7);
+  border: 1px solid var(--sd6-line);
+  border-radius: var(--sd6-radius-md);
+  display: inline-flex;
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-110);
+  font-weight: bold;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+}
+
+.sd6-die.kept {
+  border-color: var(--sd6-gold);
+  box-shadow: 0 0 8px rgb(var(--sd6-c-gold-500-rgb) / 0.45);
+}
+
+.sd6-die.fail {
+  color: var(--sd6-fail);
+}
+
+.sd6-die.mixed {
+  color: var(--sd6-mixed);
+}
+
+.sd6-die.success {
+  color: var(--sd6-success);
+  text-shadow: 0 0 6px rgb(var(--sd6-c-jade-500-rgb) / 0.4);
+}
+
+.sd6-die.crit {
+  color: var(--sd6-crit);
+  text-shadow: 0 0 10px rgb(var(--sd6-c-gold-350-rgb) / 0.8);
+}
+
+.sd6-outcome {
+  border-top: 1px solid var(--sd6-line);
+  margin-top: 0.5rem;
+  padding-top: 0.4rem;
+}
+
+.sd6-outcome-title {
+  font-family: var(--sd6-font-display);
+  font-size: var(--sd6-fs-095);
+  font-weight: bold;
+  letter-spacing: var(--sd6-tracking-2);
+  text-transform: uppercase;
+}
+
+.sd6-outcome-detail {
+  color: var(--sd6-mist);
+  font-size: var(--sd6-fs-080);
+  opacity: 0.9;
+}
+
+.sd6-outcome.critique .sd6-outcome-title {
+  color: var(--sd6-crit);
+  text-shadow: 0 0 8px rgb(var(--sd6-c-gold-350-rgb) / 0.5);
+}
+
+.sd6-outcome.net .sd6-outcome-title {
+  color: var(--sd6-success);
+}
+
+.sd6-outcome.complication .sd6-outcome-title {
+  color: var(--sd6-mixed);
+}
+
+.sd6-outcome.echec .sd6-outcome-title {
+  color: var(--sd6-fail);
+}
